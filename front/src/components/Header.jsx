@@ -11,7 +11,7 @@ const Header = ({handleCart, orderLen}) => {
                     component="span"
                     sx={{flexGrow: 1}}
                 >
-                    MUI Shop
+                    Book shop
                 </Typography>
                 <IconButton
                     color="inherit"
