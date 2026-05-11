@@ -1,11 +1,103 @@
-import './App.css'
+import { useState } from 'react';
 
-function App() {
+import Basket from './components/Basket';
+import GoodsList from './components/GoodsList';
+import Search from './components/Search';
+import Snack from "./components/Snack";
+
+import { goods } from './data/goods';
+import Header from "./components/Header";
+import {Container} from "@mui/material";
+
+const App = () => {
+    const [order, setOrder] = useState([]);
+    const [search, setSearch] = useState('');
+    const [products, setProducts] = useState(goods);
+    const [isCartOpen, setCartOpen] = useState(false);
+    const [isSnackOpen, setSnackOpen] = useState(false);
+
+    const handleChange = (e) => {
+        if (!e.target.value) {
+            setProducts(goods);
+            setSearch('');
+            return;
+        }
+
+        setSearch(e.target.value);
+        setProducts(
+            products.filter((good) =>
+                good.name.toLowerCase().includes(e.target.value.toLowerCase())
+            ))
+    };
+
+    const addToOrder = (goodsItem) => {
+        let quantity = 1;
+
+        const indexInOrder = order.findIndex(
+            (item) => item.id === goodsItem.id
+        );
+
+        if (indexInOrder > -1) {
+            quantity = order[indexInOrder].quantity + 1;
+
+            setOrder(order.map((item) => {
+                    if (item.id !== goodsItem.id) return item;
+
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        quantity,
+                    };
+                }),
+            );
+        } else {
+            setOrder([
+                    ...order,
+                    {
+                        id: goodsItem.id,
+                        name: goodsItem.name,
+                        price: goodsItem.price,
+                        quantity,
+                    },
+                ],
+            );
+        }
+
+        setSnackOpen(true)
+    };
+
+    const removeFromOrder = (goodsItem) => {
+        setOrder(order.filter((item) => item.id !== goodsItem));
+    };
+
     return (
-        <h1>
-           Book-shop
-        </h1>
-    )
+        <>
+            <Header
+                handleCart={() => setCartOpen(true)}
+                orderLen={order.length}
+            />
+            <Container
+                sx={{mt: '1rem'}}
+            >
+                <Search
+                    value={search}
+                    onChange={handleChange}
+                />
+                <GoodsList
+                    goods={products}
+                    setOrder={addToOrder}
+                />
+            </Container>
+            <Basket
+                order={order}
+                removeFormOrder={removeFromOrder}
+                cartOpen={isCartOpen}
+                closeCart={() => setCartOpen(false)}
+            />
+            <Snack isOpen={isSnackOpen} onClose={() => setSnackOpen(false)} />
+        </>
+    );
 }
 
-export default App
+export default App;
