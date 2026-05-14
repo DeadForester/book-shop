@@ -2,12 +2,12 @@ import GoodsItem from './GoodsItem';
 import {Grid} from "@mui/material";
 
 const GoodsList = (props) => {
-    const { goods } = props;
+    const { goods, onItemAdded } = props;
 
     return (
         <Grid container spacing={2}>
             {goods.map((item) => (
-                <GoodsItem key={item.id} {...item} />
+                <GoodsItem key={item.id} {...item} onItemAdded={onItemAdded} />
             ))}
         </Grid>
     );

@@ -25,6 +25,9 @@ const Books = () => {
             )
         );
     };
+
+    const handleItemAdded = () => setSnackOpen(true);
+
     return (
         <>
             <Container
@@ -36,6 +39,7 @@ const Books = () => {
                 />
                 <GoodsList
                     goods={products}
+                    onItemAdded={handleItemAdded}
                 />
             </Container>
 
