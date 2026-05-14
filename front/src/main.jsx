@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import './styles/index.css'
 import App from './App.jsx'
 import {ThemeProvider} from '@mui/material';
-import {theme} from "./components/Theme.js";
+import {theme} from "./shared/components/Theme.js";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
