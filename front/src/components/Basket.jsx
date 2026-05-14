@@ -1,13 +1,13 @@
 import {Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography} from "@mui/material";
 import {ShoppingBasket} from "@mui/icons-material";
 import BasketItem from "./BasketItem.jsx";
+import {useBasketContext} from "../context/hooks/useBasketContext.js";
 
 const Basket = ({
                     cartOpen,
                     closeCart = Function.prototype,
-                    order = [],
-                    removeFormOrder
                 }) => {
+    const {order} = useBasketContext();
     return (
         <Drawer
             anchor="right"
@@ -31,7 +31,6 @@ const Basket = ({
                             {order.map((item) => (
                                 <BasketItem {...item}
                                             key={item.id}
-                                            removeFormOrder={removeFormOrder}
                                 />
                             ))}
                             <Divider/>

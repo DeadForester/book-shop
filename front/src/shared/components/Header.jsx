@@ -1,7 +1,10 @@
 import {AppBar, IconButton, Toolbar, Typography, Badge} from "@mui/material";
 import {ShoppingBasket} from '@mui/icons-material';
+import {useBasketContext} from "../../context/hooks/useBasketContext.js";
 
-const Header = ({handleCart, orderLen}) => {
+const Header = ({handleCart}) => {
+    const {order} = useBasketContext();
+
     return (
         <AppBar position="static">
             <Toolbar>
@@ -18,7 +21,7 @@ const Header = ({handleCart, orderLen}) => {
                 >
                     <Badge
                         color="secondary"
-                        badgeContent={orderLen}
+                        badgeContent={order.length}
                     >
                         <ShoppingBasket/>
                     </Badge>
