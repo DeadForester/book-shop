@@ -1,4 +1,3 @@
-import React from 'react';
 import {AppBar, IconButton, Toolbar, Typography, Badge} from "@mui/material";
 import {ShoppingBasket} from '@mui/icons-material';
 
