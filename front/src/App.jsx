@@ -20,8 +20,6 @@ const App = () => {
                 <AppRouter/>
 
                 <Basket
-                    order={order}
-                    removeFormOrder={removeFromOrder}
                     cartOpen={isCartOpen}
                     closeCart={() => setCartOpen(false)}
                 />
