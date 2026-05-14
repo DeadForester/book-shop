@@ -6,7 +6,10 @@ const GoodsItem = (props) => {
     return (
         <Grid size={{ xs: 12, md: 4}}>
             <Card
-                sx={{height: '100%'}}
+                sx={{
+                    height: '100%',
+                    cursor: 'pointer'
+            }}
             >
                 <CardMedia
                     image={poster}
