@@ -1,4 +1,4 @@
-import {AppBar, IconButton, Toolbar, Typography, Badge} from "@mui/material";
+import {AppBar, IconButton, Toolbar, Badge, Link} from "@mui/material";
 import {ShoppingBasket} from '@mui/icons-material';
 import {useBasketContext} from "../../context/hooks/useBasketContext.js";
 
@@ -8,13 +8,13 @@ const Header = ({handleCart}) => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography
-                    variant="h6"
-                    component="span"
-                    sx={{flexGrow: 1}}
+                <Link
+                    href="/"
+                    underline="none"
+                    sx={{ typography: 'h6', flexGrow: 1, color: 'inherit' }}
                 >
                     Book shop
-                </Typography>
+                </Link>
                 <IconButton
                     color="inherit"
                     onClick={handleCart}
