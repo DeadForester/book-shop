@@ -3,7 +3,7 @@ import {Close} from "@mui/icons-material";
 import {useBasketContext} from "../context/hooks/useBasketContext.js";
 
 const BasketItem = ({ id, name, price, quantity}) => {
-    const {removeFormOrder} = useBasketContext();
+    const {removeFromOrder} = useBasketContext();
 
     return (
         <ListItem>
@@ -18,7 +18,7 @@ const BasketItem = ({ id, name, price, quantity}) => {
             </Typography>
             <IconButton
                 className='btn btn-primary'
-                onClick={() => removeFormOrder(id)}
+                onClick={() => removeFromOrder(id)}
             >
                 <Close/>
             </IconButton>

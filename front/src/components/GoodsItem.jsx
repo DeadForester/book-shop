@@ -1,7 +1,10 @@
 import {Button, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
+import {useBasketContext} from "../context/hooks/useBasketContext.js";
 
 const GoodsItem = (props) => {
-    const { name, price, setOrder, poster } = props;
+    const { name, price, poster } = props;
+
+    const {addToOrder} = useBasketContext();
 
     return (
         <Grid size={{ xs: 12, md: 4}}>
@@ -34,7 +37,7 @@ const GoodsItem = (props) => {
                     <Button
                         variant="outlined"
                         onClick={() =>
-                            setOrder({
+                            addToOrder({
                                 id: props.id,
                                 name: props.name,
                                 price: props.price,
