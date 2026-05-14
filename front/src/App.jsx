@@ -1,6 +1,5 @@
 import {BrowserRouter} from "react-router-dom";
-import {BasketContext} from "./context/basket.js";
-import {useMemo, useState} from "react";
+import {useState} from "react";
 import Header from "./shared/components/Header.jsx";
 import Basket from "./components/Basket.jsx";
 import AppRouter from "./components/AppRouter.jsx";
