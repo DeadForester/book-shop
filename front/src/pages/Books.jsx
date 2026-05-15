@@ -4,26 +4,43 @@ import Snack from "../shared/components/Snack.jsx";
 
 import { goods } from '../data/goods';
 import {Container} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useMemo, useState} from "react";
+import PaginationControls from "../shared/components/PaginationControls.jsx";
+
+const ITEMS_PER_PAGE = 9;
 
 const Books = () => {
     const [search, setSearch] = useState('');
-    const [products, setProducts] = useState(goods);
     const [isSnackOpen, setSnackOpen] = useState(false);
+    const [page, setPage] = useState(1);
+
+    const filteredProducts = useMemo(() => {
+        if (!search.trim()) return goods;
+
+        return goods.filter(good =>
+            good.name.toLowerCase().includes(search.toLowerCase()) ||
+            good.author?.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [search]);
+
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    const currentItems = useMemo(() => {
+        const start = (page - 1) * ITEMS_PER_PAGE;
+        return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
+    }, [filteredProducts, page]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [search]);
 
     const handleChange = (e) => {
-        if (!e.target.value) {
-            setProducts(goods);
-            setSearch('');
-            return;
-        }
+        const value = e.target.value;
+        setSearch(value);
+    };
 
-        setSearch(e.target.value);
-        setProducts(
-            products.filter((good) =>
-                good.name.toLowerCase().includes(e.target.value.toLowerCase())
-            )
-        );
+    const handlePageChange = (event, value) => {
+        setPage(value);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleItemAdded = () => setSnackOpen(true);
@@ -38,12 +55,20 @@ const Books = () => {
                     onChange={handleChange}
                 />
                 <GoodsList
-                    goods={products}
+                    goods={currentItems}
                     onItemAdded={handleItemAdded}
                 />
             </Container>
 
             <Snack isOpen={isSnackOpen} onClose={() => setSnackOpen(false)} />
+
+            {totalPages > 1 && (
+                <PaginationControls
+                    page={page}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            )}
         </>
     );
 };
