@@ -1,8 +1,8 @@
 import {BrowserRouter} from "react-router-dom";
 import {useState} from "react";
 import Header from "./shared/components/Header.jsx";
-import Basket from "./components/books-page/Basket.jsx";
-import AppRouter from "./shared/AppRouter.jsx";
+import Basket from "./shared/components/Basket.jsx";
+import AppRouter from "./shared/components/AppRouter.jsx";
 import AppProvider from "./shared/context/AppProvider.jsx";
 
 
