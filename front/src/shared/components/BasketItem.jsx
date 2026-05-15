@@ -1,6 +1,6 @@
 import {IconButton, ListItem, Typography} from "@mui/material";
 import {Close} from "@mui/icons-material";
-import {useBasketContext} from "../../context/hooks/useBasketContext.js";
+import {useBasketContext} from "../../hooks/useBasketContext.js";
 
 const BasketItem = ({ id, name, price, quantity}) => {
     const {removeFromOrder} = useBasketContext();

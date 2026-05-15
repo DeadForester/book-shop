@@ -1,6 +1,6 @@
 import {AppBar, IconButton, Toolbar, Badge, Link} from "@mui/material";
 import {ShoppingBasket} from '@mui/icons-material';
-import {useBasketContext} from "../../context/hooks/useBasketContext.js";
+import {useBasketContext} from "../../hooks/useBasketContext.js";
 
 const Header = ({handleCart}) => {
     const {order} = useBasketContext();
