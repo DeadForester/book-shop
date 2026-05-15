@@ -13,7 +13,7 @@ const BookIdPage = () => {
     const params = useParams();
     const navigate = useNavigate();
 
-    const book = useMemo(() => goods.find(item => item.id.localeCompare(params.id) === 0), [params.id]);
+    const book = useMemo(() => goods.find(item => String(item.id) === String(params.id)), [params.id]);
 
     if (!book) {
         return (
