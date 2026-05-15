@@ -1,4 +1,4 @@
-import GoodsItem from './GoodsItem';
+import GoodsItem from './GoodsItem.jsx';
 import {Grid} from "@mui/material";
 
 const GoodsList = (props) => {

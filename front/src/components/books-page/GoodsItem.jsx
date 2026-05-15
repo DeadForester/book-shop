@@ -1,5 +1,5 @@
 import {Button, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
-import {useBasketContext} from "../context/hooks/useBasketContext.js";
+import {useBasketContext} from "../../context/hooks/useBasketContext.js";
 
 const GoodsItem = ({ id, name, price, poster, onItemAdded }) => {
 

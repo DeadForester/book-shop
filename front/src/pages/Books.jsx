@@ -1,5 +1,5 @@
-import GoodsList from '../components/GoodsList';
-import Search from '../components/Search';
+import GoodsList from '../components/books-page/GoodsList.jsx';
+import Search from '../components/books-page/Search.jsx';
 import Snack from "../shared/components/Snack.jsx";
 
 import { goods } from '../data/goods';
