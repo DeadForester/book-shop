@@ -4,7 +4,7 @@ import Snack from "../shared/components/Snack.jsx";
 
 import { goods } from '../data/goods';
 import {Container} from "@mui/material";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState} from "react";
 import PaginationControls from "../shared/components/PaginationControls.jsx";
 
 const ITEMS_PER_PAGE = 9;
@@ -29,13 +29,9 @@ const Books = () => {
         return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
     }, [filteredProducts, page]);
 
-    useEffect(() => {
-        setPage(1);
-    }, [search]);
-
     const handleChange = (e) => {
-        const value = e.target.value;
-        setSearch(value);
+        setSearch( e.target.value);
+        setPage(1);
     };
 
     const handlePageChange = (event, value) => {
