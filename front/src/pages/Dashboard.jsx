@@ -1,7 +1,7 @@
 import {Box, Tab, Tabs} from "@mui/material";
-import PhoneIcon from '@mui/icons-material/Phone';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
+import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import {useState} from "react";
 
 const Dashboard = () => {
@@ -22,10 +22,24 @@ const Dashboard = () => {
                       aria-label="dashboard tabs"
                       variant="fullWidth"
                 >
-                    <Tab icon={<PhoneIcon />} label="RECENTS" />
-                    <Tab icon={<FavoriteIcon />} label="FAVORITES" />
-                    <Tab icon={<PersonPinIcon />} label="NEARBY" />
+                    <Tab icon={<CurrencyRubleIcon />} label="Финансы" />
+                    <Tab icon={<BarChartIcon />} label="Популярность" />
+                    <Tab icon={<ShowChartIcon />} label="Окупаемость" />
                 </Tabs>
+
+                {/*
+                  <TabPanel value={value} index={0}>
+                    <RecentsTab />
+                  </TabPanel>
+
+                  <TabPanel value={value} index={1}>
+                    <FavoritesTab />
+                  </TabPanel>
+
+                  <TabPanel value={value} index={2}>
+                    <NearbyTab />
+                  </TabPanel>
+                */}
             </Box>
         </Box>
     );
