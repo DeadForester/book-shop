@@ -41,7 +41,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!validateCredentials(email, password, setErrors())) return;
+        if (!validateCredentials(email, password, setErrors)) return;
 
         setLoading(true);
 
