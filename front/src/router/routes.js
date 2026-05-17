@@ -1,8 +1,9 @@
 import Books from "../pages/Books.jsx";
 import Error from "../pages/Error.jsx";
 import BookIdPage from "../pages/BookIdPage.jsx";
+import Dashboard from "../pages/Dashboard.jsx";
 
-export const privateRoutes = [{ path: "/panel", element: null }];
+export const privateRoutes = [{ path: "/panel", element: Dashboard }];
 
 export const publicRoutes = [
     {
