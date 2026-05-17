@@ -4,11 +4,17 @@ import './styles/index.css'
 import App from './App.jsx'
 import {ThemeProvider} from '@mui/material';
 import {theme} from "./shared/components/Theme.js";
+import {BrowserRouter} from "react-router-dom";
+import AppProvider from "./shared/context/AppProvider.jsx";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <ThemeProvider theme={theme}>
-            <App />
-        </ThemeProvider>
+        <BrowserRouter>
+            <ThemeProvider theme={theme}>
+                <AppProvider>
+                    <App />
+                </AppProvider>
+            </ThemeProvider>
+        </BrowserRouter>
     </StrictMode>,
 )

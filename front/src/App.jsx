@@ -1,30 +1,25 @@
-import {BrowserRouter} from "react-router-dom";
 import {useState} from "react";
 import Header from "./shared/components/Header.jsx";
 import Basket from "./shared/components/Basket.jsx";
 import AppRouter from "./shared/components/AppRouter.jsx";
-import AppProvider from "./shared/context/AppProvider.jsx";
 
 
 const App = () => {
     const [isCartOpen, setCartOpen] = useState(false);
 
     return (
-        <AppProvider>
-            <BrowserRouter>
-                <Header
-                    handleCart={() => setCartOpen(true)}
-                />
+        <>
+            <Header
+                handleCart={() => setCartOpen(true)}
+            />
 
-                <AppRouter/>
+            <AppRouter/>
 
-                <Basket
-                    cartOpen={isCartOpen}
-                    closeCart={() => setCartOpen(false)}
-                />
-            </BrowserRouter>
-        </AppProvider>
-
+            <Basket
+                cartOpen={isCartOpen}
+                closeCart={() => setCartOpen(false)}
+            />
+        </>
     );
 }
 
