@@ -2,16 +2,21 @@ import {useState} from "react";
 import Header from "./shared/components/Header.jsx";
 import Basket from "./shared/components/Basket.jsx";
 import AppRouter from "./shared/components/AppRouter.jsx";
+import {useLocation} from "react-router-dom";
 
 
 const App = () => {
     const [isCartOpen, setCartOpen] = useState(false);
+    const location = useLocation();
+
+    const hideHeaderPaths = ['/login', '/register', '/panel'];
+    const shouldShowHeader = !hideHeaderPaths.includes(location.pathname);
 
     return (
         <>
-            <Header
+            {shouldShowHeader && <Header
                 handleCart={() => setCartOpen(true)}
-            />
+            /> }
 
             <AppRouter/>
 
