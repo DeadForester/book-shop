@@ -1,0 +1,42 @@
+name: CI for project
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+      - name: Setup JDK
+        uses: actions/setup-java@v5.2.0
+        with:
+          java-version: 21
+          distribution: 'temurin'
+      - name: Run build
+        run: mvn clean package
+
+  frontend_build:
+    needs: backend_build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Run build
+        run: npm run build
+
+
+
+
