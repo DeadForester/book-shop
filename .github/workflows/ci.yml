@@ -19,7 +19,7 @@ jobs:
           java-version: 21
           distribution: 'temurin'
       - name: Run build
-        working-directory: ./backend
+        working-directory: ./backend/book-service
         run: mvn clean package
 
   frontend_build:
@@ -34,10 +34,10 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - name: Install dependencies
-        working-directory: ./frontend
+        working-directory: ./front
         run: npm install
       - name: Run build
-        working-directory: ./frontend
+        working-directory: ./front
         run: npm run build
 
 
