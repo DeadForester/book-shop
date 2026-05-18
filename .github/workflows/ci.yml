@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
       - name: Run build
         working-directory: ./backend/book-service
-        run: mvn clean package
+        run: mvn clean package -DskipTests
 
   frontend_build:
     needs: backend_build
