@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: book-service
+  config:
+    import: optional:file:.env[.properties]
+
+  datasource:
+    url: ${app.datasource.url}
+    username: ${app.datasource.username}
+    password: ${app.datasource.password}
+
+  flyway:
+    url: ${app.datasource.url}
+    user: ${app.datasource.username}
+    password: ${app.datasource.password}
+
+app:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  minio:
+    url: http://localhost:9000
+    accessKey: ${MINIO_USER}
+    secretKey: ${MINIO_PASSWORD}
