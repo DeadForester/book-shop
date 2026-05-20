@@ -4,6 +4,8 @@ import {privateRoutes, publicRoutes} from "../../router/routes.js";
 import Loader from "../../components/UI/loader/Loader.jsx";
 import Books from "../../pages/Books.jsx";
 import {useAuthContext} from "../../hooks/useAuthContext.js";
+import ProtectedRoute from "./ProtectedRoute.jsx";
+import Error from "../../pages/Error.jsx";
 
 const AppRouter = () => {
     const {isAuth, isLoading} = useAuthContext();
@@ -22,13 +24,18 @@ const AppRouter = () => {
                     element={<route.element/>}
                 />
             )}
-            {isAuth && privateRoutes.map((route, index) =>
-                <Route
-                    key={`private-${index}`}
-                    path={route.path}
-                    element={<route.element/>}
-                />
-            )}
+
+            <Route element={<ProtectedRoute />}>
+                {isAuth && privateRoutes.map((route, index) =>
+                    <Route
+                        key={`private-${index}`}
+                        path={route.path}
+                        element={<route.element/>}
+                    />
+                )}
+            </Route>
+
+            <Route path="*" element={<Error />} />
         </Routes>
     );
 };
