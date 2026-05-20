@@ -58,7 +58,7 @@ const Login = () => {
             severity: 'success'
         });
 
-        setTimeout(() => navigate('/'), 1500);
+        setTimeout(() => navigate('/', {replace: true}), 1500);
     };
 
     return (
