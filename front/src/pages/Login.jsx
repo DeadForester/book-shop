@@ -16,7 +16,6 @@ import {
     CircularProgress,
 } from '@mui/material';
 import {
-    LockOutlined,
     Visibility,
     VisibilityOff,
     Email,
@@ -140,23 +139,20 @@ const Login = () => {
                             error={!!errors.password}
                             helperText={errors.password}
                             margin="normal"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LockOutlined color="action" />
-                                    </InputAdornment>
-                                ),
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            edge="end"
-                                            disabled={loading}
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                edge="end"
+                                                disabled={loading}
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }
                             }}
                             disabled={loading}
                         />

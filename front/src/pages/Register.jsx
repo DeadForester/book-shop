@@ -14,7 +14,6 @@ import {
     Divider,
 } from '@mui/material';
 import {
-    LockOutlined,
     Visibility,
     VisibilityOff,
     Email,
@@ -158,15 +157,16 @@ const Register = () => {
                             error={!!errors.password}
                             helperText={errors.password}
                             margin="normal"
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start"><LockOutlined color="action" /></InputAdornment>,
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={() => togglePasswordVisibility('pass')} edge="end" disabled={loading}>
-                                            {showPassword.pass ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={() => togglePasswordVisibility('pass')} edge="end" disabled={loading}>
+                                                {showPassword.pass ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }
                             }}
                             disabled={loading}
                         />
@@ -181,15 +181,16 @@ const Register = () => {
                             error={!!errors.confirmPassword}
                             helperText={errors.confirmPassword}
                             margin="normal"
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start"><LockOutlined color="action" /></InputAdornment>,
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={() => togglePasswordVisibility('confirm')} edge="end" disabled={loading}>
-                                            {showPassword.confirm ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={() => togglePasswordVisibility('confirm')} edge="end" disabled={loading}>
+                                                {showPassword.confirm ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }
                             }}
                             disabled={loading}
                         />
