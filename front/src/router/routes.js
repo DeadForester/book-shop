@@ -2,6 +2,7 @@ import Books from "../pages/Books.jsx";
 import BookIdPage from "../pages/BookIdPage.jsx";
 import Dashboard from "../pages/Dashboard.jsx";
 import Login from "../pages/Login.jsx";
+import Register from "../pages/Register.jsx";
 
 export const privateRoutes = [{ path: "/panel", element: Dashboard }];
 
@@ -12,4 +13,5 @@ export const publicRoutes = [
     },
     { path: "/books/:id", element: BookIdPage },
     { path: "/login", element: Login },
+    { path: "/register", element: Register },
 ];
