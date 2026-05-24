@@ -44,14 +44,17 @@ public class JdbcBookRepository implements BookRepository {
     }
 
     @Override
-    public List<Book> findAllBooks() {
+    public List<Book> findAllBooks(int offset, int size) {
         String sql = """
                 SELECT *
                 FROM BOOKS
+                LIMIT ? OFFSET ?
                 """;
         List<Book> allBooks = jdbcTemplate.query(
                 sql,
-                this::mapRowToEntity
+                this::mapRowToEntity,
+                size,
+                offset
         );
         return allBooks.isEmpty() ? Collections.emptyList() : allBooks;
     }

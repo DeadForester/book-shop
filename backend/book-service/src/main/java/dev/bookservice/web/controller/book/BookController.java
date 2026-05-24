@@ -106,7 +106,7 @@ public class BookController {
     }
 
     /**
-     * Обрабатывает GET-запрос на получение списка всех книг.
+     * Обрабатывает GET-запрос на получение списка всех книг с поддержкой пагинации.
      * <p>
      * <strong>Endpoint:</strong> {@code GET /api/v1/books}
      * <p>
@@ -116,13 +116,22 @@ public class BookController {
      *         <th>Параметр</th>
      *         <th>Расположение</th>
      *         <th>Обязательный</th>
+     *         <th>Значение по умолчанию</th>
      *         <th>Описание</th>
      *     </tr>
      *     <tr>
-     *         <td>—</td>
-     *         <td>—</td>
-     *         <td>—</td>
-     *         <td>Запрос не принимает параметров</td>
+     *         <td>{@code page}</td>
+     *         <td>Query Param</td>
+     *         <td>Нет</td>
+     *         <td>{@code 0}</td>
+     *         <td>Номер страницы (нумерация с нуля)</td>
+     *     </tr>
+     *     <tr>
+     *         <td>{@code size}</td>
+     *         <td>Query Param</td>
+     *         <td>Нет</td>
+     *         <td>{@code 10}</td>
+     *         <td>Количество элементов на странице</td>
      *     </tr>
      * </table>
      * <p>
@@ -135,7 +144,7 @@ public class BookController {
      * <p>
      * <strong>Пример запроса:</strong>
      * <pre>
-     * GET /api/v1/books HTTP/1.1
+     * GET /api/v1/books?page=0&size=20 HTTP/1.1
      * Host: api.bookservice.dev
      * Accept: application/json
      * </pre>
@@ -163,15 +172,20 @@ public class BookController {
      * ]
      * </pre>
      *
+     * @param page номер страницы (нумерация с нуля)
+     * @param size количество элементов на странице
      * @return список DTO {@link GetAllBooks} с краткой информацией о каждой книге
-     * @see BookService#findAllBooks()
+     * @see BookService#findAllBooks(int, int)
      * @see GetMapping
+     * @see RequestParam
      */
     @GetMapping("/books")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<GetAllBooks> findAllBooks() {
-        log.info("GET запрос на получение всех книг");
+    public List<GetAllBooks> findAllBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        log.info("GET запрос на получение всех книг, page={}, size={}", page, size);
 
-        return bookService.findAllBooks();
+        return bookService.findAllBooks(page, size);
     }
 }

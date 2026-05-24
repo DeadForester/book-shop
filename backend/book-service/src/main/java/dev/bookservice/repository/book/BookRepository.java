@@ -21,9 +21,11 @@ public interface BookRepository {
     Optional<Book> getBookByBookId(Long bookId);
 
     /**
-     * Возвращает список всех книг.
+     * Возвращает список книг с поддержкой пагинации.
      *
+     * @param offset смещение (номер первой записи для выборки)
+     * @param size   максимальное количество записей для возврата
      * @return список сущностей {@link Book} или пустой список, если записи отсутствуют
      */
-    List<Book> findAllBooks();
+    List<Book> findAllBooks(int offset, int size);
 }

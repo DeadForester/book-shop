@@ -80,19 +80,22 @@ public class BookService {
     }
 
     /**
-     * Возвращает список всех книг с привязанными изображениями и авторами.
+     * Возвращает список книг с поддержкой пагинации, изображениями и авторами.
      * <p>
-     * Загружает книги из репозитория, проверяет список на пустоту и преобразует
-     * каждую сущность в DTO {@link GetAllBooks}, отдельно запрашивая изображение и авторов.
+     * Преобразует параметры {@code page}/{@code size} в {@code offset} для репозитория,
+     * загружает сущности книг и агрегирует для каждой изображение и список авторов.
      *
-     * @return список DTO {@link GetAllBooks}
-     * @throws BookNotFoundException если в базе данных не найдено ни одной книги
+     * @param page номер страницы (нумерация с нуля)
+     * @param size количество элементов на странице
+     * @return список DTO {@link GetAllBooks} для запрошенной страницы
+     * @throws BookNotFoundException если для запрошенной страницы не найдено ни одной книги
      */
-    public List<GetAllBooks> findAllBooks() {
-        List<Book> allBooks = bookRepository.findAllBooks();
+    public List<GetAllBooks> findAllBooks(int page, int size) {
+        int offset = page * size;
+        List<Book> allBooks = bookRepository.findAllBooks(offset, size);
 
         if (allBooks.isEmpty()) {
-            log.warn("Нет книг в БД");
+            log.warn("Нет книг в БД для страницы {}", page);
             throw new BookNotFoundException("Книги в БД не найдены");
         }
 
