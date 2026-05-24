@@ -1,11 +1,15 @@
 package dev.bookservice.web.controller.book;
 
+import dev.bookservice.exception.not_found.BookNotFoundException;
 import dev.bookservice.service.book.BookService;
+import dev.bookservice.web.dto.book.GetAllBooks;
 import dev.bookservice.web.dto.book.GetBookById;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * REST-контроллер для управления запросами, связанными с книгами.
@@ -99,5 +103,74 @@ public class BookController {
     public GetBookById getBookById(@PathVariable Long bookId) {
         log.info("GET запрос на получение книги по id={}", bookId);
         return bookService.getBookById(bookId);
+    }
+
+    /**
+     * Обрабатывает GET-запрос на получение списка всех книг.
+     * <p>
+     * <strong>Endpoint:</strong> {@code GET /api/v1/books}
+     * <p>
+     * <strong>Параметры запроса:</strong>
+     * <table border="1" cellpadding="5" cellspacing="0">
+     *     <tr>
+     *         <th>Параметр</th>
+     *         <th>Расположение</th>
+     *         <th>Обязательный</th>
+     *         <th>Описание</th>
+     *     </tr>
+     *     <tr>
+     *         <td>—</td>
+     *         <td>—</td>
+     *         <td>—</td>
+     *         <td>Запрос не принимает параметров</td>
+     *     </tr>
+     * </table>
+     * <p>
+     * <strong>Возможные ответы:</strong>
+     * <ul>
+     *     <li>{@code 200 OK} — список книг, тело ответа содержит {@code List<GetAllBooks>};</li>
+     *     <li>{@code 404 Not Found} — книги в базе данных отсутствуют (обработка {@link BookNotFoundException});</li>
+     *     <li>{@code 500 Internal Server Error} — непредвиденная ошибка на стороне сервера.</li>
+     * </ul>
+     * <p>
+     * <strong>Пример запроса:</strong>
+     * <pre>
+     * GET /api/v1/books HTTP/1.1
+     * Host: api.bookservice.dev
+     * Accept: application/json
+     * </pre>
+     * <p>
+     * <strong>Пример успешного ответа:</strong>
+     * <pre>
+     * HTTP/1.1 200 OK
+     * Content-Type: application/json
+     *
+     * [
+     *   {
+     *     "id": 123,
+     *     "title": "Effective Java",
+     *     "image": { "image_id": 456, "url": "/images/effective-java.jpg" },
+     *     "amount": 4500.00,
+     *     "genre": "Programming"
+     *   },
+     *   {
+     *     "id": 124,
+     *     "title": "Clean Code",
+     *     "image": { "image_id": 457, "url": "/images/clean-code.jpg" },
+     *     "amount": 3800.00,
+     *     "genre": "Programming"
+     *   }
+     * ]
+     * </pre>
+     *
+     * @return список DTO {@link GetAllBooks} с краткой информацией о каждой книге
+     * @see BookService#findAllBooks()
+     * @see GetMapping
+     */
+    @GetMapping("/books")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<GetAllBooks> findAllBooks() {
+        log.info("GET запрос на получение всех книг");
+        return bookService.findAllBooks();
     }
 }

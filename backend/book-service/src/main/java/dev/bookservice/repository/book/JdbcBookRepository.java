@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Year;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,19 @@ public class JdbcBookRepository implements BookRepository {
                 bookId
         );
         return results.stream().findFirst();
+    }
+
+    @Override
+    public List<Book> findAllBooks() {
+        String sql = """
+                SELECT *
+                FROM BOOKS
+                """;
+        List<Book> allBooks = jdbcTemplate.query(
+                sql,
+                this::mapRowToEntity
+        );
+        return allBooks.isEmpty() ? Collections.emptyList() : allBooks;
     }
 
     private Book mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {

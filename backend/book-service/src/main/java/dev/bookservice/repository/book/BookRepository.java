@@ -1,6 +1,8 @@
 package dev.bookservice.repository.book;
 
 import dev.bookservice.entity.book.Book;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,4 +19,11 @@ public interface BookRepository {
      * @return {@code Optional<Book>} с результатом поиска
      */
     Optional<Book> getBookByBookId(Long bookId);
+
+    /**
+     * Возвращает список всех книг.
+     *
+     * @return список сущностей {@link Book} или пустой список, если записи отсутствуют
+     */
+    List<Book> findAllBooks();
 }

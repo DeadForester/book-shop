@@ -17,9 +17,13 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GetPublisherByBookId {
 
-    /** Уникальный идентификатор издательства. */
+    /**
+     * Уникальный идентификатор издательства.
+     */
     private Long publisherId;
 
-    /** Наименование издательства. */
+    /**
+     * Наименование издательства.
+     */
     private String name;
 }
