@@ -2,10 +2,12 @@ package dev.bookservice.web.dto.book;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import dev.bookservice.web.dto.image.GetImageByBookId;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * DTO для представления краткой информации о книге в списках.
@@ -23,6 +25,11 @@ public class GetAllBooks {
      * Название книги.
      */
     private String title;
+
+    /**
+     * Список авторов связанных с книгой
+     */
+    private List<GetAuthorsByBookId> authors;
 
     /**
      * Изображение книги.

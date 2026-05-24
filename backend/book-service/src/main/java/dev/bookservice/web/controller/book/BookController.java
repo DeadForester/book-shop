@@ -171,6 +171,7 @@ public class BookController {
     @ResponseStatus(code = HttpStatus.OK)
     public List<GetAllBooks> findAllBooks() {
         log.info("GET запрос на получение всех книг");
+
         return bookService.findAllBooks();
     }
 }

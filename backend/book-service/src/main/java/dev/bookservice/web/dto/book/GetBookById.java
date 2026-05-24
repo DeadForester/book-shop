@@ -2,8 +2,9 @@ package dev.bookservice.web.dto.book;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import dev.bookservice.web.dto.image.GetImageByBookId;
-import dev.bookservice.web.dto.publisher.GetPublisherByBookId;
+import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import lombok.Data;
 
 import java.util.List;
@@ -85,6 +86,11 @@ public class GetBookById {
     private GetImageByBookId image;
 
     /**
+     * Список авторов связанных с книгой
+     */
+    private List<GetAuthorsByBookId> authors;
+
+    /**
      * Описание книги (аннотация, синопсис).
      */
     private String description;
@@ -109,8 +115,9 @@ public class GetBookById {
      * Список издательств, связанных с книгой.
      * <p>
      * В JSON-ответе сериализуется как массив объектов {@code "publishers"}.
-     * Каждый элемент содержит информацию об издательстве через {@link GetPublisherByBookId}.
-     * @see GetPublisherByBookId
+     * Каждый элемент содержит информацию об издательстве через {@link GetPublishersByBookId}.
+     *
+     * @see GetPublishersByBookId
      */
-    private List<GetPublisherByBookId> publishers;
+    private List<GetPublishersByBookId> publishers;
 }

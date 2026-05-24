@@ -1,11 +1,11 @@
 package dev.bookservice.web.mapper.publisher;
 
 import dev.bookservice.entity.publisher.Publisher;
-import dev.bookservice.web.dto.publisher.GetPublisherByBookId;
+import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import org.mapstruct.Mapper;
 
 /**
- * Маппер для преобразования сущности {@link Publisher} в DTO {@link GetPublisherByBookId}.
+ * Маппер для преобразования сущности {@link Publisher} в DTO {@link GetPublishersByBookId}.
  * <p>
  * Реализация генерируется автоматически библиотекой MapStruct.
  * Компонент регистрируется в контексте Spring благодаря {@code componentModel = "spring"}.
@@ -19,7 +19,7 @@ public interface PublisherMapper {
      * Поля сопоставляются автоматически по совпадению имён: {@code publisherId} → {@code publisherId}, {@code name} → {@code name}.
      *
      * @param entity сущность {@link Publisher} для преобразования
-     * @return DTO {@link GetPublisherByBookId} или {@code null}, если {@code entity} равен {@code null}
+     * @return DTO {@link GetPublishersByBookId} или {@code null}, если {@code entity} равен {@code null}
      */
-    GetPublisherByBookId toDto(Publisher entity);
+    GetPublishersByBookId toDto(Publisher entity);
 }

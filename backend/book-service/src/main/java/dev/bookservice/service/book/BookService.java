@@ -3,12 +3,14 @@ package dev.bookservice.service.book;
 import dev.bookservice.entity.book.Book;
 import dev.bookservice.exception.not_found.BookNotFoundException;
 import dev.bookservice.repository.book.BookRepository;
+import dev.bookservice.service.author.AuthorService;
 import dev.bookservice.service.image.ImageService;
 import dev.bookservice.service.publisher.PublisherService;
+import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import dev.bookservice.web.dto.book.GetAllBooks;
 import dev.bookservice.web.dto.book.GetBookById;
 import dev.bookservice.web.dto.image.GetImageByBookId;
-import dev.bookservice.web.dto.publisher.GetPublisherByBookId;
+import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import dev.bookservice.web.mapper.book.BookMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +37,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class BookService {
-
+    private final AuthorService authorService;
     private final BookRepository bookRepository;
     private final ImageService imageService;
     private final PublisherService publisherService;
@@ -48,22 +50,19 @@ public class BookService {
      * <ol>
      *     <li>Запрашивает основную сущность книги через {@link BookRepository#getBookByBookId(Long)};</li>
      *     <li>Получает связанное изображение через {@link ImageService#getImageByBookId(Long)};</li>
-     *     <li>Загружает список издательств, связанных с книгой, через {@link PublisherService#getPublisherByBookId(Long)};</li>
-     *     <li>Преобразует объединённые данные в DTO {@link GetBookById} с помощью {@link BookMapper#toDtoBookById(Book, GetImageByBookId, List)}.</li>
+     *     <li>Загружает список издательств через {@link PublisherService#getPublisherByBookId(Long)};</li>
+     *     <li>Загружает список авторов через {@link AuthorService#getAuthorsByBookId(Long)};</li>
+     *     <li>Преобразует объединённые данные в DTO {@link GetBookById} с помощью {@link BookMapper#toDtoBookById}.</li>
      * </ol>
      * <p>
      * В случае отсутствия книги в базе данных выбрасывается {@link BookNotFoundException}.
-     * Ошибки поиска изображения или издательств обрабатываются в соответствующих сервисах
-     * и пробрасываются на уровень выше без дополнительной трансформации.
      *
      * @param bookId уникальный идентификатор книги
-     * @return DTO {@link GetBookById}, содержащий основную информацию о книге, изображение и список издательств
+     * @return DTO {@link GetBookById}, содержащий основную информацию, изображение, издательства и авторов
      * @throws BookNotFoundException если книга с указанным {@code bookId} не найдена
      * @implNote Текущая реализация выполняет последовательные синхронные вызовы.
      * При высокой нагрузке рекомендуется рассмотреть параллельное выполнение через
-     * {@link java.util.concurrent.CompletableFuture} или объединение запросов на уровне БД
-     * через {@code JOIN} и маппинг результата в один запрос.
-     * @see BookNotFoundException
+     * {@link java.util.concurrent.CompletableFuture} или объединение запросов на уровне БД.
      */
     public GetBookById getBookById(Long bookId) {
         Book book = bookRepository.getBookByBookId(bookId).orElseThrow(() -> {
@@ -73,16 +72,18 @@ public class BookService {
 
         GetImageByBookId image = getImageByBookId(bookId);
 
-        List<GetPublisherByBookId> publishes = publisherService.getPublisherByBookId(bookId);
+        List<GetPublishersByBookId> publishes = publisherService.getPublisherByBookId(bookId);
 
-        return bookMapper.toDtoBookById(book, image, publishes);
+        List<GetAuthorsByBookId> authors = getAuthorsByBookId(bookId);
+
+        return bookMapper.toDtoBookById(book, image, publishes, authors);
     }
 
     /**
-     * Возвращает список всех книг с привязанными изображениями.
+     * Возвращает список всех книг с привязанными изображениями и авторами.
      * <p>
      * Загружает книги из репозитория, проверяет список на пустоту и преобразует
-     * каждую сущность в DTO {@link GetAllBooks}, отдельно запрашивая изображение.
+     * каждую сущность в DTO {@link GetAllBooks}, отдельно запрашивая изображение и авторов.
      *
      * @return список DTO {@link GetAllBooks}
      * @throws BookNotFoundException если в базе данных не найдено ни одной книги
@@ -95,12 +96,12 @@ public class BookService {
             throw new BookNotFoundException("Книги в БД не найдены");
         }
 
-        return allBooks.stream()
-                .map(book -> {
-                    GetImageByBookId imageByBookId = this.getImageByBookId(book.getBookId());
-                    return bookMapper.toDtoAllBooks(book, imageByBookId);
-                })
-                .toList();
+        return allBooks.stream().map(book -> {
+            Long bookId = book.getBookId();
+            GetImageByBookId imageByBookId = this.getImageByBookId(bookId);
+            List<GetAuthorsByBookId> authors = getAuthorsByBookId(bookId);
+            return bookMapper.toDtoAllBooks(book, imageByBookId, authors);
+        }).toList();
     }
 
     /**
@@ -115,6 +116,20 @@ public class BookService {
         log.debug("Запрос на получение изображения по книге={}", bookId);
 
         return imageService.getImageByBookId(bookId);
+    }
+
+    /**
+     * Получает список авторов для указанной книги.
+     * <p>
+     * Делегирует вызов в {@link AuthorService}.
+     *
+     * @param bookId идентификатор книги
+     * @return список DTO {@link GetAuthorsByBookId}
+     */
+    private List<GetAuthorsByBookId> getAuthorsByBookId(Long bookId) {
+        log.debug("Запрос на получение авторов по книге={}", bookId);
+
+        return authorService.getAuthorsByBookId(bookId);
     }
 }
 
