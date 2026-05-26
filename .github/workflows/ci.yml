@@ -1,4 +1,4 @@
-name: CI for project
+name: "CI for project"
 on:
   push:
     branches:
@@ -43,6 +43,18 @@ jobs:
       - name: Run build
         working-directory: ./front
         run: npm run build
+
+  check-docker-start:
+    needs: backend_build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+      - name: Check docker-compose
+        run: |
+          docker compose up -d
+          docker ps
+          docker compose down
 
 
 
