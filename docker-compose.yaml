@@ -1,5 +1,6 @@
 services:
   postgres_db:
+    container_name: postgre_container
     image: postgres:17.1
     environment:
       POSTGRES_DB: "${POSTGRES_DB}"
@@ -17,8 +18,10 @@ services:
     restart: unless-stopped
 
   clickhouse:
+    container_name: clickhouse_container
     image: clickhouse/clickhouse-server:latest
     environment:
+      CLICKHOUSE_DB: "${CLICKHOUSE_DB}"
       CLICKHOUSE_USER: "${CLICKHOUSE_USER}"
       CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD}"
     ports:
@@ -32,6 +35,7 @@ services:
         condition: service_healthy
 
   minio:
+    container_name: minio_container
     image: minio/minio:latest
     environment:
       MINIO_ROOT_USER: "${MINIO_USER}"
@@ -52,10 +56,34 @@ services:
       postgres_db:
         condition: service_healthy
 
+  redis:
+    container_name: redis_container
+    image: redis:8.6.3
+    environment:
+      REDIS_PASSWORD: "${REDIS_PASSWORD}"
+      REDIS_USER: "${REDIS_USER}"
+      REDIS_USER_PASSWORD: "${REDIS_USER_PASSWORD}"
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+
   #backend_image
-  #frontend_image
+  frontend:
+    container_name: frontend_container
+    build: ./front
+    ports:
+      - "3000:${SERVER_PORT}"
+    restart: unless-stopped
 
 volumes:
   postgres_data:
   minio-storage:
   clickhouse_data:
+  redis_data:

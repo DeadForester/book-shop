@@ -23,3 +23,6 @@ app:
     url: http://localhost:9000
     accessKey: ${MINIO_USER}
     secretKey: ${MINIO_PASSWORD}
+
+server:
+  port: ${SERVER_PORT}
