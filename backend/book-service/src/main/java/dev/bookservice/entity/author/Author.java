@@ -1,4 +1,4 @@
-package dev.bookservice.author;
+package dev.bookservice.entity.author;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

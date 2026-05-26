@@ -1,6 +1,6 @@
 package dev.bookservice.service.author;
 
-import dev.bookservice.author.Author;
+import dev.bookservice.entity.author.Author;
 import dev.bookservice.exception.not_found.AuthorNotFoundException;
 import dev.bookservice.repository.author.AuthorRepository;
 import dev.bookservice.web.dto.author.GetAuthorsByBookId;

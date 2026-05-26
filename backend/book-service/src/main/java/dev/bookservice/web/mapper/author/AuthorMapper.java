@@ -1,6 +1,6 @@
 package dev.bookservice.web.mapper.author;
 
-import dev.bookservice.author.Author;
+import dev.bookservice.entity.author.Author;
 import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import org.mapstruct.Mapper;
 

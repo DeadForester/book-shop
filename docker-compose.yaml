@@ -9,9 +9,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
-      - "5434:5432"
+      - "${POSTGRES_PORT}:5432"
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}" ]
+      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -74,13 +74,41 @@ services:
       retries: 5
     restart: unless-stopped
 
-  #backend_image
+  backend:
+    container_name: backend_container
+    build: ./backend/book-service
+    env_file:
+      - .env
+    environment:
+      APP_DATASOURCE_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
+      APP_DATASOURCE_USERNAME: "${POSTGRES_USER}"
+      APP_DATASOURCE_PASSWORD: "${POSTGRES_PASSWORD}"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
+      SPRING_DATASOURCE_USERNAME: "${POSTGRES_USER}"
+      SPRING_DATASOURCE_PASSWORD: "${POSTGRES_PASSWORD}"
+      SPRING_FLYWAY_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
+      SPRING_FLYWAY_USERNAME: "${POSTGRES_USER}"
+      SPRING_FLYWAY_PASSWORD: "${POSTGRES_PASSWORD}"
+      APP_MINIO_URL: "http://minio:9000"
+      APP_MINIO_ACCESSKEY: "${MINIO_USER}"
+      APP_MINIO_SECRETKEY: "${MINIO_PASSWORD}"
+      SERVER_PORT: "${SERVER_PORT}"
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    restart: unless-stopped
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+
   frontend:
     container_name: frontend_container
     build: ./front
     ports:
       - "3000:${SERVER_PORT}"
     restart: unless-stopped
+    depends_on:
+      postgres_db:
+        condition: service_healthy
 
 volumes:
   postgres_data:

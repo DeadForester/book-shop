@@ -1,6 +1,6 @@
 package dev.bookservice.repository.author;
 
-import dev.bookservice.author.Author;
+import dev.bookservice.entity.author.Author;
 
 import java.util.List;
 
