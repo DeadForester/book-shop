@@ -1,16 +1,112 @@
-# React + Vite
+# Book Shop Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Фронтенд-часть интернет-магазина книг. Приложение предоставляет каталог книг, корзину, авторизацию/регистрацию, личный кабинет, историю заказов и панель управления (dashboard).
 
-Currently, two official plugins are available:
+## Технологический стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Технология       | Назначение                                   |
+|------------------|----------------------------------------------|
+| **React 19**     | Библиотека для построения пользовательского интерфейса |
+| **Vite 8**       | Сборщик и инструмент разработки (HMR, быстрая сборка) |
+| **React Router 7** | Клиентская маршрутизация (SPA)              |
+| **MUI (Material UI) 9** | Библиотека компонентов и иконок       |
+| **Emotion**      | CSS-in-JS стилизация (@emotion/react, @emotion/styled) |
+| **Axios**        | HTTP-клиент для взаимодействия с бэкендом    |
+| **ESLint**       | Линтер для контроля качества кода            |
+| **Prettier**     | Форматировщик кода                           |
+| **Docker**       | Контейнеризация приложения                   |
 
-## React Compiler
+## Структура проекта
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+book-shop-front/
+├── public/                  # Статические файлы (favicon)
+├── src/                     # Исходный код
+│   ├── API/                 # Сервисы для работы с бэкендом (BookService)
+│   ├── components/          # UI-компоненты
+│   │   ├── book-id-page/    # Компоненты страницы книги
+│   │   ├── books-page/      # Компоненты каталога книг
+│   │   ├── dashboard-page/  # Компоненты панели управления
+│   │   ├── order-history-page/ # Компоненты истории заказов
+│   │   ├── profile-page/    # Компоненты профиля
+│   │   └── UI/              # Переиспользуемые UI-компоненты
+│   ├── context/             # React Context (auth, basket)
+│   ├── data/                # Моковые данные (goods, user)
+│   ├── hooks/               # Кастомные хуки (useAuthContext, useBasketContext, useFetching)
+│   ├── pages/               # Компоненты страниц
+│   │   ├── BookIdPage.jsx   # Страница отдельной книги
+│   │   ├── Books.jsx        # Каталог книг
+│   │   ├── Dashboard.jsx    # Панель управления / админка
+│   │   ├── Error.jsx        # Страница ошибки
+│   │   ├── Login.jsx        # Страница входа
+│   │   ├── OrderHistory.jsx # История заказов
+│   │   ├── Profile.jsx      # Профиль пользователя
+│   │   └── Register.jsx     # Страница регистрации
+│   ├── router/              # Конфигурация маршрутов
+│   ├── shared/              # Общие компоненты и контексты
+│   ├── styles/              # Глобальные стили (CSS)
+│   ├── utils/               # Утилиты (валидация и пр.)
+│   ├── App.jsx              # Корневой компонент
+│   └── main.jsx             # Точка входа
+├── .dockerignore
+├── .gitignore
+├── .prettierrc              # Конфигурация Prettier
+├── Dockerfile               # Docker-образ для продакшена
+├── eslint.config.js         # Конфигурация ESLint
+├── index.html               # HTML-шаблон
+├── package.json             # Зависимости и скрипты
+└── vite.config.js           # Конфигурация Vite
+```
 
-## Expanding the ESLint configuration
+## Запуск проекта
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Локальная разработка
+
+```bash
+# 1. Установка зависимостей
+npm install
+
+# 2. Запуск дев-сервера с HMR
+npm run dev
+```
+
+Приложение будет доступно по адресу, который выведет Vite в терминале (по умолчанию `http://localhost:5173`).
+
+### Сборка для продакшена
+
+```bash
+# Сборка проекта
+npm run build
+
+# Предпросмотр собранного проекта
+npm run preview
+```
+
+### Запуск через Docker
+
+```bash
+# Сборка Docker-образа
+docker build -t book-shop-front .
+
+# Запуск контейнера
+docker run -d -p 8080:8080 --name book-shop-front book-shop-front
+```
+
+Приложение будет доступно по адресу `http://localhost:8080`.
+
+### Прочие скрипты
+
+```bash
+# Проверка кода линтером
+npm run lint
+
+# Автоматическое исправление ошибок линтера
+npm run lint:fix
+```
+
+## API
+
+Фронтенд взаимодействует с REST API бэкенда по адресу `https://localhost:8080/api/v1/books`. Основные эндпоинты:
+
+- `GET /api/v1/books?page={page}&size={limit}` — получение списка книг с пагинацией
+- `GET /api/v1/books/{id}` — получение информации о конкретной книге
