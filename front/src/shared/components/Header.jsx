@@ -1,6 +1,7 @@
 import {AppBar, IconButton, Toolbar, Badge, Link} from "@mui/material";
 import {ShoppingBasket} from '@mui/icons-material';
 import {useBasketContext} from "../../hooks/useBasketContext.js";
+import UserCircle from "./UserCircle.jsx";
 
 const Header = ({handleCart}) => {
     const {order} = useBasketContext();
@@ -15,6 +16,9 @@ const Header = ({handleCart}) => {
                 >
                     Book shop
                 </Link>
+
+                <UserCircle />
+
                 <IconButton
                     color="inherit"
                     onClick={handleCart}
