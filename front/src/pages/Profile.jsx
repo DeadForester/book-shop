@@ -1,9 +1,17 @@
-import { Box, Container, Typography, Avatar, Button, Grid, Chip } from '@mui/material';
-import { Email, History, Dashboard, Person, LocationOn, CreditCard, Notifications } from '@mui/icons-material';
+import { Avatar, Box, Button, Chip, Container, Grid, Typography } from '@mui/material';
+import {
+    CreditCard,
+    Dashboard,
+    Email,
+    History,
+    LocationOn,
+    Notifications,
+    Person,
+} from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
-import InfoSection from "../components/profile-page/InfoSection.jsx";
-import {mockUser} from "../data/user.js";
-import DevPlaceholder from "../shared/components/DevPlaceholder.jsx";
+import InfoSection from '../components/profile-page/InfoSection.jsx';
+import { mockUser } from '../data/user.js';
+import DevPlaceholder from '../shared/components/DevPlaceholder.jsx';
 
 export default function Profile({ user = null }) {
     const currentUser = user || mockUser;
@@ -17,14 +25,22 @@ export default function Profile({ user = null }) {
 
     return (
         <Container maxWidth="md" sx={{ mt: 4, mb: 6 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4, flexWrap: 'wrap' }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    mb: 4,
+                    flexWrap: 'wrap',
+                }}
+            >
                 <Avatar
                     sx={{
                         width: 90,
                         height: 90,
                         fontSize: '2.5rem',
                         bgcolor: 'primary.main',
-                        boxShadow: 3
+                        boxShadow: 3,
                     }}
                 >
                     {avatarLetter}
@@ -36,7 +52,12 @@ export default function Profile({ user = null }) {
                     <Typography
                         variant="body1"
                         color="text.secondary"
-                        sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 0.5,
+                            mt: 0.5,
+                        }}
                     >
                         <Email fontSize="small" />
                         {currentUser.email}
@@ -69,7 +90,10 @@ export default function Profile({ user = null }) {
                         icon={<Person color="primary" />}
                         items={[
                             { label: 'Телефон', value: currentUser.phone },
-                            { label: 'Дата регистрации', value: currentUser.joinDate }
+                            {
+                                label: 'Дата регистрации',
+                                value: currentUser.joinDate,
+                            },
                         ]}
                     />
                 </Grid>
@@ -79,7 +103,10 @@ export default function Profile({ user = null }) {
                         title="Адрес доставки"
                         icon={<LocationOn color="primary" />}
                         items={[
-                            { label: 'Основной адрес', value: currentUser.address }
+                            {
+                                label: 'Основной адрес',
+                                value: currentUser.address,
+                            },
                         ]}
                     />
                 </Grid>

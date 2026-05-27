@@ -1,23 +1,23 @@
 import { useState } from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
+    Alert,
     Box,
+    Button,
     Card,
     CardContent,
-    TextField,
-    Button,
-    Typography,
-    IconButton,
-    InputAdornment,
-    Alert,
     CircularProgress,
     Divider,
+    IconButton,
+    InputAdornment,
+    TextField,
+    Typography,
 } from '@mui/material';
 import {
-    Visibility,
-    VisibilityOff,
     Email,
     PersonAddAlt1 as RegisterIcon,
+    Visibility,
+    VisibilityOff,
 } from '@mui/icons-material';
 
 const Register = () => {
@@ -55,12 +55,12 @@ const Register = () => {
 
         setLoading(true);
 
-        await new Promise(resolve => setTimeout(resolve, 1200));
+        await new Promise((resolve) => setTimeout(resolve, 1200));
 
         setSnackbar({
             open: true,
             message: 'Регистрация успешна! Перенаправляем на вход...',
-            severity: 'success'
+            severity: 'success',
         });
         setLoading(false);
 
@@ -68,7 +68,7 @@ const Register = () => {
     };
 
     const togglePasswordVisibility = (field) => {
-        setShowPassword(prev => ({ ...prev, [field]: !prev[field] }));
+        setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
     };
 
     return (
@@ -114,8 +114,12 @@ const Register = () => {
                         >
                             <RegisterIcon sx={{ color: 'white', fontSize: 32 }} />
                         </Box>
-                        <Typography variant="h5" fontWeight={600}>Создать аккаунт</Typography>
-                        <Typography variant="body2" color="text.secondary">Заполните данные для регистрации</Typography>
+                        <Typography variant="h5" fontWeight={600}>
+                            Создать аккаунт
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Заполните данные для регистрации
+                        </Typography>
                     </Box>
 
                     {/* Уведомление */}
@@ -137,12 +141,19 @@ const Register = () => {
                             label="Email"
                             type="email"
                             value={email}
-                            onChange={(e) => { setEmail(e.target.value); if (errors.email) setErrors({ ...errors, email: '' }); }}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                if (errors.email) setErrors({ ...errors, email: '' });
+                            }}
                             error={!!errors.email}
                             helperText={errors.email}
                             margin="normal"
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Email color="action" /></InputAdornment>,
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Email color="action" />
+                                    </InputAdornment>
+                                ),
                             }}
                             disabled={loading}
                         />
@@ -153,7 +164,10 @@ const Register = () => {
                             label="Пароль"
                             type={showPassword.pass ? 'text' : 'password'}
                             value={password}
-                            onChange={(e) => { setPassword(e.target.value); if (errors.password) setErrors({ ...errors, password: '' }); }}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                if (errors.password) setErrors({ ...errors, password: '' });
+                            }}
                             error={!!errors.password}
                             helperText={errors.password}
                             margin="normal"
@@ -161,12 +175,20 @@ const Register = () => {
                                 input: {
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <IconButton onClick={() => togglePasswordVisibility('pass')} edge="end" disabled={loading}>
-                                                {showPassword.pass ? <VisibilityOff /> : <Visibility />}
+                                            <IconButton
+                                                onClick={() => togglePasswordVisibility('pass')}
+                                                edge="end"
+                                                disabled={loading}
+                                            >
+                                                {showPassword.pass ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
-                                }
+                                },
                             }}
                             disabled={loading}
                         />
@@ -177,7 +199,11 @@ const Register = () => {
                             label="Повторите пароль"
                             type={showPassword.confirm ? 'text' : 'password'}
                             value={confirmPassword}
-                            onChange={(e) => { setConfirmPassword(e.target.value); if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: '' }); }}
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+                                if (errors.confirmPassword)
+                                    setErrors({ ...errors, confirmPassword: '' });
+                            }}
                             error={!!errors.confirmPassword}
                             helperText={errors.confirmPassword}
                             margin="normal"
@@ -185,12 +211,20 @@ const Register = () => {
                                 input: {
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <IconButton onClick={() => togglePasswordVisibility('confirm')} edge="end" disabled={loading}>
-                                                {showPassword.confirm ? <VisibilityOff /> : <Visibility />}
+                                            <IconButton
+                                                onClick={() => togglePasswordVisibility('confirm')}
+                                                edge="end"
+                                                disabled={loading}
+                                            >
+                                                {showPassword.confirm ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
-                                }
+                                },
                             }}
                             disabled={loading}
                         />
@@ -202,7 +236,13 @@ const Register = () => {
                             variant="contained"
                             size="large"
                             disabled={loading}
-                            startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <RegisterIcon />}
+                            startIcon={
+                                loading ? (
+                                    <CircularProgress size={20} color="inherit" />
+                                ) : (
+                                    <RegisterIcon />
+                                )
+                            }
                             sx={{
                                 mt: 3,
                                 mb: 2,
@@ -217,7 +257,9 @@ const Register = () => {
                         </Button>
 
                         <Divider sx={{ my: 2 }}>
-                            <Typography variant="body2" color="text.secondary">или</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                или
+                            </Typography>
                         </Divider>
 
                         {/* Ссылка на вход */}
@@ -227,7 +269,11 @@ const Register = () => {
                                 component={RouterLink}
                                 to="/login"
                                 color="primary"
-                                sx={{ textDecoration: 'none', fontWeight: 600, '&:hover': { textDecoration: 'underline' } }}
+                                sx={{
+                                    textDecoration: 'none',
+                                    fontWeight: 600,
+                                    '&:hover': { textDecoration: 'underline' },
+                                }}
                             >
                                 Войти
                             </Typography>

@@ -1,29 +1,36 @@
 import { useState } from 'react';
-import {
-    Box,
-    Typography,
-    Container,
-} from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 
-import HistoryEmpty from "../components/order-history-page/HistoryEmpty.jsx";
-import PaginationControls from "../shared/components/PaginationControls.jsx";
-import HistoryList from "../components/order-history-page/HistoryList.jsx";
+import HistoryEmpty from '../components/order-history-page/HistoryEmpty.jsx';
+import PaginationControls from '../shared/components/PaginationControls.jsx';
+import HistoryList from '../components/order-history-page/HistoryList.jsx';
 
 // Генерация тестовых данных
 const generateMockOrders = (count) => {
-    const books = ['1984', 'Мастер и Маргарита', 'Гарри Поттер', 'Война и мир', 'Дюна', 'Преступление и наказание'];
+    const books = [
+        '1984',
+        'Мастер и Маргарита',
+        'Гарри Поттер',
+        'Война и мир',
+        'Дюна',
+        'Преступление и наказание',
+    ];
     return Array.from({ length: count }, (_, i) => ({
         id: `ORD-${String(i + 1).padStart(3, '0')}`,
-        date: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString('ru-RU'),
+        date: new Date(
+            2024,
+            Math.floor(Math.random() * 12),
+            Math.floor(Math.random() * 28) + 1
+        ).toLocaleDateString('ru-RU'),
         total: Math.floor(Math.random() * 5000) + 500,
         items: Array.from({ length: Math.floor(Math.random() * 3) + 1 }, () => ({
             name: books[Math.floor(Math.random() * books.length)],
-            qty: Math.floor(Math.random() * 3) + 1
-        }))
+            qty: Math.floor(Math.random() * 3) + 1,
+        })),
     }));
 };
 
-const ITEMS_PER_PAGE = 9; // 3×3
+const ITEMS_PER_PAGE = 9;
 
 export default function OrderHistory() {
     const [orders] = useState(() => generateMockOrders(25));
@@ -55,7 +62,7 @@ export default function OrderHistory() {
                 </Typography>
             </Box>
 
-            <HistoryList orders={currentOrders}/>
+            <HistoryList orders={currentOrders} />
 
             {totalPages > 1 && (
                 <PaginationControls
