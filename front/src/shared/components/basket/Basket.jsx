@@ -1,7 +1,7 @@
 import {Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography} from "@mui/material";
 import {ShoppingBasket} from "@mui/icons-material";
 import BasketItem from "./BasketItem.jsx";
-import {useBasketContext} from "../../hooks/useBasketContext.js";
+import {useBasketContext} from "../../../hooks/useBasketContext.js";
 
 const Basket = ({
                     cartOpen,

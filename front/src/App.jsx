@@ -1,6 +1,6 @@
 import {useState} from "react";
 import Header from "./shared/components/Header.jsx";
-import Basket from "./shared/components/Basket.jsx";
+import Basket from "./shared/components/basket/Basket.jsx";
 import AppRouter from "./shared/components/AppRouter.jsx";
 import {useLocation} from "react-router-dom";
 
