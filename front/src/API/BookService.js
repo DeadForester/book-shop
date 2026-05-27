@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export default class BookServiceService {
-    static async getAll(limit = 10, page = 1) {
-        return await axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`);
+    static async getAllBooks(page = 1, limit = 10) {
+        return await axios.get(`https://localhost:8080/api/v1/books?page=${page}&size=${limit}`);
     }
 
-    static async getById(id) {
-        return await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    static async getBooksById(id) {
+        return await axios.get(`https://localhost:8080/api/v1/books/${id}`);
     }
 }
