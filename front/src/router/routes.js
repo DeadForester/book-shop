@@ -4,10 +4,12 @@ import Dashboard from "../pages/Dashboard.jsx";
 import Login from "../pages/Login.jsx";
 import Register from "../pages/Register.jsx";
 import OrderHistory from "../pages/OrderHistory.jsx";
+import Profile from "../pages/Profile.jsx";
 
 export const privateRoutes = [
     { path: "/panel", element: Dashboard },
-    { path: "/history", element: OrderHistory },
+    { path: "/orders", element: OrderHistory },
+    { path: "/profile", element: Profile },
 ];
 
 export const publicRoutes = [
