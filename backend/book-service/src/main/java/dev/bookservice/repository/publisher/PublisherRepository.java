@@ -2,7 +2,7 @@ package dev.bookservice.repository.publisher;
 
 import dev.bookservice.entity.publisher.Publisher;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * Репозиторий для доступа к данным издательств в базе данных.
@@ -10,10 +10,10 @@ import java.util.List;
 public interface PublisherRepository {
 
     /**
-     * Возвращает список издательств, связанных с указанной книгой.
+     * Возвращает издательство, связанное с указанной книгой.
      *
      * @param bookId идентификатор книги
-     * @return список сущностей {@link Publisher} или пустой список, если записи не найдены
+     * @return Если запись найдена, то возвращается{@code Optional<Publisher>}. Или {@link Optional#empty()}, если запись не найдена
      */
-    List<Publisher> getPublisherByBookId(Long bookId);
+    Optional<Publisher> getPublisherByBookId(Long bookId);
 }

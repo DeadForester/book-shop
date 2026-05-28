@@ -72,7 +72,7 @@ public class BookService {
 
         GetImageByBookId image = getImageByBookId(bookId);
 
-        List<GetPublishersByBookId> publishes = publisherService.getPublisherByBookId(bookId);
+        GetPublishersByBookId publishes = publisherService.getPublisherByBookId(bookId);
 
         List<GetAuthorsByBookId> authors = getAuthorsByBookId(bookId);
 

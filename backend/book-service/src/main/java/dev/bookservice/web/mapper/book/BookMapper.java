@@ -25,16 +25,16 @@ public interface BookMapper {
      *
      * @param book       сущность книги
      * @param img        DTO изображения
-     * @param publishers список DTO издательств
+     * @param publisher  DTO издательства
      * @param authors    список DTO авторов
      * @return собранный DTO {@link GetBookById}
      */
     @Mapping(target = "binding", expression = "java(book.getBinding().getName())")
     @Mapping(target = "image", source = "img")
-    @Mapping(target = "publishers", source = "publishers")
+    @Mapping(target = "publisher", source = "publisher")
     @Mapping(target = "authors", source = "authors")
     @Mapping(source = "book.bookId", target = "id")
-    GetBookById toDtoBookById(Book book, GetImageByBookId img, List<GetPublishersByBookId> publishers, List<GetAuthorsByBookId> authors);
+    GetBookById toDtoBookById(Book book, GetImageByBookId img, GetPublishersByBookId publisher, List<GetAuthorsByBookId> authors);
 
     /**
      * Преобразует сущность книги, изображение и список авторов в DTO {@link GetAllBooks}.
