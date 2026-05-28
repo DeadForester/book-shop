@@ -8,51 +8,32 @@ import CarouselItem from './CarouselItem.jsx';
 
 export default function BooksCarousel() {
     const ITEMS_PER_PAGE = 2;
-
     const [books] = useState(goods.slice(0, 5));
     const [currentPage, setCurrentPage] = useState(1);
+
     const [emblaRef, emblaApi] = useEmblaCarousel(
-        {
-            loop: true,
-            align: 'start',
-            containScroll: 'trimSnaps',
-        },
-        [Autoplay({ delay: 3000, stopOnInteraction: true })]
+        { loop: true, align: 'start', containScroll: 'trimSnaps' },
+        [Autoplay({ delay: 6000, stopOnInteraction: true })]
     );
-    const [, setScrollSnaps] = useState([]);
 
-    // Загрузка данных
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const getBooks = await GetArrayByUrl('http://localhost:5257/books/get');
-    //             setBooks(getBooks.slice(0, 5));
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-    //     void fetchData();
-    // }, []);
-
-    // Обновление пагинации при изменении API
-    const onSelect = useCallback(() => {
-        if (!emblaApi) return;
-        setCurrentPage(emblaApi.selectedScrollSnap() + 1);
+    const updatePagination = useCallback(() => {
+        setCurrentPage((prev) => {
+            const current = emblaApi?.selectedScrollSnap() + 1;
+            return current !== undefined && current !== prev ? current : prev;
+        });
     }, [emblaApi]);
 
     useEffect(() => {
         if (!emblaApi) return;
 
-        onSelect();
-        setScrollSnaps(emblaApi.scrollSnapList());
-        emblaApi.on('select', onSelect);
-        emblaApi.on('reInit', onSelect);
+        emblaApi.on('select', updatePagination);
+        emblaApi.on('reInit', updatePagination);
 
         return () => {
-            emblaApi.off('select', onSelect);
-            emblaApi.off('reInit', onSelect);
+            emblaApi.off('select', updatePagination);
+            emblaApi.off('reInit', updatePagination);
         };
-    }, [emblaApi, onSelect]);
+    }, [emblaApi, updatePagination]);
 
     // Навигация
     const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
