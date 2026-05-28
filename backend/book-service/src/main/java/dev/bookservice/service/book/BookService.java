@@ -9,6 +9,7 @@ import dev.bookservice.service.publisher.PublisherService;
 import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import dev.bookservice.web.dto.book.GetAllBooks;
 import dev.bookservice.web.dto.book.GetBookById;
+import dev.bookservice.web.dto.book.GetBookByOrderItem;
 import dev.bookservice.web.dto.image.GetImageByBookId;
 import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import dev.bookservice.web.mapper.book.BookMapper;
@@ -105,6 +106,29 @@ public class BookService {
             List<GetAuthorsByBookId> authors = getAuthorsByBookId(bookId);
             return bookMapper.toDtoAllBooks(book, imageByBookId, authors);
         }).toList();
+    }
+
+    /**
+     * Получает информацию о книге, связанной с указанной позицией заказа.
+     * <p>
+     * Алгоритм выполнения:
+     * <ol>
+     *     <li>Запрашивает сущность {@link Book} через {@link BookRepository#getBookByOrderItem(Long)};</li>
+     *     <li>Проверяет результат на наличие через {@link java.util.Optional};</li>
+     *     <li>При отсутствии записи выбрасывает {@link BookNotFoundException};</li>
+     *     <li>Преобразует сущность в DTO через {@link BookMapper#toBookByOrderItem(Book)};</li>
+     *     <li>Возвращает полученный DTO.</li>
+     * </ol>
+     *
+     * @param orderItemsId уникальный идентификатор позиции заказа
+     * @return DTO {@link GetBookByOrderItem}, содержащий информацию о книге
+     * @throws BookNotFoundException если для указанной позиции заказа книга не найдена
+     * @see BookRepository#getBookByOrderItem(Long)
+     * @see BookMapper#toBookByOrderItem(Book)
+     */
+    public GetBookByOrderItem getBookByOrderItemId(Long orderItemsId) {
+        Book book = bookRepository.getBookByOrderItem(orderItemsId).orElseThrow(() -> new BookNotFoundException("Книги для заказа не найдены"));
+        return bookMapper.toBookByOrderItem(book);
     }
 
     /**

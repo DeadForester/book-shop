@@ -4,6 +4,7 @@ import dev.bookservice.entity.book.Book;
 import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import dev.bookservice.web.dto.book.GetAllBooks;
 import dev.bookservice.web.dto.book.GetBookById;
+import dev.bookservice.web.dto.book.GetBookByOrderItem;
 import dev.bookservice.web.dto.image.GetImageByBookId;
 import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import org.mapstruct.Mapper;
@@ -23,10 +24,10 @@ public interface BookMapper {
      * <p>
      * Выполняет маппинг полей с учётом явных правил и безопасную обработку {@code null}-значений.
      *
-     * @param book       сущность книги
-     * @param img        DTO изображения
-     * @param publisher  DTO издательства
-     * @param authors    список DTO авторов
+     * @param book      сущность книги
+     * @param img       DTO изображения
+     * @param publisher DTO издательства
+     * @param authors   список DTO авторов
      * @return собранный DTO {@link GetBookById}
      */
     @Mapping(target = "binding", expression = "java(book.getBinding().getName())")
@@ -50,4 +51,12 @@ public interface BookMapper {
     @Mapping(target = "authors", source = "authors")
     @Mapping(source = "book.bookId", target = "id")
     GetAllBooks toDtoAllBooks(Book book, GetImageByBookId img, List<GetAuthorsByBookId> authors);
+
+    /**
+     * Преобразует сущность книги в DTO для позиции заказа.
+     *
+     * @param book сущность книги
+     * @return DTO {@link GetBookByOrderItem}
+     */
+    GetBookByOrderItem toBookByOrderItem(Book book);
 }

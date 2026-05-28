@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +42,7 @@ public class JdbcBookRepository implements BookRepository {
                 this::mapRowToEntity,
                 bookId
         );
-        return results.stream().findFirst();
+        return Optional.ofNullable(results.getFirst());
     }
 
     @Override
@@ -59,6 +61,32 @@ public class JdbcBookRepository implements BookRepository {
         return allBooks.isEmpty() ? Collections.emptyList() : allBooks;
     }
 
+    @Override
+    public Optional<Book> getBookByOrderItem(Long orderItemId) {
+        String sql = """
+                SELECT b.BOOK_ID
+                    , b.TITLE
+                    , b.GENRE
+                    , b.CREATION_YEAR
+                    , b.PAGES
+                    , b.DESCRIPTION
+                    , b.AMOUNT
+                    , b.BINDING
+                    , b.CREATED_AT
+                    , b.MODIFIED_AT
+                FROM BOOKS b
+                JOIN ORDER_ITEMS oi on oi.BOOK_ID = b.BOOK_ID
+                WHERE oi.BOOK_ID = ?
+                """;
+        List<Book> results = jdbcTemplate.query(
+                sql,
+                this::mapRowToEntity,
+                orderItemId
+        );
+
+        return Optional.ofNullable(results.getFirst());
+    }
+
     private Book mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {
         return Book.builder()
                 .bookId(rs.getLong("BOOK_ID"))
@@ -69,13 +97,21 @@ public class JdbcBookRepository implements BookRepository {
                 .description(rs.getString("DESCRIPTION"))
                 .amount(rs.getBigDecimal("AMOUNT"))
                 .binding(Binding.parseName(rs.getString("BINDING")))
-                .createdAt(rs.getTimestamp("CREATED_AT").toLocalDateTime())
-                .modifiedAt(rs.getTimestamp("MODIFIED_AT").toLocalDateTime())
+                .createdAt(this.timeOfNullable(rs.getTimestamp("CREATED_AT")))
+                .modifiedAt(this.timeOfNullable(rs.getTimestamp("MODIFIED_AT")))
                 .build();
     }
 
     private Year fromNumberToYear(Short year) {
         CharSequence ch = new StringBuilder(String.valueOf(year));
         return Year.parse(ch);
+    }
+
+    private LocalDateTime timeOfNullable(Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        } else {
+            return timestamp.toLocalDateTime();
+        }
     }
 }

@@ -29,7 +29,8 @@ public class JdbcImageRepository implements ImageRepository {
                 this::mapRowToEntity,
                 bookId
         );
-        return images.stream().findFirst();
+
+        return Optional.ofNullable(images.getFirst());
     }
 
     private Image mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {
