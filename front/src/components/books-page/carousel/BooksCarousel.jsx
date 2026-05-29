@@ -8,7 +8,7 @@ import CarouselItem from './CarouselItem.jsx';
 
 export default function BooksCarousel() {
     const ITEMS_PER_PAGE = 2;
-    const [books] = useState(goods.slice(0, 5));
+    const [books] = useState(goods.slice(0, 6));
     const [currentPage, setCurrentPage] = useState(1);
 
     const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -25,35 +25,24 @@ export default function BooksCarousel() {
 
     useEffect(() => {
         if (!emblaApi) return;
-
         emblaApi.on('select', updatePagination);
         emblaApi.on('reInit', updatePagination);
-
         return () => {
             emblaApi.off('select', updatePagination);
             emblaApi.off('reInit', updatePagination);
         };
     }, [emblaApi, updatePagination]);
 
-    // Навигация
     const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
     const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
     const scrollTo = useCallback((index) => emblaApi?.scrollTo(index), [emblaApi]);
 
     const totalPages = Math.ceil(books.length / ITEMS_PER_PAGE);
-
-    if (books.length === 0) return <></>;
+    if (books.length === 0) return null;
 
     return (
         <Box sx={{ py: 4, bgcolor: 'grey.50', position: 'relative' }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1,
-                    px: { xs: 2, md: 4 },
-                }}
-            >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: { xs: 2, md: 4 } }}>
                 <IconButton
                     onClick={scrollPrev}
                     sx={{
@@ -65,8 +54,9 @@ export default function BooksCarousel() {
                     <ChevronLeft />
                 </IconButton>
 
-                <Box className="embla" sx={{ flex: 1, overflow: 'hidden' }} ref={emblaRef}>
-                    <Box className="embla__container" sx={{ display: 'flex', ml: -1 }}>
+                {/* Embla контейнер — только sx, без className */}
+                <Box ref={emblaRef} sx={{ flex: 1, overflow: 'hidden' }}>
+                    <Box sx={{ display: 'flex', ml: -1 }}>
                         {books.map((book) => (
                             <CarouselItem key={book.id} book={book} />
                         ))}
@@ -85,7 +75,7 @@ export default function BooksCarousel() {
                 </IconButton>
             </Box>
 
-            {/* Пагинация в стиле PaginationControls */}
+            {/* Пагинация */}
             {totalPages > 1 && (
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5, mt: 2 }}>
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (

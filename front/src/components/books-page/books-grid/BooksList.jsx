@@ -19,7 +19,7 @@ export default function BooksList({ books }) {
         <Grid container spacing={2}>
             {books.slice(0, 8).map((book) => (
                 <Grid size={{ sm: 12, md: 6 }} key={book.id}>
-                    <BooksItem key={book.id} book={book} />
+                    <BooksItem book={book} />
                 </Grid>
             ))}
         </Grid>
