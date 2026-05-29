@@ -1,37 +1,8 @@
-import { goods } from '../data/goods';
 import { Box, Card, CardContent, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Favorite, Person } from '@mui/icons-material';
-import { useMemo, useState } from 'react';
 import { BooksCarousel, BooksList, WeekAuthorsList, YearBooksList } from '../components/books-page';
-import PaginationControls from '../shared/components/PaginationControls.jsx';
 
 const Books = () => {
-    const [search] = useState('');
-    const [page, setPage] = useState(1);
-
-    const ITEMS_PER_PAGE = 6;
-
-    const filteredProducts = useMemo(() => {
-        if (!search.trim()) return goods;
-
-        return goods.filter(
-            (good) =>
-                good.name.toLowerCase().includes(search.toLowerCase()) ||
-                good.author?.toLowerCase().includes(search.toLowerCase())
-        );
-    }, [search]);
-
-    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-    const currentItems = useMemo(() => {
-        const start = (page - 1) * ITEMS_PER_PAGE;
-        return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
-    }, [filteredProducts, page]);
-
-    const handlePageChange = (event, value) => {
-        setPage(value);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
     return (
         <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
             <Container maxWidth="xl">
@@ -77,31 +48,7 @@ const Books = () => {
                         <Grid size={{ xs: 12, md: 8 }}>
                             <Card variant="outlined">
                                 <CardContent>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            mb: 2,
-                                        }}
-                                    >
-                                        <Typography variant="h6" fontWeight="bold">
-                                            📚 Подборки книг
-                                        </Typography>
-                                        <Typography variant="caption" color="text.secondary">
-                                            Все жанры
-                                        </Typography>
-                                    </Box>
-                                    <Divider sx={{ mb: 2 }} />
-                                    <BooksList books={currentItems} />
-
-                                    {totalPages > 1 && (
-                                        <PaginationControls
-                                            page={page}
-                                            totalPages={totalPages}
-                                            onPageChange={handlePageChange}
-                                        />
-                                    )}
+                                    <BooksList />
                                 </CardContent>
                             </Card>
                         </Grid>

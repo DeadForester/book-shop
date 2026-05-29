@@ -29,8 +29,8 @@ const CarouselItem = ({ book }) => {
                     image={book.poster}
                     alt={book.name}
                     sx={{
-                        width: { xs: 120, sm: 180 },
-                        height: 220,
+                        width: { xs: 160, sm: 220 },
+                        height: 300,
                         flexShrink: 0,
                         minWidth: { xs: 120, sm: 180 },
                         objectFit: 'cover',
