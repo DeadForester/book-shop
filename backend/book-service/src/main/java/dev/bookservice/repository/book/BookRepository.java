@@ -28,4 +28,15 @@ public interface BookRepository {
      * @return список сущностей {@link Book} или пустой список, если записи отсутствуют
      */
     List<Book> findAllBooks(int offset, int size);
+
+    /**
+     * Ищет книгу, связанную с указанной позицией заказа.
+     * <p>
+     * Возвращает {@link Optional} с найденной сущностью {@link Book} или пустой {@link Optional#empty()},
+     * если позиция заказа не найдена или не связана с книгой.
+     *
+     * @param orderItemId уникальный идентификатор позиции заказа
+     * @return {@code Optional<Book>} с результатом поиска
+     */
+    Optional<Book> getBookByOrderItem(Long orderItemId);
 }

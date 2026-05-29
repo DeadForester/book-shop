@@ -112,12 +112,9 @@ public class GetBookById {
     private String binding;
 
     /**
-     * Список издательств, связанных с книгой.
-     * <p>
-     * В JSON-ответе сериализуется как массив объектов {@code "publishers"}.
-     * Каждый элемент содержит информацию об издательстве через {@link GetPublishersByBookId}.
+     * Издательство книги.
      *
      * @see GetPublishersByBookId
      */
-    private List<GetPublishersByBookId> publishers;
+    private GetPublishersByBookId publisher;
 }

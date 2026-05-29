@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * Сервисный слой для работы с данными издательств ({@link Publisher}).
  * <p>
@@ -31,32 +29,31 @@ public class PublisherService {
     private final PublisherMapper publisherMapper;
 
     /**
-     * Получает список издательств, связанных с указанной книгой.
+     * Получает издательство, связанное с указанной книгой.
      * <p>
      * Алгоритм выполнения:
      * <ol>
-     *     <li>Запрашивает список сущностей {@link Publisher} через {@link PublisherRepository#getPublisherByBookId(Long)};</li>
-     *     <li>Проверяет результат на пустоту;</li>
-     *     <li>При отсутствии записей логирует ошибку уровня {@code ERROR} и выбрасывает {@link PublisherNotFoundException};</li>
-     *     <li>При наличии данных выполняет параллельное преобразование сущностей в DTO через {@link PublisherMapper#toDto(Publisher)};</li>
-     *     <li>Возвращает результат в виде неизменяемого списка.</li>
+     *     <li>Запрашивает сущность {@link Publisher} через {@link PublisherRepository#getPublisherByBookId(Long)};</li>
+     *     <li>Проверяет результат на наличие через {@link java.util.Optional};</li>
+     *     <li>При отсутствии записи логирует предупреждение уровня {@code WARN} и выбрасывает {@link PublisherNotFoundException};</li>
+     *     <li>При наличии данных преобразует сущность в DTO через {@link PublisherMapper#toDto(Publisher)};</li>
+     *     <li>Возвращает полученный DTO.</li>
      * </ol>
      *
-     * @param bookId уникальный идентификатор книги, для которой требуется получить издательства
-     * @return список DTO {@link GetPublishersByBookId}, содержащих информацию об издательствах
-     * @throws PublisherNotFoundException если для указанного {@code bookId} не найдено ни одного издательства
+     * @param bookId уникальный идентификатор книги, для которой требуется получить издательство
+     * @return DTO {@link GetPublishersByBookId}, содержащий информацию об издательстве
+     * @throws PublisherNotFoundException если для указанного {@code bookId} не найдено издательство
      * @see PublisherRepository#getPublisherByBookId(Long)
      * @see PublisherMapper#toDto(Publisher)
      */
-    public List<GetPublishersByBookId> getPublisherByBookId(Long bookId) {
-        List<Publisher> publisherByBookId = publisherRepository.getPublisherByBookId(bookId);
-        if (publisherByBookId.isEmpty()) {
-            log.warn("Издатели по книге = {} не найдены", bookId);
-            throw new PublisherNotFoundException("Издатели по книге " + bookId + " не найдены");
-        }
+    public GetPublishersByBookId getPublisherByBookId(Long bookId) {
+        Publisher publisherByBookId = publisherRepository.getPublisherByBookId(bookId).orElseThrow(
+                () -> {
+                    log.warn("Издатели по книге = {} не найдены", bookId);
+                    return new PublisherNotFoundException("Издатели по книге " + bookId + " не найдены");
+                }
+        );
 
-        return publisherByBookId.stream()
-                .map(publisherMapper::toDto)
-                .toList();
+        return publisherMapper.toDto(publisherByBookId);
     }
 }
