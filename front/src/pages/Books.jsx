@@ -2,10 +2,7 @@ import { goods } from '../data/goods';
 import { Box, Card, CardContent, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Favorite, Person } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
-import BooksCarousel from '../components/books-page/carousel/BooksCarousel.jsx';
-import YearBooksList from '../components/books-page/year-books/YearBooksList.jsx';
-import WeekAuthorsList from '../components/books-page/week-authors/WeekAuthorsList.jsx';
-import BooksList from '../components/books-page/books-grid/BooksList.jsx';
+import { BooksCarousel, BooksList, WeekAuthorsList, YearBooksList } from '../components/books-page';
 import PaginationControls from '../shared/components/PaginationControls.jsx';
 
 const Books = () => {
