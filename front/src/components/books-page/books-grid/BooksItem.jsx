@@ -17,7 +17,6 @@ export default function BooksItem({ book }) {
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 },
                 position: 'relative',
-                // Декоративная точка (псевдоэлемент в sx)
                 '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -41,8 +40,8 @@ export default function BooksItem({ book }) {
                     sx={{
                         width: 160,
                         height: 220,
-                        flexShrink: 0, // Критично!
-                        minWidth: 160, // Критично!
+                        flexShrink: 0,
+                        minWidth: 160,
                         objectFit: 'cover',
                         mt: -4,
                         mb: 2.5,
@@ -76,7 +75,7 @@ export default function BooksItem({ book }) {
                         {book.author ?? 'Неизвестный автор'}
                     </Typography>
                     <Chip
-                        label={book.idGenreNavigation?.genreName || 'Жанр'}
+                        label={book.genre || 'Жанр'}
                         size="small"
                         color="info"
                         variant="outlined"

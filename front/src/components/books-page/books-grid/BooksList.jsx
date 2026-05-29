@@ -15,19 +15,8 @@ export default function BooksList() {
 
     const ITEMS_PER_PAGE = 6;
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             setBooksFor(await GetArrayByUrl('http://localhost:5257/books/get'));
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
-
     const availableGenres = useMemo(() => {
-        const genres = books.map((book) => book.idGenreNavigation?.genreName).filter(Boolean);
+        const genres = books.map((book) => book.genre).filter(Boolean);
         return [...new Set(genres)].sort();
     }, [books]);
 
@@ -36,8 +25,7 @@ export default function BooksList() {
             const matchesSearch =
                 !searchQuery.trim() || book.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-            const matchesGenre =
-                !selectedGenre || book.idGenreNavigation?.genreName === selectedGenre;
+            const matchesGenre = !selectedGenre || book.genre === selectedGenre;
 
             return matchesSearch && matchesGenre;
         });
@@ -77,11 +65,8 @@ export default function BooksList() {
         );
     }
 
-    if (books.length === 0) return <Typography>Загрузка...</Typography>;
-
     return (
         <Box sx={{ width: '100%' }}>
-            {/* 🔹 Панель фильтров */}
             <Box
                 sx={{
                     display: 'flex',
@@ -95,7 +80,6 @@ export default function BooksList() {
                     alignItems: 'flex-end',
                 }}
             >
-                {/* Поиск по названию */}
                 <TextField
                     label="Поиск по названию"
                     variant="outlined"
@@ -116,7 +100,6 @@ export default function BooksList() {
                     }}
                 />
 
-                {/* Фильтр по жанру (Autocomplete с ограниченным выбором) */}
                 <AutocompleteSelector
                     value={selectedGenre}
                     onChange={handleGenreChange}
@@ -125,7 +108,6 @@ export default function BooksList() {
                     placeholder={'Выберите жанр...'}
                 />
 
-                {/* Кнопка сброса фильтров (показывается, если что-то выбрано) */}
                 {(searchQuery || selectedGenre) && (
                     <Box
                         component="button"
@@ -148,11 +130,10 @@ export default function BooksList() {
                 )}
             </Box>
 
-            {/* 🔹 Результаты поиска */}
             {(searchQuery || selectedGenre) && (
                 <Box sx={{ mb: 2 }}>
                     <Typography variant="body2" color="text.secondary">
-                        Найдено:{' '}
+                        Найдено книг:{' '}
                         <Typography component="span" fontWeight="bold">
                             {filteredBooks.length}
                         </Typography>
@@ -160,7 +141,6 @@ export default function BooksList() {
                 </Box>
             )}
 
-            {/* 🔹 Сетка книг */}
             {filteredBooks.length === 0 ? (
                 <Box sx={{ textAlign: 'center', py: 6 }}>
                     <Typography variant="h6" color="text.secondary" gutterBottom>
@@ -179,13 +159,12 @@ export default function BooksList() {
                             </Grid>
                         ))}
                     </Grid>
-                    {totalPages > 1 && (
-                        <PaginationControls
-                            page={page}
-                            totalPages={totalPages}
-                            onPageChange={handlePageChange}
-                        />
-                    )}
+
+                    <PaginationControls
+                        page={page}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
                 </>
             )}
         </Box>

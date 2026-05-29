@@ -6,18 +6,6 @@ import YearBooksItem from './YearBooksItem.jsx';
 export default function YearBooksList() {
     const [booksPop] = useState(goods.slice(0, 5));
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const books = await GetArrayByUrl('http://localhost:5257/books/popular');
-    //             setBooksPop(books.slice(0, 5));
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
-
     if (booksPop.length === 0) return null;
 
     return (
