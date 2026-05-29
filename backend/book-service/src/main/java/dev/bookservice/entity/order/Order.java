@@ -32,7 +32,7 @@ public class Order {
     /**
      * Номер заказа.
      */
-    private Long orderNumber;
+    private String orderNumber;
 
     /**
      * Текущий статус заказа.

@@ -24,13 +24,13 @@ public class JdbcImageRepository implements ImageRepository {
                 WHERE im.BOOK_ID = ?
                 """;
 
-        List<Image> images = jdbcTemplate.query(
+        List<Image> results = jdbcTemplate.query(
                 sql,
                 this::mapRowToEntity,
                 bookId
         );
 
-        return Optional.ofNullable(images.getFirst());
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
     }
 
     private Image mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {

@@ -42,7 +42,7 @@ public class JdbcBookRepository implements BookRepository {
                 this::mapRowToEntity,
                 bookId
         );
-        return Optional.ofNullable(results.getFirst());
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
     }
 
     @Override
@@ -76,7 +76,7 @@ public class JdbcBookRepository implements BookRepository {
                     , b.MODIFIED_AT
                 FROM BOOKS b
                 JOIN ORDER_ITEMS oi on oi.BOOK_ID = b.BOOK_ID
-                WHERE oi.BOOK_ID = ?
+                WHERE oi.ORDER_ITEM_ID = ?
                 """;
         List<Book> results = jdbcTemplate.query(
                 sql,
@@ -84,7 +84,7 @@ public class JdbcBookRepository implements BookRepository {
                 orderItemId
         );
 
-        return Optional.ofNullable(results.getFirst());
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
     }
 
     private Book mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {

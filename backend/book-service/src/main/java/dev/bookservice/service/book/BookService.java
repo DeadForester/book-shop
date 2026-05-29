@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -49,10 +50,10 @@ public class BookService {
      * <p>
      * Метод выполняет агрегацию данных из нескольких источников:
      * <ol>
-     *     <li>Запрашивает основную сущность книги через {@link BookRepository#getBookByBookId(Long)};</li>
-     *     <li>Получает связанное изображение через {@link ImageService#getImageByBookId(Long)};</li>
+     *     <li>Запрашивает основную сущность книги через {@link #getBookEntityByBookId(Long)};</li>
+     *     <li>Получает связанное изображение через {@link #getImageByBookId(Long)};</li>
+     *     <li>Загружает список авторов через {@link #getAuthorsByBookId(Long)};</li>
      *     <li>Загружает список издательств через {@link PublisherService#getPublisherByBookId(Long)};</li>
-     *     <li>Загружает список авторов через {@link AuthorService#getAuthorsByBookId(Long)};</li>
      *     <li>Преобразует объединённые данные в DTO {@link GetBookById} с помощью {@link BookMapper#toDtoBookById}.</li>
      * </ol>
      * <p>
@@ -66,16 +67,13 @@ public class BookService {
      * {@link java.util.concurrent.CompletableFuture} или объединение запросов на уровне БД.
      */
     public GetBookById getBookById(Long bookId) {
-        Book book = bookRepository.getBookByBookId(bookId).orElseThrow(() -> {
-            log.warn("Книга по id = {} не найдена", bookId);
-            return new BookNotFoundException("Книга по id " + bookId + " не найдена");
-        });
+        Book book = this.getBookEntityByBookId(bookId);
 
-        GetImageByBookId image = getImageByBookId(bookId);
+        GetImageByBookId image = this.getImageByBookId(bookId);
+
+        List<GetAuthorsByBookId> authors = this.getAuthorsByBookId(bookId);
 
         GetPublishersByBookId publishes = publisherService.getPublisherByBookId(bookId);
-
-        List<GetAuthorsByBookId> authors = getAuthorsByBookId(bookId);
 
         return bookMapper.toDtoBookById(book, image, publishes, authors);
     }
@@ -103,7 +101,7 @@ public class BookService {
         return allBooks.stream().map(book -> {
             Long bookId = book.getBookId();
             GetImageByBookId imageByBookId = this.getImageByBookId(bookId);
-            List<GetAuthorsByBookId> authors = getAuthorsByBookId(bookId);
+            List<GetAuthorsByBookId> authors = this.getAuthorsByBookId(bookId);
             return bookMapper.toDtoAllBooks(book, imageByBookId, authors);
         }).toList();
     }
@@ -132,6 +130,36 @@ public class BookService {
     }
 
     /**
+     * Получает стоимость книги по её уникальному идентификатору.
+     * <p>
+     * Используется для внутренних расчетов или валидации цены перед добавлением в заказ.
+     *
+     * @param bookId уникальный идентификатор книги
+     * @return текущая стоимость книги ({@link BigDecimal})
+     * @throws BookNotFoundException если книга с указанным {@code bookId} не найдена
+     */
+    public BigDecimal getBookAmountByBookId(Long bookId) {
+        return this.getBookEntityByBookId(bookId).getAmount();
+    }
+
+    /**
+     * Получает сущность {@link Book} по идентификатору с обработкой случая отсутствия.
+     * <p>
+     * Вспомогательный метод, инкапсулирующий логику поиска книги в репозитории
+     * и генерации исключения при неудаче.
+     *
+     * @param bookId уникальный идентификатор книги
+     * @return найденная сущность {@link Book}
+     * @throws BookNotFoundException если книга не найдена в базе данных
+     */
+    private Book getBookEntityByBookId(Long bookId) {
+        return bookRepository.getBookByBookId(bookId).orElseThrow(() -> {
+            log.warn("Книга по id = {} не найдена", bookId);
+            return new BookNotFoundException("Книга по id " + bookId + " не найдена");
+        });
+    }
+
+    /**
      * Получает DTO изображения для указанной книги.
      * <p>
      * Делегирует вызов в {@link ImageService}.
@@ -141,7 +169,6 @@ public class BookService {
      */
     private GetImageByBookId getImageByBookId(Long bookId) {
         log.debug("Запрос на получение изображения по книге={}", bookId);
-
         return imageService.getImageByBookId(bookId);
     }
 
@@ -155,7 +182,6 @@ public class BookService {
      */
     private List<GetAuthorsByBookId> getAuthorsByBookId(Long bookId) {
         log.debug("Запрос на получение авторов по книге={}", bookId);
-
         return authorService.getAuthorsByBookId(bookId);
     }
 }

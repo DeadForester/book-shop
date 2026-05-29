@@ -6,15 +6,22 @@ import dev.bookservice.repository.order_item.OrderItemRepository;
 import dev.bookservice.service.book.BookService;
 import dev.bookservice.web.dto.book.GetBookByOrderItem;
 import dev.bookservice.web.dto.order_item.GetOrderItemByOrderId;
+import dev.bookservice.web.dto.order_item.PostOrderItem;
 import dev.bookservice.web.mapper.order_item.OrderItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * Сервис для управления позициями заказа (Order Items).
+ * <p>
+ * Предоставляет бизнес-логику для получения списка товаров в заказе,
+ * агрегируя данные о позиции заказа и связанной с ней книге,
+ * а также для создания новых позиций при оформлении заказа.
  */
 @Service
 @RequiredArgsConstructor
@@ -61,6 +68,49 @@ public class OrderItemService {
     }
 
     /**
+     * Создает позиции заказа на основе входных данных и рассчитывает общую сумму.
+     * <p>
+     * Алгоритм выполнения:
+     * <ol>
+     *     <li>Инициализирует общую сумму заказа нулевым значением;</li>
+     *     <li>Для каждой позиции из списка {@code orderItems}:
+     *         <ul>
+     *             <li>Извлекает ID книги и количество;</li>
+     *             <li>Получает актуальную цену книги через {@link #getSumOrderItem(Long)};</li>
+     *             <li>Рассчитывает стоимость позиции (цена * количество);</li>
+     *             <li>Создает новую сущность {@link OrderItem} в БД через {@link #createOrderItem(LocalDateTime, PostOrderItem, Long)};</li>
+     *             <li>Добавляет стоимость позиции к общей сумме.</li>
+     *         </ul>
+     *     </li>
+     *     <li>Возвращает итоговую сумму всех позиций.</li>
+     * </ol>
+     *
+     * @param now        текущее время создания записей (для поля {@code createdAt})
+     * @param orderItems список DTO {@link PostOrderItem}, содержащих ID книг и количество
+     * @param orderId    уникальный идентификатор родительского заказа
+     * @return общая сумма заказа ({@link BigDecimal})
+     * @see #getSumOrderItem(Long)
+     * @see #createOrderItem(LocalDateTime, PostOrderItem, Long)
+     */
+    public BigDecimal createOrderItems(LocalDateTime now, List<PostOrderItem> orderItems, Long orderId) {
+        BigDecimal doubleTotalSum = BigDecimal.ZERO;
+
+        for (PostOrderItem orderItem : orderItems) {
+            BigDecimal price = getSumOrderItem(
+                    getBookIdByOrderItem(orderItem)
+            );
+
+            BigDecimal quantity = getQuantityOrderItem(orderItem);
+
+            createOrderItem(now, orderItem, orderId);
+
+            doubleTotalSum = doubleTotalSum.add(price.multiply(quantity));
+        }
+
+        return doubleTotalSum;
+    }
+
+    /**
      * Преобразует сущность позиции заказа в DTO с информацией о книге.
      * <p>
      * Внутренний вспомогательный метод, используемый для маппинга элементов списка.
@@ -71,5 +121,63 @@ public class OrderItemService {
     private GetOrderItemByOrderId getOrderItemByOrderId(OrderItem orderItem) {
         GetBookByOrderItem book = bookService.getBookByOrderItemId(orderItem.getOrderItemId());
         return orderItemMapper.toDtoOrderItemByOrderId(orderItem, book);
+    }
+
+    /**
+     * Получает стоимость одной единицы товара по его идентификатору.
+     * <p>
+     * Делегирует запрос в {@link BookService}.
+     *
+     * @param bookId идентификатор книги
+     * @return цена книги ({@link BigDecimal})
+     */
+    private BigDecimal getSumOrderItem(Long bookId) {
+        return bookService.getBookAmountByBookId(bookId);
+    }
+
+    /**
+     * Извлекает идентификатор книги из DTO позиции заказа.
+     *
+     * @param orderItem DTO позиции заказа
+     * @return ID книги ({@link Long})
+     */
+    private Long getBookIdByOrderItem(PostOrderItem orderItem) {
+        return orderItem.getBook().getBookId();
+    }
+
+    /**
+     * Преобразует количество товара из {@link Integer} в {@link BigDecimal}.
+     * <p>
+     * Необходимо для корректного арифметического расчета стоимости.
+     *
+     * @param orderItem DTO позиции заказа
+     * @return количество в формате {@link BigDecimal}
+     */
+    private BigDecimal getQuantityOrderItem(PostOrderItem orderItem) {
+        return new BigDecimal(orderItem.getQuantity());
+    }
+
+    /**
+     * Создает и сохраняет новую позицию заказа в базе данных.
+     * <p>
+     * Формирует сущность {@link OrderItem} с помощью билдера, устанавливает
+     * время создания и делегирует сохранение в репозиторий вместе с ID книги и заказа.
+     *
+     * @param now       время создания записи
+     * @param orderItem DTO с данными о количестве и книге
+     * @param orderId   ID родительского заказа
+     * @see OrderItemRepository#createOrderItem(OrderItem, Long, Long)
+     */
+    private void createOrderItem(LocalDateTime now, PostOrderItem orderItem, Long orderId) {
+        OrderItem newEntity = OrderItem.builder()
+                .quantity(orderItem.getQuantity())
+                .createdAt(now)
+                .build();
+
+        orderItemRepository.createOrderItem(
+                newEntity,
+                getBookIdByOrderItem(orderItem),
+                orderId
+        );
     }
 }

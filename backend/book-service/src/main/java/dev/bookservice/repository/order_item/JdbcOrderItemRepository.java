@@ -37,6 +37,22 @@ public class JdbcOrderItemRepository implements OrderItemRepository {
         return result.isEmpty() ? Collections.emptyList() : result;
     }
 
+    @Override
+    public void createOrderItem(OrderItem newEntity, Long bookIdByOrderItem, Long orderId) {
+        String sql = """
+                INSERT INTO ORDER_ITEMS (BOOK_ID, ORDER_ID, QUANTITY, CREATED_AT)
+                VALUES (?, ?, ?, ?)
+                """;
+
+        jdbcTemplate.update(
+                sql,
+                bookIdByOrderItem,
+                orderId,
+                newEntity.getQuantity(),
+                newEntity.getCreatedAt()
+        );
+    }
+
     private OrderItem mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {
         return OrderItem.builder()
                 .orderItemId(rs.getLong("ORDER_ITEM_ID"))

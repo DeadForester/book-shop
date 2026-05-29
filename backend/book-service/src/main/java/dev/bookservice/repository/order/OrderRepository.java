@@ -1,6 +1,7 @@
 package dev.bookservice.repository.order;
 
 import dev.bookservice.entity.order.Order;
+import dev.bookservice.entity.order.Status;
 
 import java.util.Optional;
 
@@ -19,4 +20,8 @@ public interface OrderRepository {
      * @return {@code Optional<Order>} с результатом поиска
      */
     Optional<Order> getOrderById(Long orderId);
+
+    Long createOrder(Order orderEntity);
+
+    void updateOrderStatusByOrderId(Long orderId, Status status);
 }

@@ -31,19 +31,56 @@ public class JdbcOrderRepository implements OrderRepository {
                 WHERE o.ORDER_ID = ?
                 """;
 
-        List<Order> orders = jdbcTemplate.query(
+        List<Order> results = jdbcTemplate.query(
                 sql,
                 this::mapRowToEntity,
                 orderId
         );
 
-        return Optional.ofNullable(orders.getFirst());
+        return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
+    }
+
+    @Override
+    public Long createOrder(Order orderEntity) {
+        String sql = """
+                INSERT INTO ORDERS (ORDER_NUMBER, STATUS, CREATED_AT)
+                VALUES (?, ?, ?) RETURNING ORDER_ID;
+                """;
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                Long.class,
+                orderEntity.getOrderNumber(),
+                getStringStatus(
+                        orderEntity.getStatus()
+                ),
+                orderEntity.getCreatedAt()
+        );
+    }
+
+    @Override
+    public void updateOrderStatusByOrderId(Long orderId, Status status) {
+        String sql = """
+                UPDATE ORDERS
+                SET STATUS = ?
+                WHERE ORDER_ID = ?
+                """;
+
+        jdbcTemplate.update(
+                sql,
+                getStringStatus(status),
+                orderId
+        );
+    }
+
+    private String getStringStatus(Status status) {
+        return status.name();
     }
 
     private Order mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {
         return Order.builder()
                 .orderId(rs.getLong("ORDER_ID"))
-                .orderNumber(rs.getLong("ORDER_NUMBER"))
+                .orderNumber(rs.getString("ORDER_NUMBER"))
                 .status(Status.valueOf(rs.getString("STATUS")))
                 .totalPrice(rs.getBigDecimal("TOTAL_PRICE"))
                 .createdAt(timeOfNullable(rs.getTimestamp("CREATED_AT")))

@@ -23,7 +23,7 @@ public class GetOrderById {
      * <p>
      * Используется для отображения пользователю и в коммуникации (например, "Ваш заказ №100500").
      */
-    private Long orderNumber;
+    private String orderNumber;
 
     /**
      * Список позиций (товаров) в заказе.
