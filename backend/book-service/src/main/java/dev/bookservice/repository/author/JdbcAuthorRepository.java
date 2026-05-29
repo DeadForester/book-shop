@@ -40,7 +40,7 @@ public class JdbcAuthorRepository implements AuthorRepository {
                 .authorId(rs.getLong("AUTHOR_ID"))
                 .firstname(rs.getString("FIRSTNAME"))
                 .surname(rs.getString("SURNAME"))
-                .surname(rs.getString("DESCRIPTION"))
+                .description(rs.getString("DESCRIPTION"))
                 .build();
     }
 }

@@ -87,7 +87,7 @@ public class OrderService {
      *     <li>Сохраняет позиции заказа и рассчитывает их фактическую сумму через {@link OrderItemService#createOrderItems(LocalDateTime, List, Long)};</li>
      *     <li>Сравнивает рассчитанную сумму с суммой, переданной клиентом ({@code postOrder.getTotalPrice()});</li>
      *     <li>При несовпадении сумм логирует ошибку и выбрасывает {@link DifferentTotalSumException};</li>
-     *     <li>Обновляет статус заказа на {@code PROCESSING} через {@link #updateOrderStatusByOrderId(Long, Status)};</li>
+     *     <li>Обновляет статус заказа на {@code PROCESSING} и его конечную стоимость через {@link #updateOrderStatusByOrderId(Long, BigDecimal, Status)};</li>
      *     <li>Возвращает полную информацию о созданном заказе через {@link #getOrderById(Long)}.</li>
      * </ol>
      *
@@ -97,14 +97,16 @@ public class OrderService {
      * @throws DifferentTotalSumException если расчетная сумма не совпадает с переданной
      * @see #createOrderEntity(LocalDateTime)
      * @see OrderItemService#createOrderItems(LocalDateTime, List, Long)
-     * @see #updateOrderStatusByOrderId(Long, Status)
+     * @see #updateOrderStatusByOrderId(Long, BigDecimal, Status)
      */
+    //TODO подумать над оптимизацией данного метода
+    //TODO подумать как переделать ошибку, при создании ордера
     public GetOrderById createOrder(PostOrder postOrder) {
         LocalDateTime now = LocalDateTime.now(ZONE_ID);
 
         List<PostOrderItem> newOrderItems = postOrder.getOrderItems();
 
-        if (newOrderItems.isEmpty()) {
+        if (newOrderItems == null || newOrderItems.isEmpty()) {
             throw new CreateOrderException("Ошибка при создании Заказа. Список товаров пуст");
         }
 
@@ -117,7 +119,7 @@ public class OrderService {
             throw new DifferentTotalSumException("Ошибка суммы всего заказа. Сумма на фронте и беке различается");
         }
 
-        updateOrderStatusByOrderId(orderId, Status.PROCESSING);
+        updateOrderStatusByOrderId(orderId, totalPrice, Status.PROCESSING);
 
         return getOrderById(orderId);
     }
@@ -150,7 +152,7 @@ public class OrderService {
      * @param orderId идентификатор заказа
      * @param status  новый статус заказа
      */
-    private void updateOrderStatusByOrderId(Long orderId, Status status) {
-        orderRepository.updateOrderStatusByOrderId(orderId, status);
+    private void updateOrderStatusByOrderId(Long orderId, BigDecimal totalPrice, Status status) {
+        orderRepository.updateOrderStatusByOrderId(orderId, totalPrice, status);
     }
 }

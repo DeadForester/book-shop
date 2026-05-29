@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -59,16 +60,18 @@ public class JdbcOrderRepository implements OrderRepository {
     }
 
     @Override
-    public void updateOrderStatusByOrderId(Long orderId, Status status) {
+    public void updateOrderStatusByOrderId(Long orderId, BigDecimal totalPrice, Status status) {
         String sql = """
                 UPDATE ORDERS
-                SET STATUS = ?
+                SET STATUS = ?,
+                    TOTAL_PRICE = ?
                 WHERE ORDER_ID = ?
                 """;
 
         jdbcTemplate.update(
                 sql,
                 getStringStatus(status),
+                totalPrice,
                 orderId
         );
     }
