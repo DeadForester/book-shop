@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import BooksItem from './books-item/BooksItem.jsx';
+import BooksItem from './BooksItem.jsx';
 
 export default function BooksList({ books }) {
     // useEffect(() => {
