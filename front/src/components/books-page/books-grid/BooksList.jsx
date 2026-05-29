@@ -1,7 +1,17 @@
-import { Box, Grid, InputAdornment, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    FormControl,
+    FormLabel,
+    Grid,
+    InputAdornment,
+    TextField,
+    ToggleButton,
+    ToggleButtonGroup,
+    Typography,
+} from '@mui/material';
 import BooksItem from './BooksItem.jsx';
 import { useMemo, useState } from 'react';
-import { Search } from '@mui/icons-material';
+import { ArrowDownward, ArrowUpward, Search } from '@mui/icons-material';
 import PaginationControls from '../../../shared/components/PaginationControls.jsx';
 import { goods } from '../../../data/goods.js';
 import AutocompleteSelector from '../../../shared/components/AutocompleteSelector.jsx';
@@ -10,6 +20,7 @@ export default function BooksList() {
     const [books] = useState(goods);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedGenre, setSelectedGenre] = useState(null);
+    const [sortBy, setSortBy] = useState(null);
 
     const [page, setPage] = useState(1);
 
@@ -21,15 +32,23 @@ export default function BooksList() {
     }, [books]);
 
     const filteredBooks = useMemo(() => {
-        return books.filter((book) => {
+        let result = books.filter((book) => {
             const matchesSearch =
                 !searchQuery.trim() || book.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-            const matchesGenre = !selectedGenre || book.genre === selectedGenre;
-
+            const matchesGenre =
+                !selectedGenre || book.idGenreNavigation?.genreName === selectedGenre;
             return matchesSearch && matchesGenre;
         });
-    }, [books, searchQuery, selectedGenre]);
+
+        // Сортировка по цене
+        if (sortBy === 'price-asc') {
+            result = [...result].sort((a, b) => (a.price || 0) - (b.price || 0));
+        } else if (sortBy === 'price-desc') {
+            result = [...result].sort((a, b) => (b.price || 0) - (a.price || 0));
+        }
+
+        return result;
+    }, [books, searchQuery, selectedGenre, sortBy]);
 
     const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
     const currentItems = useMemo(() => {
@@ -52,9 +71,18 @@ export default function BooksList() {
         setPage(1);
     };
 
+    const handleSortChange = (event, newSort) => {
+        if (newSort === sortBy) {
+            setSortBy(null);
+        } else {
+            setSortBy(newSort);
+        }
+    };
+
     const handleClearFilters = () => {
         setSearchQuery('');
         setSelectedGenre(null);
+        setSortBy(null);
     };
 
     if (books.length === 0) {
@@ -107,6 +135,48 @@ export default function BooksList() {
                     label={'Жанр'}
                     placeholder={'Выберите жанр...'}
                 />
+
+                <FormControl sx={{ minWidth: { xs: '100%', sm: 180 } }}>
+                    <FormLabel sx={{ fontSize: '12px', color: 'text.secondary', mb: 0.5 }}>
+                        Сортировка по цене
+                    </FormLabel>
+                    <ToggleButtonGroup
+                        value={sortBy}
+                        onChange={handleSortChange}
+                        exclusive
+                        size="small"
+                        sx={{
+                            '& .MuiToggleButton-root': {
+                                py: 0.5,
+                                px: 1,
+                                border: '1px solid',
+                                borderColor: 'divider',
+                                '&.Mui-selected': {
+                                    bgcolor: 'primary.light',
+                                    color: 'primary.contrastText',
+                                    '&:hover': { bgcolor: 'primary.main' },
+                                },
+                            },
+                        }}
+                    >
+                        <ToggleButton value="price-asc" aria-label="по возрастанию">
+                            <ArrowUpward fontSize="small" sx={{ mr: 0.5 }} />
+                            <Typography variant="caption">
+                                Сначала
+                                <br />
+                                дешёвые
+                            </Typography>
+                        </ToggleButton>
+                        <ToggleButton value="price-desc" aria-label="по убыванию">
+                            <ArrowDownward fontSize="small" sx={{ mr: 0.5 }} />
+                            <Typography variant="caption">
+                                Сначала
+                                <br />
+                                дорогие
+                            </Typography>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </FormControl>
 
                 {(searchQuery || selectedGenre) && (
                     <Box
