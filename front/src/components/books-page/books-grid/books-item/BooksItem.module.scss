@@ -1,0 +1,93 @@
+@import '../../../../styles/variables';
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  @include hover-lift;
+  position: relative;
+
+  // Декоративная точка
+  &::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 17px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: $color-dot;
+    box-shadow: 0 -6px 0 0 $color-dot-shadow, 0 6px 0 0 $color-dot-shadow;
+  }
+}
+
+.topSection {
+  display: flex;
+  border-bottom: 1px solid $color-border;
+}
+
+.image {
+  width: 160px;
+  height: 220px;
+  object-fit: cover;
+  margin-top: -$spacing-lg;
+  margin-bottom: $spacing-md;
+  border-radius: $border-radius-sm;
+  box-shadow: $book-shadow;
+  border-bottom: 1px solid $color-border;
+  transition: transform $transition-normal;
+
+  &:hover {
+    transform: scale(1.04);
+  }
+}
+
+.content {
+  flex: 1;
+  padding: $spacing-sm $spacing-lg $spacing-md;
+  position: relative;
+}
+
+.title {
+  font-weight: 500;
+  margin-bottom: $spacing-xs;
+  @include ellipsis(1);
+}
+
+.author {
+  font-size: 13px;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  @include ellipsis(1);
+}
+
+.chip {
+  margin-bottom: $spacing-md;
+  align-self: flex-start;
+  height: 24px;
+  font-size: 12px;
+}
+
+.description {
+  font-size: 13px;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  @include ellipsis(4);
+  margin-top: $spacing-sm;
+}
+
+.footer {
+  padding: $spacing-sm $spacing-md;
+  margin-top: auto;
+}
+
+.price {
+  font-size: 13pt;
+  color: $color-text-primary;
+  @include ellipsis(1);
+
+  span {
+    font-weight: 600;
+  }
+}

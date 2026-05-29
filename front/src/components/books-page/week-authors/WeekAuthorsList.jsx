@@ -1,6 +1,7 @@
 import { Avatar, Box, Chip } from '@mui/material';
 import { Person } from '@mui/icons-material';
 import { goods } from '../../../data/goods.js';
+import styles from './WeekAuthorsList.module.scss';
 
 const WeekAuthorsList = () => {
     const authors = goods.map((book) => book.author).slice(0, 5);
@@ -10,15 +11,7 @@ const WeekAuthorsList = () => {
     console.log(authors);
 
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '10px',
-                width: '100%',
-                minHeight: 'auto',
-            }}
-        >
+        <Box className={styles.container}>
             {authors.map((author, idx) => (
                 <Chip
                     key={idx}

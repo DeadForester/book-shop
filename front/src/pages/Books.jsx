@@ -2,11 +2,9 @@ import { goods } from '../data/goods';
 import { Box, Card, CardContent, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Favorite, Person } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
-import BooksCarousel from '../components/books-page/carousel/BooksCarousel.jsx';
-import YearBooksList from '../components/books-page/year-books/YearBooksList.jsx';
-import WeekAuthorsList from '../components/books-page/week-authors/WeekAuthorsList.jsx';
-import BooksList from '../components/books-page/books-grid/BooksList.jsx';
+import { BooksCarousel, BooksList, WeekAuthorsList, YearBooksList } from '../components/books-page';
 import PaginationControls from '../shared/components/PaginationControls.jsx';
+import styles from '../styles/pages/Books.module.scss';
 
 const Books = () => {
     const [search] = useState('');
@@ -36,40 +34,40 @@ const Books = () => {
     };
 
     return (
-        <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+        <Box className={styles.page}>
             <Container maxWidth="xl">
                 {/* 🔹 Карусель с пагинацией */}
                 <BooksCarousel />
 
-                <Box sx={{ py: 4 }}>
+                <Box className={styles.section}>
                     <Grid container spacing={4}>
                         {/* Левая колонка */}
                         <Grid size={{ xs: 12, md: 4 }}>
                             <Stack spacing={3}>
-                                <Card variant="outlined" sx={{ height: 'auto', minHeight: 200 }}>
+                                <Card variant="outlined" className={styles.card}>
                                     <CardContent>
-                                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                                        <Typography variant="h6" className={styles.cardTitle}>
                                             <Person
                                                 color="primary"
                                                 sx={{ verticalAlign: 'middle', mr: 0.5 }}
                                             />
                                             Авторы недели
                                         </Typography>
-                                        <Divider sx={{ mb: 2 }} />
+                                        <Divider className={styles.divider} />
                                         <WeekAuthorsList />
                                     </CardContent>
                                 </Card>
 
                                 <Card variant="outlined">
                                     <CardContent>
-                                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                                        <Typography variant="h6" className={styles.cardTitle}>
                                             <Favorite
                                                 color="error"
                                                 sx={{ verticalAlign: 'middle', mr: 0.5 }}
                                             />
                                             Популярное в этом году
                                         </Typography>
-                                        <Divider sx={{ mb: 2 }} />
+                                        <Divider className={styles.divider} />
                                         <YearBooksList />
                                     </CardContent>
                                 </Card>
@@ -80,14 +78,7 @@ const Books = () => {
                         <Grid size={{ xs: 12, md: 8 }}>
                             <Card variant="outlined">
                                 <CardContent>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            mb: 2,
-                                        }}
-                                    >
+                                    <Box className={styles.header}>
                                         <Typography variant="h6" fontWeight="bold">
                                             📚 Подборки книг
                                         </Typography>
@@ -95,7 +86,7 @@ const Books = () => {
                                             Все жанры
                                         </Typography>
                                     </Box>
-                                    <Divider sx={{ mb: 2 }} />
+                                    <Divider className={styles.divider} />
                                     <BooksList books={currentItems} />
 
                                     {totalPages > 1 && (
