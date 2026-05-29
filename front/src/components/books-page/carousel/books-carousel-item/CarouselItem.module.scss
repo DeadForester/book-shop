@@ -1,9 +1,10 @@
-@import '../../../../styles/variables';
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/mixins' as m;
 
 .slide {
   flex: 0 0 100%;
   min-width: 0;
-  padding-left: $spacing-sm;
+  padding-left: v.$spacing-sm;
   box-sizing: border-box;
 
   @media (min-width: 600px) {
@@ -14,19 +15,19 @@
 .card {
   display: flex;
   height: auto;
-  background-color: $color-bg-card;
-  @include hover-lift;
+  background-color: v.$color-bg-card;
+  @include m.hover-lift;
 
   @media (min-width: 960px) {
     height: 320px;
   }
 
   &.even {
-    background-color: $color-accent-even;
+    background-color: v.$color-accent-even;
   }
 
   &.odd {
-    background-color: $color-accent-odd;
+    background-color: v.$color-accent-odd;
   }
 }
 
@@ -34,16 +35,16 @@
   width: 120px;
   object-fit: cover;
   background-color: white;
-  padding: $spacing-sm;
+  padding: v.$spacing-sm;
 
   @media (min-width: 600px) {
     width: 180px;
   }
 
-  border-radius: $border-radius-sm;
-  box-shadow: $book-shadow;
-  border-bottom: 1px solid $color-border;
-  transition: transform $transition-normal;
+  border-radius: v.$border-radius-sm;
+  box-shadow: v.$book-shadow;
+  border-bottom: 1px solid v.$color-border;
+  transition: transform v.$transition-normal;
 
   &:hover {
     transform: scale(1.04);
@@ -54,24 +55,24 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: $spacing-md;
+  padding: v.$spacing-md;
 }
 
 .title {
   font-weight: 700;
-  margin-bottom: $spacing-xs;
-  @include ellipsis(1);
+  margin-bottom: v.$spacing-xs;
+  @include m.ellipsis(1);
 }
 
 .author {
   font-size: 14px;
-  color: $color-text-secondary;
-  margin-bottom: $spacing-sm;
-  @include ellipsis(1);
+  color: v.$color-text-secondary;
+  margin-bottom: v.$spacing-sm;
+  @include m.ellipsis(1);
 }
 
 .chip {
-  margin-bottom: $spacing-md;
+  margin-bottom: v.$spacing-md;
   align-self: flex-start;
   height: 24px;
   font-size: 12px;
@@ -80,10 +81,10 @@
 .description {
   flex: 1;
   font-size: 14px;
-  @include ellipsis(3);
+  @include m.ellipsis(3);
 }
 
 .button {
-  margin-top: $spacing-md;
+  margin-top: v.$spacing-md;
   align-self: flex-start;
 }

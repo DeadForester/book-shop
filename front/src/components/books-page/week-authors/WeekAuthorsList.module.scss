@@ -1,9 +1,9 @@
-@import '../../../styles/variables';
+@use '../../../styles/variables' as v;
 
 .container {
   display: flex;
   flex-wrap: wrap;
-  gap: $spacing-sm;
+  gap: v.$spacing-sm;
   width: 100%;
   min-height: auto;
 }

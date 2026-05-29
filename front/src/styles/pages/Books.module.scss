@@ -1,16 +1,12 @@
-@import '../variables';
+@use '../../styles/variables' as v;
 
 .page {
-  background-color: $color-bg-page;
+  background-color: v.$color-bg-page;
   min-height: 100vh;
 }
 
 .section {
-  padding: $spacing-xl 0;
-}
-
-.sidebar {
-  // Стили для левой колонки
+  padding: v.$spacing-xl 0;
 }
 
 .card {
@@ -20,29 +16,25 @@
 
 .cardTitle {
   font-weight: 700;
-  margin-bottom: $spacing-sm;
+  margin-bottom: v.$spacing-sm;
 
   svg {
     vertical-align: middle;
-    margin-right: $spacing-xs;
+    margin-right: v.$spacing-xs;
   }
 }
 
 .divider {
-  margin-bottom: $spacing-md;
-}
-
-.mainContent {
-  // Стили для правой колонки
+  margin-bottom: v.$spacing-md;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: $spacing-md;
+  margin-bottom: v.$spacing-md;
 }
 
 .pagination {
-  margin-top: $spacing-lg;
+  margin-top: v.$spacing-lg;
 }

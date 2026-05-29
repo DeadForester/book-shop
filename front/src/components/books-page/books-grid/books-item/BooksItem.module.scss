@@ -1,11 +1,12 @@
-@import '../../../../styles/variables';
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/mixins' as m;
 
 .card {
   height: 100%;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  @include hover-lift;
+  @include m.hover-lift;
   position: relative;
 
   // Декоративная точка
@@ -17,53 +18,56 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background-color: $color-dot;
-    box-shadow: 0 -6px 0 0 $color-dot-shadow, 0 6px 0 0 $color-dot-shadow;
+    background-color: v.$color-dot;
+    box-shadow: 0 -6px 0 0 v.$color-dot-shadow, 0 6px 0 0 v.$color-dot-shadow;
   }
 }
 
 .topSection {
   display: flex;
-  border-bottom: 1px solid $color-border;
+  border-bottom: 1px solid v.$color-border;
 }
 
 .image {
   width: 160px;
   height: 220px;
   object-fit: cover;
-  margin-top: -$spacing-lg;
-  margin-bottom: $spacing-md;
-  border-radius: $border-radius-sm;
-  box-shadow: $book-shadow;
-  border-bottom: 1px solid $color-border;
-  transition: transform $transition-normal;
+  margin-top: -(v.$spacing-lg);
+  margin-bottom: v.$spacing-md;
+  border-radius: v.$border-radius-sm;
+  border-bottom: 1px solid v.$color-border;
+  transition: transform v.$transition-normal;
 
   &:hover {
     transform: scale(1.04);
   }
 }
 
+.image {
+  box-shadow: v.$book-shadow;
+}
+
 .content {
   flex: 1;
-  padding: $spacing-sm $spacing-lg $spacing-md;
+  padding: v.$spacing-sm v.$spacing-lg v.$spacing-md;
   position: relative;
 }
 
 .title {
   font-weight: 500;
-  margin-bottom: $spacing-xs;
-  @include ellipsis(1);
+  margin-bottom: v.$spacing-xs;
+  @include m.ellipsis(1);
 }
 
 .author {
   font-size: 13px;
-  color: $color-text-secondary;
-  margin-bottom: $spacing-sm;
-  @include ellipsis(1);
+  color: v.$color-text-secondary;
+  margin-bottom: v.$spacing-sm;
+  @include m.ellipsis(1);
 }
 
 .chip {
-  margin-bottom: $spacing-md;
+  margin-bottom: v.$spacing-md;
   align-self: flex-start;
   height: 24px;
   font-size: 12px;
@@ -71,21 +75,21 @@
 
 .description {
   font-size: 13px;
-  color: $color-text-secondary;
+  color: v.$color-text-secondary;
   line-height: 1.6;
-  @include ellipsis(4);
-  margin-top: $spacing-sm;
+  @include m.ellipsis(4);
+  margin-top: v.$spacing-sm;
 }
 
 .footer {
-  padding: $spacing-sm $spacing-md;
+  padding: v.$spacing-sm v.$spacing-md;
   margin-top: auto;
 }
 
 .price {
   font-size: 13pt;
-  color: $color-text-primary;
-  @include ellipsis(1);
+  color: v.$color-text-primary;
+  @include m.ellipsis(1);
 
   span {
     font-weight: 600;

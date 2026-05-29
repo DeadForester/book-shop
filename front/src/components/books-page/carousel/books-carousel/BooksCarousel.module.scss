@@ -1,25 +1,25 @@
-@import '../../../../styles/variables';
+@use '../../../../styles/variables' as v;
 
 .carousel {
-  padding: $spacing-xl 0;
-  background-color: $color-bg-page;
+  padding: v.$spacing-xl 0;
+  background-color: v.$color-bg-page;
   position: relative;
 }
 
 .wrapper {
   display: flex;
   align-items: center;
-  gap: $spacing-sm;
-  padding: 0 $spacing-lg;
+  gap: v.$spacing-sm;
+  padding: 0 v.$spacing-lg;
 
   @media (min-width: 960px) {
-    padding: 0 $spacing-xl;
+    padding: 0 v.$spacing-xl;
   }
 }
 
 .navButton {
-  background-color: $color-bg-card;
-  box-shadow: $shadow-md;
+  background-color: v.$color-bg-card;
+  box-shadow: v.$shadow-md;
 
   &:hover {
     background-color: #1976d2; // primary.light
@@ -35,8 +35,8 @@
 .pagination {
   display: flex;
   justify-content: center;
-  gap: $spacing-xs;
-  margin-top: $spacing-md;
+  gap: v.$spacing-xs;
+  margin-top: v.$spacing-md;
 }
 
 .pageButton {
@@ -44,7 +44,7 @@
   height: 32px;
   min-width: 32px;
   background-color: #e0e0e0; // grey.200
-  color: $color-text-primary;
+  color: v.$color-text-primary;
 
   &.active {
     background-color: #1976d2; // primary.main
