@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { adminRoutes, publicRoutes, userRoutes } from '../../router/routes.js';
-import Loader from '../../components/UI/loader/Loader.jsx';
+import Loader from './Loader.jsx';
 import Books from '../../pages/Books.jsx';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
 import ProtectedRoute from './ProtectedRoute.jsx';
