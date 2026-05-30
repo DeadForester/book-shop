@@ -1,28 +1,23 @@
-import {useState} from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
+    Alert,
     Box,
+    Button,
     Card,
     CardContent,
-    TextField,
-    Button,
-    Typography,
-    IconButton,
-    InputAdornment,
-    FormControlLabel,
     Checkbox,
-    Divider,
-    Alert,
     CircularProgress,
+    Divider,
+    FormControlLabel,
+    InputAdornment,
+    TextField,
+    Typography,
 } from '@mui/material';
-import {
-    Visibility,
-    VisibilityOff,
-    Email,
-    Login as LoginIcon,
-} from '@mui/icons-material';
-import { useAuthContext } from "../hooks/useAuthContext.js";
-import {validateCredentials} from "../utils/validateCredentials.js";
+import { Email, Login as LoginIcon } from '@mui/icons-material';
+import { useAuthContext } from '../hooks/useAuthContext.js';
+import { validateCredentials } from '../utils/validateCredentials.js';
+import Password from '../shared/components/Password.jsx';
 
 const Login = () => {
     const { setIsAuth } = useAuthContext();
@@ -31,7 +26,6 @@ const Login = () => {
     const [email, setEmail] = useState(localStorage.getItem('rememberedEmail') ?? '');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(!!localStorage.getItem('rememberedEmail'));
-    const [showPassword, setShowPassword] = useState(false);
 
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
@@ -54,10 +48,10 @@ const Login = () => {
         setSnackbar({
             open: true,
             message: 'Успешный вход!',
-            severity: 'success'
+            severity: 'success',
         });
 
-        setTimeout(() => navigate('/', {replace: true}), 1500);
+        setTimeout(() => navigate('/', { replace: true }), 1500);
     };
 
     return (
@@ -127,34 +121,12 @@ const Login = () => {
                             disabled={loading}
                         />
 
-                        <TextField
-                            fullWidth
-                            label="Пароль"
-                            type={showPassword ? 'text' : 'password'}
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                if (errors.password) setErrors({ ...errors, password: '' });
-                            }}
-                            error={!!errors.password}
-                            helperText={errors.password}
-                            margin="normal"
-                            slotProps={{
-                                input: {
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => setShowPassword(!showPassword)}
-                                                edge="end"
-                                                disabled={loading}
-                                            >
-                                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                            disabled={loading}
+                        <Password
+                            password={password}
+                            setPassword={setPassword}
+                            error={errors.password}
+                            resetErrors={() => setErrors({ ...errors, password: '' })}
+                            loading={loading}
                         />
 
                         <Box

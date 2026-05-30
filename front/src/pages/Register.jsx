@@ -8,17 +8,12 @@ import {
     CardContent,
     CircularProgress,
     Divider,
-    IconButton,
     InputAdornment,
     TextField,
     Typography,
 } from '@mui/material';
-import {
-    Email,
-    PersonAddAlt1 as RegisterIcon,
-    Visibility,
-    VisibilityOff,
-} from '@mui/icons-material';
+import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
+import Password from '../shared/components/Password.jsx';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -26,8 +21,6 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
-    const [showPassword, setShowPassword] = useState({ pass: false, confirm: false });
 
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
@@ -65,10 +58,6 @@ const Register = () => {
         setLoading(false);
 
         setTimeout(() => navigate('/login', { replace: true }), 2000);
-    };
-
-    const togglePasswordVisibility = (field) => {
-        setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
     };
 
     return (
@@ -158,75 +147,21 @@ const Register = () => {
                             disabled={loading}
                         />
 
-                        {/* Пароль */}
-                        <TextField
-                            fullWidth
-                            label="Пароль"
-                            type={showPassword.pass ? 'text' : 'password'}
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                if (errors.password) setErrors({ ...errors, password: '' });
-                            }}
-                            error={!!errors.password}
-                            helperText={errors.password}
-                            margin="normal"
-                            slotProps={{
-                                input: {
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => togglePasswordVisibility('pass')}
-                                                edge="end"
-                                                disabled={loading}
-                                            >
-                                                {showPassword.pass ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                            disabled={loading}
+                        <Password
+                            password={password}
+                            setPassword={setPassword}
+                            error={errors.password}
+                            resetErrors={() => setErrors({ ...errors, password: '' })}
+                            loading={loading}
                         />
 
-                        {/* Повтор пароля */}
-                        <TextField
-                            fullWidth
-                            label="Повторите пароль"
-                            type={showPassword.confirm ? 'text' : 'password'}
-                            value={confirmPassword}
-                            onChange={(e) => {
-                                setConfirmPassword(e.target.value);
-                                if (errors.confirmPassword)
-                                    setErrors({ ...errors, confirmPassword: '' });
-                            }}
-                            error={!!errors.confirmPassword}
-                            helperText={errors.confirmPassword}
-                            margin="normal"
-                            slotProps={{
-                                input: {
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => togglePasswordVisibility('confirm')}
-                                                edge="end"
-                                                disabled={loading}
-                                            >
-                                                {showPassword.confirm ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                            disabled={loading}
+                        <Password
+                            password={confirmPassword}
+                            setPassword={setConfirmPassword}
+                            error={errors.confirmPassword}
+                            resetErrors={() => setErrors({ ...errors, confirmPassword: '' })}
+                            loading={loading}
+                            label={'Повтор пароля'}
                         />
 
                         {/* Кнопка регистрации */}
