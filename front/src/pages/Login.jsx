@@ -34,11 +34,12 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const errors = validateCredentials(email, password);
+        const validationsErrors = validateCredentials(email, password);
 
-        if (!errors) return;
-
-        setErrors(errors);
+        if (validationsErrors) {
+            setErrors(validationsErrors);
+            return;
+        }
 
         setLoading(true);
 

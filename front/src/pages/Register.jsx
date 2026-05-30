@@ -28,10 +28,10 @@ const Register = () => {
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
     const validate = () => {
-        const newErrors = validateCredentials(email, password, confirmPassword);
+        const validationsErrors = validateCredentials(email, password, confirmPassword);
 
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        setErrors(validationsErrors);
+        return Object.keys(validationsErrors).length === 0;
     };
 
     const handleSubmit = async (e) => {
