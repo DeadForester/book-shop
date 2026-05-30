@@ -8,17 +8,13 @@ import {
     CardContent,
     CircularProgress,
     Divider,
-    IconButton,
     InputAdornment,
     TextField,
     Typography,
 } from '@mui/material';
-import {
-    Email,
-    PersonAddAlt1 as RegisterIcon,
-    Visibility,
-    VisibilityOff,
-} from '@mui/icons-material';
+import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
+import Password from '../shared/components/Password.jsx';
+import { validateCredentials } from '../utils/validateCredentials.js';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -27,26 +23,15 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const [showPassword, setShowPassword] = useState({ pass: false, confirm: false });
-
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
     const validate = () => {
-        const newErrors = {};
+        const validationsErrors = validateCredentials(email, password, confirmPassword);
 
-        if (!email.trim()) newErrors.email = 'Введите email';
-        else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Некорректный формат email';
-
-        if (!password) newErrors.password = 'Введите пароль';
-        else if (password.length < 6) newErrors.password = 'Минимум 6 символов';
-
-        if (!confirmPassword) newErrors.confirmPassword = 'Повторите пароль';
-        else if (password !== confirmPassword) newErrors.confirmPassword = 'Пароли не совпадают';
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        setErrors(validationsErrors);
+        return Object.keys(validationsErrors).length === 0;
     };
 
     const handleSubmit = async (e) => {
@@ -67,10 +52,6 @@ const Register = () => {
         setTimeout(() => navigate('/login', { replace: true }), 2000);
     };
 
-    const togglePasswordVisibility = (field) => {
-        setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
-    };
-
     return (
         <Box
             sx={{
@@ -78,7 +59,7 @@ const Register = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                bgcolor: 'background.default',
+                backgroundColor: 'background.default',
                 p: 2,
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             }}
@@ -104,7 +85,7 @@ const Register = () => {
                                 width: 64,
                                 height: 64,
                                 borderRadius: '50%',
-                                bgcolor: 'primary.main',
+                                backgroundColor: 'primary.main',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -158,75 +139,21 @@ const Register = () => {
                             disabled={loading}
                         />
 
-                        {/* Пароль */}
-                        <TextField
-                            fullWidth
-                            label="Пароль"
-                            type={showPassword.pass ? 'text' : 'password'}
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                if (errors.password) setErrors({ ...errors, password: '' });
-                            }}
-                            error={!!errors.password}
-                            helperText={errors.password}
-                            margin="normal"
-                            slotProps={{
-                                input: {
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => togglePasswordVisibility('pass')}
-                                                edge="end"
-                                                disabled={loading}
-                                            >
-                                                {showPassword.pass ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                            disabled={loading}
+                        <Password
+                            password={password}
+                            setPassword={setPassword}
+                            error={errors.password}
+                            resetErrors={() => setErrors({ ...errors, password: '' })}
+                            loading={loading}
                         />
 
-                        {/* Повтор пароля */}
-                        <TextField
-                            fullWidth
-                            label="Повторите пароль"
-                            type={showPassword.confirm ? 'text' : 'password'}
-                            value={confirmPassword}
-                            onChange={(e) => {
-                                setConfirmPassword(e.target.value);
-                                if (errors.confirmPassword)
-                                    setErrors({ ...errors, confirmPassword: '' });
-                            }}
-                            error={!!errors.confirmPassword}
-                            helperText={errors.confirmPassword}
-                            margin="normal"
-                            slotProps={{
-                                input: {
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => togglePasswordVisibility('confirm')}
-                                                edge="end"
-                                                disabled={loading}
-                                            >
-                                                {showPassword.confirm ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                            disabled={loading}
+                        <Password
+                            password={confirmPassword}
+                            setPassword={setConfirmPassword}
+                            error={errors.confirmPassword}
+                            resetErrors={() => setErrors({ ...errors, confirmPassword: '' })}
+                            loading={loading}
+                            label={'Повтор пароля'}
                         />
 
                         {/* Кнопка регистрации */}

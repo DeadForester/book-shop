@@ -1,6 +1,6 @@
-import {Box, Grid} from "@mui/material";
+import { Box, Grid } from '@mui/material';
 
-const BookImage = ({poster, name}) => {
+const BookImage = ({ poster, name }) => {
     return (
         <Grid size={{ xs: 12, md: 5 }}>
             <Box
@@ -13,7 +13,7 @@ const BookImage = ({poster, name}) => {
                     objectFit: 'contain',
                     borderRadius: 2,
                     boxShadow: 2,
-                    bgcolor: 'grey.100',
+                    backgroundColor: 'grey.100',
                 }}
             />
         </Grid>

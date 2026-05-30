@@ -1,71 +1,58 @@
-import GoodsList from '../components/books-page/GoodsList.jsx';
-import Search from '../components/books-page/Search.jsx';
-import Snack from "../shared/components/Snack.jsx";
-
-import { goods } from '../data/goods';
-import {Container} from "@mui/material";
-import {useMemo, useState} from "react";
-import PaginationControls from "../shared/components/PaginationControls.jsx";
-
-const ITEMS_PER_PAGE = 9;
+import { Box, Card, CardContent, Container, Divider, Grid, Stack, Typography } from '@mui/material';
+import { Favorite, Person } from '@mui/icons-material';
+import { BooksCarousel, BooksList, WeekAuthorsList, YearBooksList } from '../components/books-page';
 
 const Books = () => {
-    const [search, setSearch] = useState('');
-    const [isSnackOpen, setSnackOpen] = useState(false);
-    const [page, setPage] = useState(1);
-
-    const filteredProducts = useMemo(() => {
-        if (!search.trim()) return goods;
-
-        return goods.filter(good =>
-            good.name.toLowerCase().includes(search.toLowerCase()) ||
-            good.author?.toLowerCase().includes(search.toLowerCase())
-        );
-    }, [search]);
-
-    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-    const currentItems = useMemo(() => {
-        const start = (page - 1) * ITEMS_PER_PAGE;
-        return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
-    }, [filteredProducts, page]);
-
-    const handleChange = (e) => {
-        setSearch( e.target.value);
-        setPage(1);
-    };
-
-    const handlePageChange = (event, value) => {
-        setPage(value);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    const handleItemAdded = () => setSnackOpen(true);
-
     return (
-        <>
-            <Container
-                sx={{mt: '1rem'}}
-            >
-                <Search
-                    value={search}
-                    onChange={handleChange}
-                />
-                <GoodsList
-                    goods={currentItems}
-                    onItemAdded={handleItemAdded}
-                />
+        <Box sx={{ backgroundColor: 'background.default', minHeight: '100vh' }}>
+            <Container maxWidth="xl">
+                <BooksCarousel />
+
+                <Box sx={{ py: 4 }}>
+                    <Grid container spacing={4}>
+                        <Grid size={{ xs: 12, md: 4 }}>
+                            <Stack spacing={3}>
+                                <Card variant="outlined" sx={{ height: 'auto', minHeight: 200 }}>
+                                    <CardContent>
+                                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                                            <Person
+                                                color="primary"
+                                                sx={{ verticalAlign: 'middle', mr: 0.5 }}
+                                            />
+                                            Авторы недели
+                                        </Typography>
+                                        <Divider sx={{ mb: 2 }} />
+                                        <WeekAuthorsList />
+                                    </CardContent>
+                                </Card>
+
+                                <Card variant="outlined">
+                                    <CardContent>
+                                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                                            <Favorite
+                                                color="error"
+                                                sx={{ verticalAlign: 'middle', mr: 0.5 }}
+                                            />
+                                            Популярное в этом году
+                                        </Typography>
+                                        <Divider sx={{ mb: 2 }} />
+                                        <YearBooksList />
+                                    </CardContent>
+                                </Card>
+                            </Stack>
+                        </Grid>
+
+                        <Grid size={{ xs: 12, md: 8 }}>
+                            <Card variant="outlined">
+                                <CardContent>
+                                    <BooksList />
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </Box>
             </Container>
-
-            <Snack isOpen={isSnackOpen} onClose={() => setSnackOpen(false)} />
-
-            {totalPages > 1 && (
-                <PaginationControls
-                    page={page}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                />
-            )}
-        </>
+        </Box>
     );
 };
 

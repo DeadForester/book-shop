@@ -40,13 +40,11 @@ export default function OrderHistory() {
 
             <HistoryList orders={currentOrders} />
 
-            {totalPages > 1 && (
-                <PaginationControls
-                    page={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                />
-            )}
+            <PaginationControls
+                page={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </Container>
     );
 }

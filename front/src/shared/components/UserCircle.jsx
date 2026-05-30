@@ -38,12 +38,9 @@ const UserCircle = () => {
 
     return (
         <>
-            <IconButton
-                color="inherit"
-                onClick={handleMenuOpen}
-            >
+            <IconButton color="inherit" onClick={handleMenuOpen}>
                 {isAuth ? (
-                    <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ width: 32, height: 32, backgroundColor: 'secondary.main' }}>
                         {user.name?.charAt(0) || user.email?.charAt(0) || 'U'}
                     </Avatar>
                 ) : (

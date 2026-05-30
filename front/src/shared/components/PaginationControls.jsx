@@ -1,7 +1,7 @@
-import { Box, Pagination } from "@mui/material";
+import { Box, Pagination } from '@mui/material';
 
 const PaginationControls = ({ page, totalPages, onPageChange }) => {
-    if (totalPages <= 1) return null;
+    if (totalPages <= 1) return <></>;
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>

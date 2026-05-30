@@ -39,7 +39,7 @@ export default function Profile({ user = null }) {
                         width: 90,
                         height: 90,
                         fontSize: '2.5rem',
-                        bgcolor: 'primary.main',
+                        backgroundColor: 'primary.main',
                         boxShadow: 3,
                     }}
                 >
@@ -99,16 +99,7 @@ export default function Profile({ user = null }) {
                 </Grid>
 
                 <Grid size={{ xs: 12, sm: 6 }}>
-                    <InfoSection
-                        title="Адрес доставки"
-                        icon={<LocationOn color="primary" />}
-                        items={[
-                            {
-                                label: 'Основной адрес',
-                                value: currentUser.address,
-                            },
-                        ]}
-                    />
+                    <DevPlaceholder title="Адрес доставки" icon={<LocationOn />} />
                 </Grid>
 
                 <Grid size={{ xs: 12, sm: 6 }}>

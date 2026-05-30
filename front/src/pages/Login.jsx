@@ -1,28 +1,23 @@
-import {useState} from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
+    Alert,
     Box,
+    Button,
     Card,
     CardContent,
-    TextField,
-    Button,
-    Typography,
-    IconButton,
-    InputAdornment,
-    FormControlLabel,
     Checkbox,
-    Divider,
-    Alert,
     CircularProgress,
+    Divider,
+    FormControlLabel,
+    InputAdornment,
+    TextField,
+    Typography,
 } from '@mui/material';
-import {
-    Visibility,
-    VisibilityOff,
-    Email,
-    Login as LoginIcon,
-} from '@mui/icons-material';
-import { useAuthContext } from "../hooks/useAuthContext.js";
-import {validateCredentials} from "../utils/validateCredentials.js";
+import { Email, Login as LoginIcon } from '@mui/icons-material';
+import { useAuthContext } from '../hooks/useAuthContext.js';
+import { validateCredentials } from '../utils/validateCredentials.js';
+import Password from '../shared/components/Password.jsx';
 
 const Login = () => {
     const { setIsAuth } = useAuthContext();
@@ -31,7 +26,6 @@ const Login = () => {
     const [email, setEmail] = useState(localStorage.getItem('rememberedEmail') ?? '');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(!!localStorage.getItem('rememberedEmail'));
-    const [showPassword, setShowPassword] = useState(false);
 
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
@@ -40,7 +34,12 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!validateCredentials(email, password, setErrors)) return;
+        const validationsErrors = validateCredentials(email, password);
+
+        if (validationsErrors) {
+            setErrors(validationsErrors);
+            return;
+        }
 
         setLoading(true);
 
@@ -54,10 +53,10 @@ const Login = () => {
         setSnackbar({
             open: true,
             message: 'Успешный вход!',
-            severity: 'success'
+            severity: 'success',
         });
 
-        setTimeout(() => navigate('/', {replace: true}), 1500);
+        setTimeout(() => navigate('/', { replace: true }), 1500);
     };
 
     return (
@@ -67,7 +66,7 @@ const Login = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                bgcolor: 'background.default',
+                backgroundColor: 'background.default',
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             }}
         >
@@ -127,37 +126,22 @@ const Login = () => {
                             disabled={loading}
                         />
 
-                        <TextField
-                            fullWidth
-                            label="Пароль"
-                            type={showPassword ? 'text' : 'password'}
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                if (errors.password) setErrors({ ...errors, password: '' });
-                            }}
-                            error={!!errors.password}
-                            helperText={errors.password}
-                            margin="normal"
-                            slotProps={{
-                                input: {
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => setShowPassword(!showPassword)}
-                                                edge="end"
-                                                disabled={loading}
-                                            >
-                                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }
-                            }}
-                            disabled={loading}
+                        <Password
+                            password={password}
+                            setPassword={setPassword}
+                            error={errors.password}
+                            resetErrors={() => setErrors({ ...errors, password: '' })}
+                            loading={loading}
                         />
 
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 2 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                my: 2,
+                            }}
+                        >
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -173,7 +157,10 @@ const Login = () => {
                                 to="/forgot-password"
                                 variant="body2"
                                 color="primary"
-                                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                                sx={{
+                                    textDecoration: 'none',
+                                    '&:hover': { textDecoration: 'underline' },
+                                }}
                             >
                                 Забыли пароль?
                             </Typography>
@@ -185,7 +172,13 @@ const Login = () => {
                             variant="contained"
                             size="large"
                             disabled={loading}
-                            startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <LoginIcon />}
+                            startIcon={
+                                loading ? (
+                                    <CircularProgress size={20} color="inherit" />
+                                ) : (
+                                    <LoginIcon />
+                                )
+                            }
                             sx={{
                                 mt: 2,
                                 mb: 2,
@@ -200,7 +193,9 @@ const Login = () => {
                         </Button>
 
                         <Divider sx={{ my: 2 }}>
-                            <Typography variant="body2" color="text.secondary">или</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                или
+                            </Typography>
                         </Divider>
 
                         <Typography variant="body2" textAlign="center" color="text.secondary">
@@ -209,7 +204,11 @@ const Login = () => {
                                 component={RouterLink}
                                 to="/register"
                                 color="primary"
-                                sx={{ textDecoration: 'none', fontWeight: 600, '&:hover': { textDecoration: 'underline' } }}
+                                sx={{
+                                    textDecoration: 'none',
+                                    fontWeight: 600,
+                                    '&:hover': { textDecoration: 'underline' },
+                                }}
                             >
                                 Зарегистрироваться
                             </Typography>

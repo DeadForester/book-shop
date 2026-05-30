@@ -1,12 +1,15 @@
-export const validateCredentials = (email, password, setErrors) => {
+export const validateCredentials = (email, password, confirmPassword = null) => {
     const newErrors = {};
 
     validateEmail(email, newErrors);
 
-    validatePassword(password, setErrors);
+    validatePassword(password, newErrors);
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    console.log(confirmPassword);
+
+    if (confirmPassword != null) validatePasswordConfirm(password, confirmPassword, newErrors);
+
+    return newErrors;
 };
 
 const validateEmail = (email, newErrors) => {
@@ -15,7 +18,7 @@ const validateEmail = (email, newErrors) => {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
         newErrors.email = 'Некорректный формат email';
     }
-}
+};
 
 const validatePassword = (password, newErrors) => {
     if (!password) {
@@ -23,4 +26,9 @@ const validatePassword = (password, newErrors) => {
     } else if (password.length < 6) {
         newErrors.password = 'Минимум 6 символов';
     }
-}
+};
+
+const validatePasswordConfirm = (password, confirmPassword, newErrors) => {
+    if (!confirmPassword) newErrors.confirmPassword = 'Повторите пароль';
+    else if (password !== confirmPassword) newErrors.confirmPassword = 'Пароли не совпадают';
+};
