@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
 import Password from '../shared/components/Password.jsx';
+import { validateCredentials } from '../utils/validateCredentials.js';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -27,16 +28,7 @@ const Register = () => {
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
     const validate = () => {
-        const newErrors = {};
-
-        if (!email.trim()) newErrors.email = 'Введите email';
-        else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Некорректный формат email';
-
-        if (!password) newErrors.password = 'Введите пароль';
-        else if (password.length < 6) newErrors.password = 'Минимум 6 символов';
-
-        if (!confirmPassword) newErrors.confirmPassword = 'Повторите пароль';
-        else if (password !== confirmPassword) newErrors.confirmPassword = 'Пароли не совпадают';
+        const newErrors = validateCredentials(email, password, confirmPassword);
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
