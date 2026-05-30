@@ -16,7 +16,7 @@ import java.util.List;
  * <p>
  * Обрабатывает HTTP-запросы к конечным точкам API версии {@code v1}
  * для получения информации о книгах. Все эндпоинты имеют базовый путь
- * {@code /api/v1}.
+ * {@code /api/v1/books}.
  * <p>
  * Класс использует аннотации:
  * <ul>
@@ -34,7 +34,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/books")
 public class BookController {
     private final BookService bookService;
 
@@ -98,7 +98,7 @@ public class BookController {
      * @see PathVariable
      * @see GetMapping
      */
-    @GetMapping("/books/{bookId}")
+    @GetMapping("/{bookId}")
     @ResponseStatus(code = HttpStatus.OK)
     public GetBookById getBookById(@PathVariable Long bookId) {
         log.info("GET запрос на получение книги по id={}", bookId);
@@ -179,7 +179,7 @@ public class BookController {
      * @see GetMapping
      * @see RequestParam
      */
-    @GetMapping("/books")
+    @GetMapping()
     @ResponseStatus(code = HttpStatus.OK)
     public List<GetAllBooks> findAllBooks(
             @RequestParam(defaultValue = "0") int page,

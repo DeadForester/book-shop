@@ -1,5 +1,7 @@
 package dev.bookservice.web.dto.book;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,6 +14,7 @@ import java.math.BigDecimal;
  * избыточных данных (например, описания, авторов или издательств).
  */
 @Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GetBookByOrderItem {
 
     /**

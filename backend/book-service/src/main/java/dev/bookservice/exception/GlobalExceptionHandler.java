@@ -2,6 +2,7 @@ package dev.bookservice.exception;
 
 import dev.bookservice.exception.bad_request.BadRequestException;
 import dev.bookservice.exception.not_found.NotFoundException;
+import dev.bookservice.exception.unauthorized.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +61,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<String> createBadRequestExceptionHandler(BadRequestException exception) {
         return createError(HttpStatus.BAD_REQUEST, exception);
+    }
+
+    /**
+     * Обрабатывает исключения {@link UnauthorizedException}.
+     * <p>
+     * Возвращает статус 401 (Unauthorized) и текст ошибки в теле ответа.
+     * Используется при попытке доступа к защищенным ресурсам без действительных учетных данных.
+     *
+     * @param exception перехваченное исключение неавторизованного доступа
+     * @return HTTP-ответ со статусом 401
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String> unauthorizedExceptionHandler(UnauthorizedException exception) {
+        return createError(HttpStatus.UNAUTHORIZED, exception);
     }
 
     /**

@@ -1,5 +1,7 @@
 package dev.bookservice.web.dto.order;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import dev.bookservice.web.dto.order_item.GetOrderItemByOrderId;
 import lombok.Data;
 
@@ -11,6 +13,7 @@ import java.util.List;
  * DTO для представления полной информации о заказе.
  */
 @Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GetOrderById {
 
     /**
