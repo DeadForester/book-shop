@@ -67,7 +67,7 @@ const Login = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                bgcolor: 'background.default',
+                backgroundColor: 'background.default',
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             }}
         >
@@ -152,12 +152,19 @@ const Login = () => {
                                             </IconButton>
                                         </InputAdornment>
                                     ),
-                                }
+                                },
                             }}
                             disabled={loading}
                         />
 
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 2 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                my: 2,
+                            }}
+                        >
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -173,7 +180,10 @@ const Login = () => {
                                 to="/forgot-password"
                                 variant="body2"
                                 color="primary"
-                                sx={{ textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                                sx={{
+                                    textDecoration: 'none',
+                                    '&:hover': { textDecoration: 'underline' },
+                                }}
                             >
                                 Забыли пароль?
                             </Typography>
@@ -185,7 +195,13 @@ const Login = () => {
                             variant="contained"
                             size="large"
                             disabled={loading}
-                            startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <LoginIcon />}
+                            startIcon={
+                                loading ? (
+                                    <CircularProgress size={20} color="inherit" />
+                                ) : (
+                                    <LoginIcon />
+                                )
+                            }
                             sx={{
                                 mt: 2,
                                 mb: 2,
@@ -200,7 +216,9 @@ const Login = () => {
                         </Button>
 
                         <Divider sx={{ my: 2 }}>
-                            <Typography variant="body2" color="text.secondary">или</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                или
+                            </Typography>
                         </Divider>
 
                         <Typography variant="body2" textAlign="center" color="text.secondary">
@@ -209,7 +227,11 @@ const Login = () => {
                                 component={RouterLink}
                                 to="/register"
                                 color="primary"
-                                sx={{ textDecoration: 'none', fontWeight: 600, '&:hover': { textDecoration: 'underline' } }}
+                                sx={{
+                                    textDecoration: 'none',
+                                    fontWeight: 600,
+                                    '&:hover': { textDecoration: 'underline' },
+                                }}
                             >
                                 Зарегистрироваться
                             </Typography>

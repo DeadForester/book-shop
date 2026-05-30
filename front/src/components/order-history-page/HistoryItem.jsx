@@ -22,7 +22,7 @@ const HistoryItem = ({ id, date, items, total}) => {
         new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(amount);
 
     return (
-        <Grid size={{ xs: 12, sm: 6, md: 4}}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Card
                 sx={{
                     height: '100%',
@@ -31,8 +31,8 @@ const HistoryItem = ({ id, date, items, total}) => {
                     transition: 'transform 0.2s, box-shadow 0.2s',
                     '&:hover': {
                         transform: 'translateY(-4px)',
-                        boxShadow: 6
-                    }
+                        boxShadow: 6,
+                    },
                 }}
                 elevation={2}
             >
@@ -88,7 +88,7 @@ const HistoryItem = ({ id, date, items, total}) => {
 
                 <Divider />
 
-                <Box sx={{ p: 2, textAlign: 'right', bgcolor: 'grey.50' }}>
+                <Box sx={{ p: 2, textAlign: 'right', backgroundColor: 'grey.50' }}>
                     <Typography variant="h6" color="primary" fontWeight="bold">
                         {formatCurrency(total)}
                     </Typography>

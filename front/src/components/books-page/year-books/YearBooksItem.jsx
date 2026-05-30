@@ -15,7 +15,7 @@ const YearBooksItem = ({ book }) => {
                 p: 1,
                 cursor: 'pointer',
                 transition: 'box-shadow 0.2s',
-                '&:hover': { boxShadow: 4, bgcolor: 'action.hover' },
+                '&:hover': { boxShadow: 4, backgroundColor: 'action.hover' },
             }}
             onClick={() => navigate(`/books/${book.id}`)}
         >

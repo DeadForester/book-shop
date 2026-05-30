@@ -78,7 +78,7 @@ const Register = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                bgcolor: 'background.default',
+                backgroundColor: 'background.default',
                 p: 2,
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             }}
@@ -104,7 +104,7 @@ const Register = () => {
                                 width: 64,
                                 height: 64,
                                 borderRadius: '50%',
-                                bgcolor: 'primary.main',
+                                backgroundColor: 'primary.main',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',

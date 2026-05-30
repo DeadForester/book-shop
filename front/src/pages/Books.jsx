@@ -4,14 +4,12 @@ import { BooksCarousel, BooksList, WeekAuthorsList, YearBooksList } from '../com
 
 const Books = () => {
     return (
-        <Box sx={{ bgcolor: 'background.default', minHeight: '100vh' }}>
+        <Box sx={{ backgroundColor: 'background.default', minHeight: '100vh' }}>
             <Container maxWidth="xl">
-                {/* 🔹 Карусель с пагинацией */}
                 <BooksCarousel />
 
                 <Box sx={{ py: 4 }}>
                     <Grid container spacing={4}>
-                        {/* Левая колонка */}
                         <Grid size={{ xs: 12, md: 4 }}>
                             <Stack spacing={3}>
                                 <Card variant="outlined" sx={{ height: 'auto', minHeight: 200 }}>
@@ -44,7 +42,6 @@ const Books = () => {
                             </Stack>
                         </Grid>
 
-                        {/* Правая колонка */}
                         <Grid size={{ xs: 12, md: 8 }}>
                             <Card variant="outlined">
                                 <CardContent>

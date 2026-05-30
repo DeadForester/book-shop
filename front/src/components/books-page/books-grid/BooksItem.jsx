@@ -25,7 +25,7 @@ export default function BooksItem({ book }) {
                     width: 4,
                     height: 4,
                     borderRadius: '50%',
-                    bgcolor: '#8f98a9',
+                    backgroundColor: '#8f98a9',
                     boxShadow: '0 -6px 0 0 #aaaebc, 0 6px 0 0 #aaaebc',
                 },
             }}

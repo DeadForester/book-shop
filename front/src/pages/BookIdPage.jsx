@@ -41,7 +41,7 @@ const BookIdPage = () => {
                 Назад в каталог
             </Button>
 
-            <Paper elevation={0} sx={{ p: { xs: 2, md: 4 }, bgcolor: 'background.paper' }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, md: 4 }, backgroundColor: 'background.paper' }}>
                 <Grid container spacing={4}>
                     {/* Изображение */}
                     <BookImage name={book.name} poster={book.poster} />

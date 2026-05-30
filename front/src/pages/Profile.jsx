@@ -39,7 +39,7 @@ export default function Profile({ user = null }) {
                         width: 90,
                         height: 90,
                         fontSize: '2.5rem',
-                        bgcolor: 'primary.main',
+                        backgroundColor: 'primary.main',
                         boxShadow: 3,
                     }}
                 >

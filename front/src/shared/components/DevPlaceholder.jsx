@@ -7,7 +7,7 @@ const DevPlaceholder = ({ title, icon }) => {
             elevation={2}
             sx={{
                 height: '100%',
-                bgcolor: 'grey.50',
+                backgroundColor: 'grey.50',
                 border: '1px dashed',
                 borderColor: 'grey.300',
             }}

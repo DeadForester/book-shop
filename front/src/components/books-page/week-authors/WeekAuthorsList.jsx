@@ -12,7 +12,7 @@ const WeekAuthorsList = () => {
                 <Chip
                     key={`${author}-${idx}`}
                     avatar={
-                        <Avatar sx={{ bgcolor: 'primary.light' }}>
+                        <Avatar sx={{ backgroundColor: 'primary.light' }}>
                             <Person fontSize="small" />
                         </Avatar>
                     }

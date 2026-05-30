@@ -102,7 +102,7 @@ export default function BooksList() {
                     gap: 2,
                     mb: 3,
                     p: 2,
-                    bgcolor: 'background.paper',
+                    backgroundColor: 'background.paper',
                     borderRadius: 2,
                     boxShadow: 1,
                     alignItems: 'flex-end',
@@ -137,7 +137,14 @@ export default function BooksList() {
                 />
 
                 <FormControl sx={{ minWidth: { xs: '100%', sm: 180 } }}>
-                    <FormLabel sx={{ fontSize: '12px', color: 'text.secondary', mb: 0.5 }}>
+                    <FormLabel
+                        sx={{
+                            textAlign: 'center',
+                            fontSize: '12px',
+                            color: 'text.secondary',
+                            mb: 0.5,
+                        }}
+                    >
                         Сортировка по цене
                     </FormLabel>
                     <ToggleButtonGroup
@@ -152,28 +159,20 @@ export default function BooksList() {
                                 border: '1px solid',
                                 borderColor: 'divider',
                                 '&.Mui-selected': {
-                                    bgcolor: 'primary.light',
+                                    backgroundColor: 'primary.light',
                                     color: 'primary.contrastText',
-                                    '&:hover': { bgcolor: 'primary.main' },
+                                    '&:hover': { backgroundColor: 'primary.main' },
                                 },
                             },
                         }}
                     >
                         <ToggleButton value="price-asc" aria-label="по возрастанию">
                             <ArrowUpward fontSize="small" sx={{ mr: 0.5 }} />
-                            <Typography variant="caption">
-                                Сначала
-                                <br />
-                                дешёвые
-                            </Typography>
+                            <Typography variant="caption">Сначала дешёвые</Typography>
                         </ToggleButton>
                         <ToggleButton value="price-desc" aria-label="по убыванию">
                             <ArrowDownward fontSize="small" sx={{ mr: 0.5 }} />
-                            <Typography variant="caption">
-                                Сначала
-                                <br />
-                                дорогие
-                            </Typography>
+                            <Typography variant="caption">Сначала дорогие</Typography>
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </FormControl>
@@ -184,7 +183,7 @@ export default function BooksList() {
                         onClick={handleClearFilters}
                         sx={{
                             border: 'none',
-                            bgcolor: 'transparent',
+                            backgroundColor: 'transparent',
                             color: 'primary.main',
                             fontWeight: 500,
                             cursor: 'pointer',

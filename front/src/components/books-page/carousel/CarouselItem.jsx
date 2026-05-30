@@ -19,7 +19,7 @@ const CarouselItem = ({ book }) => {
                 sx={{
                     display: 'flex',
                     height: { xs: 'auto', md: 320 },
-                    bgcolor: backgroundColor,
+                    backgroundColor: backgroundColor,
                     transition: 'transform 0.2s',
                     '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 },
                 }}
@@ -34,7 +34,7 @@ const CarouselItem = ({ book }) => {
                         flexShrink: 0,
                         minWidth: { xs: 120, sm: 180 },
                         objectFit: 'cover',
-                        bgcolor: 'white',
+                        backgroundColor: 'white',
                         p: 1,
                         borderRadius: 1,
                         boxShadow: '0 1px 7px 2px #c7c9d3',
