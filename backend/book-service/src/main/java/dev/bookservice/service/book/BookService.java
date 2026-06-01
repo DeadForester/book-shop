@@ -1,6 +1,7 @@
 package dev.bookservice.service.book;
 
 import dev.bookservice.entity.book.Book;
+import dev.bookservice.exception.bad_request.BadRequestException;
 import dev.bookservice.exception.not_found.BookNotFoundException;
 import dev.bookservice.repository.book.BookRepository;
 import dev.bookservice.service.author.AuthorService;
@@ -67,6 +68,11 @@ public class BookService {
      * {@link java.util.concurrent.CompletableFuture} или объединение запросов на уровне БД.
      */
     public GetBookById getBookById(Long bookId) {
+
+        if (bookId == null) {
+            throw new BadRequestException("Укажите параметр");
+        }
+
         Book book = this.getBookEntityByBookId(bookId);
 
         GetImageByBookId image = this.getImageByBookId(bookId);
@@ -90,6 +96,11 @@ public class BookService {
      * @throws BookNotFoundException если для запрошенной страницы не найдено ни одной книги
      */
     public List<GetAllBooks> findAllBooks(int page, int size) {
+
+        if (page < 0 || size < 1) {
+            throw new BadRequestException("Укажите верный параметр");
+        }
+
         int offset = page * size;
         List<Book> allBooks = bookRepository.findAllBooks(offset, size);
 

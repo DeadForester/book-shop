@@ -2,6 +2,7 @@ package dev.bookservice.service.order;
 
 import dev.bookservice.entity.order.Order;
 import dev.bookservice.entity.order.Status;
+import dev.bookservice.exception.bad_request.BadRequestException;
 import dev.bookservice.exception.bad_request.CreateOrderException;
 import dev.bookservice.exception.bad_request.DifferentTotalSumException;
 import dev.bookservice.exception.not_found.OrderNotFoundException;
@@ -74,6 +75,10 @@ public class OrderService {
      */
     public GetOrderById getOrderById(Long orderId) {
 
+        if (orderId == null) {
+            throw new BadRequestException("Укажите верный параметр");
+        }
+
         Long currentUserId = currentUserService.getCurrentUserId();
 
         log.debug("Получение orderId = {} из БД для пользователя = {}", orderId, currentUserId);
@@ -114,6 +119,11 @@ public class OrderService {
      * @see #updateOrderStatusByOrderId(Long, BigDecimal, Status)
      */
     public GetOrderById createOrder(PostOrder postOrder) {
+
+        if (postOrder == null) {
+            throw new BadRequestException("Укажите верный параметр");
+        }
+
         LocalDateTime now = LocalDateTime.now(ZONE_ID);
         Long currentUserId = currentUserService.getCurrentUserId();
 
@@ -172,12 +182,10 @@ public class OrderService {
         if (allOrdersByUserId.isEmpty()) {
             return Collections.emptyList();
         } else {
-            return allOrdersByUserId.stream()
-                    .map(order -> {
-                        List<GetOrderItemByOrderId> orderItems = orderItemService.getOrderItemsByOrderId(order.getOrderId());
-                        return orderMapper.toDtoOrderById(order, orderItems);
-                    })
-                    .toList();
+            return allOrdersByUserId.stream().map(order -> {
+                List<GetOrderItemByOrderId> orderItems = orderItemService.getOrderItemsByOrderId(order.getOrderId());
+                return orderMapper.toDtoOrderById(order, orderItems);
+            }).toList();
         }
     }
 
@@ -197,10 +205,7 @@ public class OrderService {
 
         String orderNumber = now.format(DateTimeFormatter.ofPattern("ddMMyyyy")) + number;
 
-        Order order = Order.builder()
-                .orderNumber(orderNumber)
-                .status(Status.CREATING)
-                .createdAt(now).build();
+        Order order = Order.builder().orderNumber(orderNumber).status(Status.CREATING).createdAt(now).build();
 
         return orderRepository.createOrder(order, currentUserId);
     }

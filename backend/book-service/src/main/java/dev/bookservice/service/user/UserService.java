@@ -1,6 +1,7 @@
 package dev.bookservice.service.user;
 
 import dev.bookservice.entity.user.User;
+import dev.bookservice.exception.bad_request.BadRequestException;
 import dev.bookservice.exception.not_found.UserNotFoundException;
 import dev.bookservice.repository.user.UserRepository;
 import dev.bookservice.web.dto.user.GetUserById;
@@ -78,6 +79,11 @@ public class UserService {
      * @see UserMapper#toUserById(User)
      */
     public GetUserById getUserById(Long userId) {
+
+        if (userId == null) {
+            throw new BadRequestException("Укажите верный параметр");
+        }
+
         User user = userRepository.getUserById(userId).orElseThrow(() -> {
             log.error("Пользователь с id={} не найден", userId);
             return new UserNotFoundException("Пользователь с id = " + userId + " не найден");
