@@ -1,3 +1,5 @@
+import { providers } from './providers.js';
+
 export const goods = [
     {
         id: '01',
@@ -5,7 +7,9 @@ export const goods = [
         name: 'JavaScript Карманный справочник',
         poster: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
         price: 750,
+        provider: providers[0],
         genre: 'Справочник',
+        stock: 8,
     },
     {
         id: '02',
@@ -13,7 +17,9 @@ export const goods = [
         name: 'JavaScript Подробное руководство',
         poster: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
         price: 1450,
+        provider: providers[2],
         genre: 'Руководство',
+        stock: 19,
     },
     {
         id: '03',
@@ -21,7 +27,9 @@ export const goods = [
         name: 'React и Redux',
         poster: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80',
         price: 950,
+        provider: providers[3],
         genre: 'Справочник',
+        stock: 15,
     },
     {
         id: '04',
@@ -29,7 +37,9 @@ export const goods = [
         name: 'GraphQL',
         poster: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
         price: 850,
+        provider: providers[2],
         genre: 'Справочник',
+        stock: 31,
     },
     {
         id: '05',
@@ -37,7 +47,9 @@ export const goods = [
         name: 'Путь к изучению React',
         poster: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80',
         price: 550,
+        provider: providers[1],
         genre: 'Руководство',
+        stock: 2,
     },
     {
         id: '06',
@@ -45,7 +57,9 @@ export const goods = [
         name: 'Рефакторинг. Улучшение существующего кода',
         poster: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80',
         price: 1290,
+        provider: providers[1],
         genre: 'Руководство',
+        stock: 11,
     },
     {
         id: '07',
@@ -53,7 +67,9 @@ export const goods = [
         name: 'Чистый код. Создание, анализ, рефакторинг',
         poster: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
         price: 1650,
+        provider: providers[0],
         genre: 'Руководство',
+        stock: 20,
     },
     {
         id: '08',
@@ -61,7 +77,9 @@ export const goods = [
         name: 'Вы не знаете JS. Область видимости и замыкания',
         poster: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80',
         price: 890,
+        provider: providers[2],
         genre: 'Руководство',
+        stock: 13,
     },
     {
         id: '09',
@@ -69,7 +87,9 @@ export const goods = [
         name: 'Паттерны проектирования',
         poster: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
         price: 1150,
+        provider: providers[3],
         genre: 'Справочник',
+        stock: 12,
     },
     {
         id: '10',
@@ -77,7 +97,9 @@ export const goods = [
         name: 'Современный React. Хуки и контекст',
         poster: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80',
         price: 990,
+        provider: providers[4],
         genre: 'Справочник',
+        stock: 5,
     },
     {
         id: '11',
@@ -85,7 +107,9 @@ export const goods = [
         name: 'TypeScript для профессионалов',
         poster: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
         price: 1090,
+        provider: providers[4],
         genre: 'Справочник',
+        stock: 17,
     },
     {
         id: '12',
@@ -93,6 +117,8 @@ export const goods = [
         name: 'Алгоритмы. Построение и анализ',
         poster: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80',
         price: 1490,
+        provider: providers[3],
         genre: 'Руководство',
+        stock: 22,
     },
 ];
