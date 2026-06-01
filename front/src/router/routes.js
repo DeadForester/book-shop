@@ -5,8 +5,12 @@ import Login from '../pages/Login.jsx';
 import Register from '../pages/Register.jsx';
 import OrderHistory from '../pages/OrderHistory.jsx';
 import Profile from '../pages/Profile.jsx';
+import SupplierOrder from '../pages/SupplierOrder.jsx';
 
-export const adminRoutes = [{ path: '/panel', element: Dashboard }];
+export const adminRoutes = [
+    { path: '/panel', element: Dashboard },
+    { path: '/storageOrder', element: SupplierOrder },
+];
 
 export const userRoutes = [
     { path: '/orders', element: OrderHistory },
