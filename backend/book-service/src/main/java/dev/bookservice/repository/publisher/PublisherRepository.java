@@ -16,4 +16,15 @@ public interface PublisherRepository {
      * @return Если запись найдена, то возвращается{@code Optional<Publisher>}. Или {@link Optional#empty()}, если запись не найдена
      */
     Optional<Publisher> getPublisherByBookId(Long bookId);
+
+    /**
+     * Ищет издательство по уникальному идентификатору.
+     * <p>
+     * Возвращает {@link Optional} с найденной сущностью или пустой {@code Optional},
+     * если издательство с указанным идентификатором не найдено.
+     *
+     * @param publisherId уникальный идентификатор издательства
+     * @return {@code Optional<Publisher>} с результатом поиска
+     */
+    Optional<Publisher> getPublisherById(Long publisherId);
 }

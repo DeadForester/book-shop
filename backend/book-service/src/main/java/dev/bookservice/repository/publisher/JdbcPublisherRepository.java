@@ -18,11 +18,11 @@ public class JdbcPublisherRepository implements PublisherRepository {
     @Override
     public Optional<Publisher> getPublisherByBookId(Long bookId) {
         String sql = """
-                SELECT p.publisher_id
-                     , p.name
-                     , p.description
-                     , p.phone
-                     , p.address
+                SELECT p.PUBLISHER_ID
+                     , p.NAME
+                     , p.DESCRIPTION
+                     , p.PHONE
+                     , p.ADDRESS
                 FROM PUBLISHERS p
                 JOIN BOOKS b on b.PUBLISHER_ID = p.PUBLISHER_ID
                 WHERE b.BOOK_ID = ?
@@ -34,6 +34,26 @@ public class JdbcPublisherRepository implements PublisherRepository {
         );
 
         return publishers.isEmpty() ? Optional.empty() : Optional.ofNullable(publishers.getFirst());
+    }
+
+    @Override
+    public Optional<Publisher> getPublisherById(Long publisherId) {
+        String sql = """
+                SELECT p.PUBLISHER_ID
+                     , p.NAME
+                     , p.DESCRIPTION
+                     , p.PHONE
+                     , p.ADDRESS
+                FROM PUBLISHERS p
+                WHERE p.PUBLISHER_ID = ?
+                """;
+        List<Publisher> publishers = jdbcTemplate.query(
+                sql,
+                this::mapRowToEntity,
+                publisherId
+        );
+
+        return publishers.isEmpty() ? Optional.empty() : Optional.of(publishers.getFirst());
     }
 
     private Publisher mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {

@@ -39,4 +39,17 @@ public interface BookRepository {
      * @return {@code Optional<Book>} с результатом поиска
      */
     Optional<Book> getBookByOrderItem(Long orderItemId);
+
+    /**
+     * Возвращает список книг указанного издательства с поддержкой пагинации.
+     * <p>
+     * Выполняет поиск по идентификатору издательства. Если книги не найдены,
+     * возвращается пустой список.
+     *
+     * @param publisherId уникальный идентификатор издательства
+     * @param offset      смещение (номер первой записи для выборки)
+     * @param size        максимальное количество записей для возврата
+     * @return список сущностей {@link Book}, выпущенных данным издательством
+     */
+    List<Book> findAllBookByPublisherId(Long publisherId, int offset, int size);
 }

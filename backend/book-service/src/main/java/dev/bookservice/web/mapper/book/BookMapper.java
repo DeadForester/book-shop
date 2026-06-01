@@ -5,6 +5,7 @@ import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import dev.bookservice.web.dto.book.GetAllBooks;
 import dev.bookservice.web.dto.book.GetBookById;
 import dev.bookservice.web.dto.book.GetBookByOrderItem;
+import dev.bookservice.web.dto.book.GetBooksByPublisherId;
 import dev.bookservice.web.dto.image.GetImageByBookId;
 import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import org.mapstruct.Mapper;
@@ -59,4 +60,17 @@ public interface BookMapper {
      * @return DTO {@link GetBookByOrderItem}
      */
     GetBookByOrderItem toBookByOrderItem(Book book);
+
+
+    /**
+     * Преобразует сущность книги и её изображение в DTO для отображения в списке книг издательства.
+     * <p>
+     * Используется при фильтрации или просмотре книг конкретного издателя.
+     *
+     * @param book сущность книги
+     * @param img  DTO изображения книги
+     * @return DTO {@link GetBooksByPublisherId}
+     */
+    @Mapping(target = "image", source = "img")
+    GetBooksByPublisherId toBooksByPublisherByPublisherId(Book book, GetImageByBookId img);
 }

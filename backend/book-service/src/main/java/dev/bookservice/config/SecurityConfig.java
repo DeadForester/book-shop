@@ -59,7 +59,7 @@ public class SecurityConfig {
      *     <li>Устанавливает политику создания сессий в {@code STATELESS} (сервер не хранит состояние клиента);</li>
      *     <li>Настраивает правила авторизации запросов:
      *         <ul>
-     *             <li>{@code /api/v1/registration}, {@code /api/v1/books/**}, Swagger — доступны всем ({@code permitAll});</li>
+     *             <li>{@code /api/v1/registration}, {@code /api/v1/books/**}, {@code /api/v1/publishers/id} Swagger — доступны всем ({@code permitAll});</li>
      *             <li>{@code /api/v1/orders/**}, {@code /api/v1/user/**} — доступны только пользователям с ролью {@code USER};</li>
      *             <li>Все остальные запросы требуют аутентификации ({@code authenticated}).</li>
      *         </ul>
@@ -81,6 +81,7 @@ public class SecurityConfig {
                                 "/api/v1/registration",
                                 "/api/v1/books",
                                 "/api/v1/books/**",
+                                "/api/v1/publishers/id",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()

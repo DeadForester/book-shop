@@ -11,6 +11,7 @@ import dev.bookservice.web.dto.author.GetAuthorsByBookId;
 import dev.bookservice.web.dto.book.GetAllBooks;
 import dev.bookservice.web.dto.book.GetBookById;
 import dev.bookservice.web.dto.book.GetBookByOrderItem;
+import dev.bookservice.web.dto.book.GetBooksByPublisherId;
 import dev.bookservice.web.dto.image.GetImageByBookId;
 import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import dev.bookservice.web.mapper.book.BookMapper;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -109,12 +111,9 @@ public class BookService {
             throw new BookNotFoundException("Книги в БД не найдены");
         }
 
-        return allBooks.stream().map(book -> {
-            Long bookId = book.getBookId();
-            GetImageByBookId imageByBookId = this.getImageByBookId(bookId);
-            List<GetAuthorsByBookId> authors = this.getAuthorsByBookId(bookId);
-            return bookMapper.toDtoAllBooks(book, imageByBookId, authors);
-        }).toList();
+        return allBooks.stream()
+                .map(this::fromBookToGetAllBooks)
+                .toList();
     }
 
     /**
@@ -154,6 +153,41 @@ public class BookService {
     }
 
     /**
+     * Возвращает список книг указанного издательства с поддержкой пагинации.
+     * <p>
+     * Алгоритм выполнения:
+     * <ol>
+     *     <li>Запрашивает список сущностей {@link Book} через {@link BookRepository#findAllBookByPublisherId(Long, int, int)};</li>
+     *     <li>При отсутствии записей возвращает пустой неизменяемый список;</li>
+     *     <li>Для каждой книги:
+     *         <ul>
+     *             <li>Загружает изображение через {@link ImageService#getImageByBookId(Long)};</li>
+     *             <li>Преобразует сущность и изображение в DTO {@link GetBooksByPublisherId} через вспомогательный метод {@link #fromBookToGetBooksByPublisherId(Book)}.</li>
+     *         </ul>
+     *     </li>
+     *     <li>Возвращает список преобразованных DTO.</li>
+     * </ol>
+     *
+     * @param publisherId уникальный идентификатор издательства
+     * @param offset      смещение (номер первой записи для выборки)
+     * @param size        максимальное количество записей для возврата
+     * @return список DTO {@link GetBooksByPublisherId} для запрошенной страницы
+     * @see BookRepository#findAllBookByPublisherId(Long, int, int)
+     * @see #fromBookToGetBooksByPublisherId(Book)
+     */
+    public List<GetBooksByPublisherId> getAllBookByPublisherId(Long publisherId, int offset, int size) {
+        List<Book> booksByPublisherId = bookRepository.findAllBookByPublisherId(publisherId, offset, size);
+
+        if (booksByPublisherId.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return booksByPublisherId.stream()
+                .map(this::fromBookToGetBooksByPublisherId)
+                .toList();
+    }
+
+    /**
      * Получает сущность {@link Book} по идентификатору с обработкой случая отсутствия.
      * <p>
      * Вспомогательный метод, инкапсулирующий логику поиска книги в репозитории
@@ -168,6 +202,24 @@ public class BookService {
             log.warn("Книга по id = {} не найдена", bookId);
             return new BookNotFoundException("Книга по id " + bookId + " не найдена");
         });
+    }
+
+    /**
+     * Преобразует сущность книги в DTO {@link GetAllBooks}.
+     * <p>
+     * Внутренний вспомогательный метод, который агрегирует данные об изображении
+     * и авторах для конкретной книги перед маппингом.
+     *
+     * @param book сущность книги
+     * @return DTO {@link GetAllBooks} с краткой информацией
+     * @see #getImageByBookId(Long)
+     * @see #getAuthorsByBookId(Long)
+     * @see BookMapper#toDtoAllBooks(Book, GetImageByBookId, List)
+     */
+    private GetAllBooks fromBookToGetAllBooks(Book book) {
+        GetImageByBookId imageByBookId = this.getImageByBookId(book.getBookId());
+        List<GetAuthorsByBookId> authors = this.getAuthorsByBookId(book.getBookId());
+        return bookMapper.toDtoAllBooks(book, imageByBookId, authors);
     }
 
     /**
@@ -194,6 +246,22 @@ public class BookService {
     private List<GetAuthorsByBookId> getAuthorsByBookId(Long bookId) {
         log.debug("Запрос на получение авторов по книге={}", bookId);
         return authorService.getAuthorsByBookId(bookId);
+    }
+
+    /**
+     * Преобразует сущность книги в DTO {@link GetBooksByPublisherId}.
+     * <p>
+     * Внутренний вспомогательный метод, который загружает изображение книги
+     * и выполняет маппинг для отображения в списке книг издательства.
+     *
+     * @param book сущность книги
+     * @return DTO {@link GetBooksByPublisherId}
+     * @see ImageService#getImageByBookId(Long)
+     * @see BookMapper#toBooksByPublisherByPublisherId(Book, GetImageByBookId)
+     */
+    private GetBooksByPublisherId fromBookToGetBooksByPublisherId(Book book) {
+        GetImageByBookId imageByBookId = imageService.getImageByBookId(book.getBookId());
+        return bookMapper.toBooksByPublisherByPublisherId(book, imageByBookId);
     }
 }
 

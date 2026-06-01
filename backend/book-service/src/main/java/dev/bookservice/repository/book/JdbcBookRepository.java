@@ -78,13 +78,21 @@ public class JdbcBookRepository implements BookRepository {
                 JOIN ORDER_ITEMS oi on oi.BOOK_ID = b.BOOK_ID
                 WHERE oi.ORDER_ITEM_ID = ?
                 """;
-        List<Book> results = jdbcTemplate.query(
-                sql,
-                this::mapRowToEntity,
-                orderItemId
-        );
+        List<Book> results = jdbcTemplate.query(sql, this::mapRowToEntity, orderItemId);
 
         return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
+    }
+
+    @Override
+    public List<Book> findAllBookByPublisherId(Long publisherId, int offset, int size) {
+        String sql = """
+                SELECT *
+                FROM BOOKS b
+                WHERE b.PUBLISHER_ID = ?
+                LIMIT ? OFFSET ?
+                """;
+        List<Book> allBooks = jdbcTemplate.query(sql, this::mapRowToEntity, publisherId, size, offset);
+        return allBooks.isEmpty() ? Collections.emptyList() : allBooks;
     }
 
     private Book mapRowToEntity(ResultSet rs, int rowNum) throws SQLException {
