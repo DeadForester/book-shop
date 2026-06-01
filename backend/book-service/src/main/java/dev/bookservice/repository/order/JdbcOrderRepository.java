@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class JdbcOrderRepository implements OrderRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public Optional<Order> getOrderById(Long orderId) {
+    public Optional<Order> getOrderById(Long orderId, Long userId) {
         String sql = """
                 SELECT o.ORDER_ID
                     , o.ORDER_NUMBER
@@ -30,21 +31,23 @@ public class JdbcOrderRepository implements OrderRepository {
                     , o.MODIFIED_AT
                 FROM ORDERS o
                 WHERE o.ORDER_ID = ?
+                AND o.USER_ID = ?
                 """;
 
         List<Order> results = jdbcTemplate.query(
                 sql,
                 this::mapRowToEntity,
-                orderId
+                orderId,
+                userId
         );
 
         return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
     }
 
     @Override
-    public Long createOrder(Order orderEntity) {
+    public Long createOrder(Order orderEntity, Long userId) {
         String sql = """
-                INSERT INTO ORDERS (ORDER_NUMBER, STATUS, CREATED_AT)
+                INSERT INTO ORDERS (ORDER_NUMBER, USER_ID, STATUS, CREATED_AT)
                 VALUES (?, ?, ?) RETURNING ORDER_ID;
                 """;
 
@@ -52,6 +55,7 @@ public class JdbcOrderRepository implements OrderRepository {
                 sql,
                 Long.class,
                 orderEntity.getOrderNumber(),
+                userId,
                 getStringStatus(
                         orderEntity.getStatus()
                 ),
@@ -74,6 +78,28 @@ public class JdbcOrderRepository implements OrderRepository {
                 totalPrice,
                 orderId
         );
+    }
+
+    @Override
+    public List<Order> findAllOrdersByUserId(Long userId) {
+        String sql = """
+                SELECT o.ORDER_ID
+                    , o.ORDER_NUMBER
+                    , o.STATUS
+                    , o.TOTAL_PRICE
+                    , o.CREATED_AT
+                    , o.MODIFIED_AT
+                FROM ORDERS o
+                WHERE o.USER_ID = ?
+                """;
+
+        List<Order> results = jdbcTemplate.query(
+                sql,
+                this::mapRowToEntity,
+                userId
+        );
+
+        return results.isEmpty() ? Collections.emptyList() : results;
     }
 
     private String getStringStatus(Status status) {

@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * REST-контроллер для управления запросами, связанными с заказами.
  * <p>
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
  * для получения и создания заказов. Все эндпоинты имеют базовый путь
  * {@code /api/v1/orders}.
  *
- * @author [Ваше имя/команда]
- * @version 1.0
  * @see RestController
  * @see RequestMapping
  * @see OrderService
@@ -68,6 +68,79 @@ public class OrderController {
     public GetOrderById getOrderById(@PathVariable Long orderId) {
         log.info("GET запрос на получение заказа по orderId = {}", orderId);
         return orderService.getOrderById(orderId);
+    }
+
+    /**
+     * Получает список всех заказов текущего аутентифицированного пользователя.
+     * <p>
+     * <strong>Endpoint:</strong> {@code GET /api/v1/orders/me}
+     * <p>
+     * <strong>Параметры запроса:</strong>
+     * <table border="1" cellpadding="5" cellspacing="0">
+     *     <tr>
+     *         <th>Параметр</th>
+     *         <th>Расположение</th>
+     *         <th>Обязательный</th>
+     *         <th>Описание</th>
+     *     </tr>
+     *     <tr>
+     *         <td>—</td>
+     *         <td>—</td>
+     *         <td>—</td>
+     *         <td>Параметры не требуются; пользователь определяется из контекста аутентификации</td>
+     *     </tr>
+     * </table>
+     * <p>
+     * <strong>Возможные ответы:</strong>
+     * <ul>
+     *     <li>{@code 200 OK} — запрос успешен, тело ответа содержит список {@code List<GetOrderById>};</li>
+     *     <li>{@code 401 Unauthorized} — пользователь не аутентифицирован;</li>
+     *     <li>{@code 500 Internal Server Error} — непредвиденная ошибка на стороне сервера.</li>
+     * </ul>
+     * <p>
+     * <strong>Пример запроса:</strong>
+     * <pre>
+     * GET /api/v1/orders/me HTTP/1.1
+     * Host: api.bookservice.dev
+     * Accept: application/json
+     * Authorization: Basic dXNlcjpwYXNzd29yZA==
+     * </pre>
+     * <p>
+     * <strong>Пример успешного ответа:</strong>
+     * <pre>
+     * HTTP/1.1 200 OK
+     * Content-Type: application/json
+     *
+     * [
+     *   {
+     *     "order_id": 789,
+     *     "order_number": 100500,
+     *     "status": "IN_PROGRESS",
+     *     "total_price": 8300.00,
+     *     "created_at": "2026-05-28T10:30:00",
+     *     "order_items": [...]
+     *   },
+     *   {
+     *     "order_id": 790,
+     *     "order_number": 100501,
+     *     "status": "DONE",
+     *     "total_price": 4500.00,
+     *     "created_at": "2026-05-20T14:15:00",
+     *     "order_items": [...]
+     *   }
+     * ]
+     * </pre>
+     *
+     * @return список DTO {@link GetOrderById} с информацией о заказах текущего пользователя
+     * @throws org.springframework.security.core.AuthenticationException если пользователь не аутентифицирован
+     * @see OrderService#findAllOrdersByUser()
+     * @see GetMapping
+     */
+    @GetMapping("/me")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<GetOrderById> getOrdersByUser() {
+        log.info("GET запрос на получение заказа для пользователя");
+        return orderService.findAllOrdersByUser();
     }
 
     /**
