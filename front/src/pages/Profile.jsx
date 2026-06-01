@@ -7,6 +7,7 @@ import {
     LocationOn,
     Notifications,
     Person,
+    ShoppingCart,
 } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import InfoSection from '../components/profile-page/InfoSection.jsx';
@@ -82,6 +83,20 @@ export default function Profile({ user = null }) {
             >
                 {navLabel}
             </Button>
+
+            {isAdmin && (
+                <Button
+                    component={RouterLink}
+                    to="/storageOrder"
+                    variant="contained"
+                    size="large"
+                    startIcon={<ShoppingCart />}
+                    fullWidth
+                    sx={{ mb: 4, py: 1.5, fontSize: '1.1rem' }}
+                >
+                    Заказать книги на склад
+                </Button>
+            )}
 
             <Grid container spacing={3}>
                 <Grid size={{ xs: 12, sm: 6 }}>
