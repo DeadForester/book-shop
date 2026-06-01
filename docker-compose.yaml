@@ -1,5 +1,7 @@
 services:
   postgres_db:
+    env_file:
+      - .env
     networks:
       - book-shop
     container_name: postgre_container
@@ -20,6 +22,8 @@ services:
     restart: unless-stopped
 
   clickhouse:
+    env_file:
+      - .env
     networks:
       - book-shop
     container_name: clickhouse_container
@@ -44,6 +48,8 @@ services:
     restart: unless-stopped
 
   minio:
+    env_file:
+      - .env
     networks:
       - book-shop
     container_name: minio_container
@@ -68,6 +74,8 @@ services:
     restart: unless-stopped
 
   redis:
+    env_file:
+      - .env
     networks:
       - book-shop
     container_name: redis_container
@@ -91,12 +99,12 @@ services:
     restart: unless-stopped
 
   backend:
+    env_file:
+      .env
     networks:
       - book-shop
     container_name: backend_container
     build: ./backend/book-service
-    env_file:
-      - .env
     environment:
       APP_DATASOURCE_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
       APP_DATASOURCE_USERNAME: "${POSTGRES_USER}"
@@ -125,12 +133,14 @@ services:
     restart: unless-stopped
 
   frontend:
+    env_file:
+      - .env
     networks:
       - book-shop
     container_name: frontend_container
     build: ./front
     ports:
-      - "3000:${SERVER_PORT}"
+      - "${FRONTEND_PORT}:${SERVER_PORT}"
     depends_on:
       - backend
     restart: unless-stopped
