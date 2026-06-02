@@ -44,7 +44,7 @@ public class PostUser {
      */
     @NotNull(message = "Пароль не может быть null")
     @NotEmpty(message = "Пароль не может быть пустым")
-    @Size(min = 8, message = "Миминальная длина пароля равна 8 символов")
+    @Size(min = 6, message = "Миминальная длина пароля равна 6 символов")
     @Size(max = 128, message = "Максимальная длина пароля равна 128 символов")
     private String password;
 }
