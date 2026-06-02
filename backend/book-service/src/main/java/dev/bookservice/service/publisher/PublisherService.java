@@ -83,7 +83,7 @@ public class PublisherService {
      * @param size        количество книг на странице
      * @param page        номер страницы (нумерация с нуля)
      * @return DTO {@link GetPublisherById}, содержащий информацию об издательстве и список его книг
-     * @throws BadRequestException       если параметры пагинации некорректны
+     * @throws BadRequestException        если параметры пагинации некорректны
      * @throws PublisherNotFoundException если издательство с указанным {@code publisherId} не найдено
      * @see #getPublisherFromDbByPublisherId(Long)
      * @see BookService#getAllBookByPublisherId(Long, int, int)

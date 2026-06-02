@@ -1,11 +1,9 @@
 package dev.bookservice.web.mapper.book;
 
 import dev.bookservice.entity.book.Book;
+import dev.bookservice.entity.publisher.Publisher;
 import dev.bookservice.web.dto.author.GetAuthorsByBookId;
-import dev.bookservice.web.dto.book.GetAllBooks;
-import dev.bookservice.web.dto.book.GetBookById;
-import dev.bookservice.web.dto.book.GetBookByOrderItem;
-import dev.bookservice.web.dto.book.GetBooksByPublisherId;
+import dev.bookservice.web.dto.book.*;
 import dev.bookservice.web.dto.image.GetImageByBookId;
 import dev.bookservice.web.dto.publisher.GetPublishersByBookId;
 import org.mapstruct.Mapper;
@@ -73,4 +71,25 @@ public interface BookMapper {
      */
     @Mapping(target = "image", source = "img")
     GetBooksByPublisherId toBooksByPublisherByPublisherId(Book book, GetImageByBookId img);
+
+    /**
+     * Преобразует сущность книги и издательства в DTO для оформления покупки.
+     * <p>
+     * Используется в корзине или на этапе оформления заказа для отображения
+     * ключевой информации о товаре вместе с данными издателя.
+     * <p>
+     * Алгоритм маппинга:
+     * <ol>
+     *     <li>Маппит идентификатор книги ({@code book.bookId}) в поле {@code id};</li>
+     *     <li>Маппит название издательства ({@code publisher.name}) в поле {@code publisherName};</li>
+     *     <li>Остальные поля преобразуются автоматически на основе совпадающих имён.</li>
+     * </ol>
+     *
+     * @param book      сущность книги
+     * @param publisher сущность издательства, выпустившего книгу
+     * @return DTO {@link GetBookForPurchase}, готовый для отображения в чеке или корзине
+     */
+    @Mapping(target = "id", source = "book.bookId")
+    @Mapping(target = "publisherName", source = "publisher.name")
+    GetBookForPurchase toBookForPurchase(Book book, Publisher publisher);
 }

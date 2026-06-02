@@ -88,7 +88,11 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/v1/orders/**",
                                 "/api/v1/user/**"
-                        ).hasAnyRole(UserRole.USER.name())
+                        ).hasRole(UserRole.USER.name())
+                        .requestMatchers(
+                                "/api/v1/purchases/**",
+                                "/api/v1/providers/**"
+                        ).hasRole(UserRole.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .httpBasic(basic -> basic.realmName("BookService"))
