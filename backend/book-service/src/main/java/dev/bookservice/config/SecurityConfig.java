@@ -91,7 +91,8 @@ public class SecurityConfig {
                         ).hasRole(UserRole.USER.name())
                         .requestMatchers(
                                 "/api/v1/purchases/**",
-                                "/api/v1/providers/**"
+                                "/api/v1/providers/**",
+                                "/api/v1/warehouses/**"
                         ).hasRole(UserRole.ADMIN.name())
                         .anyRequest().authenticated()
                 )
