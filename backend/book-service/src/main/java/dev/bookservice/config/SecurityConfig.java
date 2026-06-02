@@ -83,7 +83,8 @@ public class SecurityConfig {
                                 "/api/v1/books/**",
                                 "/api/v1/publishers/id",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+                                "/api/v1/login"
                         ).permitAll()
                         .requestMatchers(
                                 "/api/v1/orders/**",
