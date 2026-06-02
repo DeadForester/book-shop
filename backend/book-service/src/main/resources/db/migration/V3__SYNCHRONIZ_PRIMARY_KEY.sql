@@ -1,0 +1,10 @@
+SELECT setval('publishers_publisher_id_seq', (SELECT COALESCE(MAX(publisher_id), 0) FROM publishers));
+SELECT setval('authors_author_id_seq', (SELECT COALESCE(MAX(author_id), 0) FROM authors));
+SELECT setval('books_book_id_seq', (SELECT COALESCE(MAX(book_id), 0) FROM books));
+SELECT setval('usrs_user_id_seq', (SELECT COALESCE(MAX(user_id), 0) FROM usrs));
+SELECT setval('warehouses_warehouse_id_seq', (SELECT COALESCE(MAX(warehouse_id), 0) FROM warehouses));
+SELECT setval('providers_provider_id_seq', (SELECT COALESCE(MAX(provider_id), 0) FROM providers));
+SELECT setval('purchases_purchase_id_seq', (SELECT COALESCE(MAX(purchase_id), 0) FROM purchases));
+SELECT setval('orders_order_id_seq', (SELECT COALESCE(MAX(order_id), 0) FROM orders));
+SELECT setval('order_items_order_item_id_seq', (SELECT COALESCE(MAX(order_item_id), 0) FROM order_items));
+SELECT setval('images_image_id_seq', (SELECT COALESCE(MAX(image_id), 0) FROM images));
