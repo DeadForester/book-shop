@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 
 const UserCircle = () => {
-    const {isAuth, setIsAuth} = useAuthContext();
+    const {isAuth, logout} = useAuthContext();
     const navigate = useNavigate();
     const user = {};
 
@@ -30,8 +30,7 @@ const UserCircle = () => {
     };
 
     const handleLogout = () => {
-        localStorage.setItem('auth', 'false');
-        setIsAuth(false);
+        logout();
         handleMenuClose();
         navigate('/');
     };

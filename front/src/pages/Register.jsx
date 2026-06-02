@@ -15,16 +15,18 @@ import {
 import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
 import Password from '../shared/components/Password.jsx';
 import { validateCredentials } from '../utils/validateCredentials.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 const Register = () => {
     const navigate = useNavigate();
+    const { registration, isRegistrationLoading, registrationError } = useAuthContext();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
     const validate = () => {
@@ -38,16 +40,23 @@ const Register = () => {
         e.preventDefault();
         if (!validate()) return;
 
-        setLoading(true);
+        void registration(email, password);
 
-        await new Promise((resolve) => setTimeout(resolve, 1200));
+        if (registrationError) {
+            setSnackbar({
+                open: true,
+                message: 'Произошла ошибка при регистрации.',
+                severity: 'error',
+            });
+            console.error('Register: ' + registrationError);
+            return;
+        }
 
         setSnackbar({
             open: true,
             message: 'Регистрация успешна! Перенаправляем на вход...',
             severity: 'success',
         });
-        setLoading(false);
 
         setTimeout(() => navigate('/login', { replace: true }), 2000);
     };
@@ -136,7 +145,7 @@ const Register = () => {
                                     </InputAdornment>
                                 ),
                             }}
-                            disabled={loading}
+                            disabled={isRegistrationLoading}
                         />
 
                         <Password
@@ -144,7 +153,7 @@ const Register = () => {
                             setPassword={setPassword}
                             error={errors.password}
                             resetErrors={() => setErrors({ ...errors, password: '' })}
-                            loading={loading}
+                            loading={isRegistrationLoading}
                         />
 
                         <Password
@@ -152,7 +161,7 @@ const Register = () => {
                             setPassword={setConfirmPassword}
                             error={errors.confirmPassword}
                             resetErrors={() => setErrors({ ...errors, confirmPassword: '' })}
-                            loading={loading}
+                            loading={isRegistrationLoading}
                             label={'Повтор пароля'}
                         />
 
@@ -162,9 +171,9 @@ const Register = () => {
                             type="submit"
                             variant="contained"
                             size="large"
-                            disabled={loading}
+                            disabled={isRegistrationLoading}
                             startIcon={
-                                loading ? (
+                                isRegistrationLoading ? (
                                     <CircularProgress size={20} color="inherit" />
                                 ) : (
                                     <RegisterIcon />
@@ -180,7 +189,7 @@ const Register = () => {
                                 fontWeight: 600,
                             }}
                         >
-                            {loading ? 'Регистрация...' : 'Зарегистрироваться'}
+                            {isRegistrationLoading ? 'Регистрация...' : 'Зарегистрироваться'}
                         </Button>
 
                         <Divider sx={{ my: 2 }}>

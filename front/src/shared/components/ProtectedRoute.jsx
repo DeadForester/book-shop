@@ -1,11 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import Loader from './Loader.jsx';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
 
 const ProtectedRoute = () => {
-    const { isAuth, isLoading } = useAuthContext();
-
-    if (isLoading) return <Loader />;
+    const { isAuth } = useAuthContext();
 
     return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
 };

@@ -20,15 +20,14 @@ import { validateCredentials } from '../utils/validateCredentials.js';
 import Password from '../shared/components/Password.jsx';
 
 const Login = () => {
-    const { setIsAuth } = useAuthContext();
+    const { login, isLoginLoading, loginError } = useAuthContext();
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState(localStorage.getItem('rememberedEmail') ?? '');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(!!localStorage.getItem('rememberedEmail'));
+    const [rememberMe, setRememberMe] = useState(false);
 
     const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
     const handleSubmit = async (e) => {
@@ -41,18 +40,21 @@ const Login = () => {
             return;
         }
 
-        setLoading(true);
+        void login(email, password, rememberMe);
 
-        setIsAuth(true);
-        localStorage.setItem('auth', 'true');
-
-        if (rememberMe) {
-            localStorage.setItem('rememberedEmail', email);
+        if (loginError){
+            setSnackbar({
+                open: true,
+                message: 'Не верные данные пользователя.',
+                severity: 'error',
+            });
+            console.error('Login: ' + loginError);
+            return;
         }
 
         setSnackbar({
             open: true,
-            message: 'Успешный вход!',
+            message: 'Успешный вход.',
             severity: 'success',
         });
 
@@ -123,7 +125,7 @@ const Login = () => {
                                     </InputAdornment>
                                 ),
                             }}
-                            disabled={loading}
+                            disabled={isLoginLoading}
                         />
 
                         <Password
@@ -131,7 +133,7 @@ const Login = () => {
                             setPassword={setPassword}
                             error={errors.password}
                             resetErrors={() => setErrors({ ...errors, password: '' })}
-                            loading={loading}
+                            loading={isLoginLoading}
                         />
 
                         <Box
@@ -147,7 +149,7 @@ const Login = () => {
                                     <Checkbox
                                         checked={rememberMe}
                                         onChange={(e) => setRememberMe(e.target.checked)}
-                                        disabled={loading}
+                                        disabled={isLoginLoading}
                                     />
                                 }
                                 label="Запомнить меня"
@@ -171,9 +173,9 @@ const Login = () => {
                             type="submit"
                             variant="contained"
                             size="large"
-                            disabled={loading}
+                            disabled={isLoginLoading}
                             startIcon={
-                                loading ? (
+                                isLoginLoading ? (
                                     <CircularProgress size={20} color="inherit" />
                                 ) : (
                                     <LoginIcon />
@@ -189,7 +191,7 @@ const Login = () => {
                                 fontWeight: 600,
                             }}
                         >
-                            {loading ? 'Вход...' : 'Войти'}
+                            {isLoginLoading ? 'Вход...' : 'Войти'}
                         </Button>
 
                         <Divider sx={{ my: 2 }}>
