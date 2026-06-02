@@ -3,6 +3,7 @@ package dev.bookservice.web.controller.provider;
 import dev.bookservice.service.provider.ProviderService;
 import dev.bookservice.web.dto.provider.GetProviderById;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/providers")
+@Slf4j
 public class ProviderController {
 
     private final ProviderService providerService;
@@ -83,6 +85,7 @@ public class ProviderController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public GetProviderById getProviderById(@PathVariable Long id) {
+        log.info("GET запрос на получение поставщика по id = {}", id);
         return providerService.getProviderById(id);
     }
 }

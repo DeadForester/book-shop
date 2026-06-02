@@ -6,6 +6,7 @@ import dev.bookservice.web.dto.warehouse.GetWarehouseBookInfo;
 import dev.bookservice.web.dto.warehouse.GetWarehouseById;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/warehouses")
 @RequiredArgsConstructor
+@Slf4j
 public class WarehouseController {
 
     private final WarehouseService warehouseService;
@@ -71,6 +73,7 @@ public class WarehouseController {
      */
     @GetMapping("/{warehouseId}")
     public GetWarehouseById getWarehouse(@PathVariable Long warehouseId) {
+        log.info("GET запрос на получение склада по id = {}", warehouseId);
         return warehouseService.getWarehouseInfo(warehouseId);
     }
 
@@ -141,6 +144,7 @@ public class WarehouseController {
      */
     @GetMapping("/{warehouseId}/books/{bookId}")
     public GetWarehouseBookInfo getStock(@PathVariable Long warehouseId, @PathVariable Long bookId) {
+        log.info("GET запрос на получение информация по книге = {} со склада = {}", bookId, warehouseId);
         return warehouseService.getStockInfo(warehouseId, bookId);
     }
 
@@ -197,6 +201,7 @@ public class WarehouseController {
     @PostMapping("/stock")
     @ResponseStatus(HttpStatus.OK)
     public GetWarehouseBookInfo addStock(@Valid @RequestBody AddToWarehouseRequest request) {
+        log.info("POST запрос на добавления товара на склад");
         return warehouseService.addToWarehouse(request);
     }
 }

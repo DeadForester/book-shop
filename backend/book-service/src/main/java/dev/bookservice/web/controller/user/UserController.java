@@ -3,6 +3,7 @@ package dev.bookservice.web.controller.user;
 import dev.bookservice.service.user.UserService;
 import dev.bookservice.web.dto.user.GetUserById;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -81,6 +83,7 @@ public class UserController {
     @GetMapping("/user/{userId}")
     @ResponseStatus(code = HttpStatus.OK)
     public GetUserById getUserById(@PathVariable Long userId) {
+        log.info("GET запрос на поулчение пользователя по id = {}", userId);
         return userService.getUserById(userId);
     }
 }

@@ -5,6 +5,7 @@ import dev.bookservice.web.dto.purchase.CreatePurchase;
 import dev.bookservice.web.dto.purchase.GetPurchaseById;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/purchases")
 @RequiredArgsConstructor
+@Slf4j
 public class PurchaseController {
 
     private final PurchaseService purchaseService;
@@ -94,6 +96,7 @@ public class PurchaseController {
      */
     @GetMapping("/{id}")
     public GetPurchaseById getById(@PathVariable Long id) {
+        log.info("GET запрос на получение заказа по id = {}", id);
         return purchaseService.getById(id);
     }
 
@@ -149,6 +152,7 @@ public class PurchaseController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public GetPurchaseById create(@Valid @RequestBody CreatePurchase request) {
+        log.info("POST запрос на создание заказа");
         return purchaseService.create(request);
     }
 
@@ -223,6 +227,7 @@ public class PurchaseController {
     @PostMapping("/add_supply")
     @ResponseStatus(HttpStatus.CREATED)
     public GetPurchaseById addNewSupply(@RequestParam Long id) {
+        log.info("Обновление запрос по дате прибытия по заказу = {} ", id);
         return purchaseService.addNewSupply(id);
     }
 }

@@ -4,6 +4,7 @@ import dev.bookservice.service.user.UserService;
 import dev.bookservice.web.dto.user.GetUserById;
 import dev.bookservice.web.dto.user.PostUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -78,6 +80,7 @@ public class AuthController {
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
     public GetUserById login(@RequestBody PostUser loginRequest) {
+        log.info("Попытка пользователя = {} войти в систему", loginRequest.getEmail());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
@@ -135,6 +138,7 @@ public class AuthController {
     @PostMapping("/registration")
     @ResponseStatus(code = HttpStatus.CREATED)
     public GetUserById register(@RequestBody PostUser newUser) {
+        log.info("Попытка пользователя = {} зарегестрироваться", newUser.getEmail());
         return userService.createNewUser(newUser);
     }
 }
