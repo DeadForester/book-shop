@@ -40,7 +40,7 @@ const Login = () => {
             return;
         }
 
-        void login(email, password, rememberMe);
+        await login(email, password, rememberMe);
 
         if (loginError){
             setSnackbar({

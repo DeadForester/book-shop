@@ -5,8 +5,6 @@ export const validateCredentials = (email, password, confirmPassword = null) => 
 
     validatePassword(password, newErrors);
 
-    console.log(confirmPassword);
-
     if (confirmPassword != null) validatePasswordConfirm(password, confirmPassword, newErrors);
 
     return newErrors;
