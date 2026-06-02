@@ -26,7 +26,6 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const [errors, setErrors] = useState({});
-    // const [loading, setLoading] = useState(false);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
     const validate = () => {
@@ -40,7 +39,7 @@ const Register = () => {
         e.preventDefault();
         if (!validate()) return;
 
-        void registration(email, password);
+        await registration(email, password);
 
         if (registrationError) {
             setSnackbar({
