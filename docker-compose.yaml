@@ -99,6 +99,8 @@ services:
     restart: unless-stopped
 
   grafana:
+    env_file:
+      - .env
     networks:
       - book-shop
     image: grafana/grafana:latest
@@ -114,6 +116,7 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     depends_on:
       - clickhouse
     restart: unless-stopped
