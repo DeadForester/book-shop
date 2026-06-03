@@ -98,6 +98,26 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  grafana:
+    networks:
+      - book-shop
+    image: grafana/grafana:latest
+    container_name: grafana_container
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
+      - GF_FEATURE_TOGGLES_ENABLE=publicDashboards
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    depends_on:
+      - clickhouse
+    restart: unless-stopped
+
   backend:
     env_file:
       .env
@@ -109,6 +129,9 @@ services:
       APP_DATASOURCE_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
       APP_DATASOURCE_USERNAME: "${POSTGRES_USER}"
       APP_DATASOURCE_PASSWORD: "${POSTGRES_PASSWORD}"
+      APP_CLICKHOUSE_URL: "jdbc:ch://clickhouse:8123/${CLICKHOUSE_DB}"
+      APP_CLICKHOUSE_USER: "${CLICKHOUSE_USER}"
+      APP_CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD}"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
       SPRING_DATASOURCE_USERNAME: "${POSTGRES_USER}"
       SPRING_DATASOURCE_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -150,6 +173,8 @@ volumes:
   minio-storage:
   clickhouse_data:
   redis_data:
+  grafana_data:
 
 networks:
   book-shop:
+    driver: bridge

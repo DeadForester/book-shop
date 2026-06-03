@@ -23,6 +23,10 @@ app:
     url: http://localhost:9000
     accessKey: ${MINIO_USER}
     secretKey: ${MINIO_PASSWORD}
+  clickhouse:
+    url: jdbc:ch://localhost:8123/${CLICKHOUSE_DB}
+    user: ${CLICKHOUSE_USER}
+    password: ${CLICKHOUSE_PASSWORD}
 
 server:
   port: ${SERVER_PORT}
