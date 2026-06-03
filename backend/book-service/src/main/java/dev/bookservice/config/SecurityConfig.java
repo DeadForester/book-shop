@@ -1,7 +1,6 @@
 package dev.bookservice.config;
 
 import dev.bookservice.entity.user.User;
-import dev.bookservice.entity.user.UserRole;
 import dev.bookservice.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -83,25 +82,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/v1/registration",
-                                "/api/v1/books",
-                                "/api/v1/books/**",
-                                "/api/v1/publishers/id",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/api/v1/login"
-                        ).permitAll()
-                        .requestMatchers(
-                                "/api/v1/orders/**",
-                                "/api/v1/user/**"
-                        ).hasRole(UserRole.USER.name())
-                        .requestMatchers(
-                                "/api/v1/purchases/**",
-                                "/api/v1/providers/**",
-                                "/api/v1/warehouses/**"
-                        ).hasRole(UserRole.ADMIN.name())
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(basic -> basic.realmName("BookService"))
                 .build();
