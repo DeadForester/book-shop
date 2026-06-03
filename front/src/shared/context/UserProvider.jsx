@@ -9,7 +9,8 @@ const UserProvider = ({ children }) => {
 
     const fetchUser = useCallback(async () => {
         const response = await UserService.getUserById(localStorage.getItem('userId'));
-        setCurrentUser(response.data);
+
+        setCurrentUser({ ...response.data, isAdmin: response.data.user_role === 'ADMIN' });
     }, []);
 
     const [getUser, isLoading, error] = useFetching(fetchUser);

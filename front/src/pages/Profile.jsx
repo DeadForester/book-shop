@@ -24,6 +24,11 @@ export default function Profile() {
     }, [getUser]);
 
     useEffect(() => {
+        console.log('User: ' + currentUser);
+        console.log('User admin: ' + currentUser.isAdmin);
+    }, [currentUser]);
+
+    useEffect(() => {
         if (error) {
             console.error('Ошибка загрузки профиля:', error);
         }
