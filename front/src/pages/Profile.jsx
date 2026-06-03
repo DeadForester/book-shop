@@ -16,15 +16,17 @@ import DevPlaceholder from '../shared/components/DevPlaceholder.jsx';
 import { useFetching } from '../hooks/useFetching.js';
 import UserService from '../API/UserService.js';
 import Loader from '../shared/components/Loader.jsx';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function Profile() {
     const [currentUser, setCurrentUser] = useState(mockUser);
 
-    const [getUser, isLoading, error] = useFetching(async () => {
+    const fetchUser = useCallback(async () => {
         const response = await UserService.getUserById(localStorage.getItem('userId'));
         setCurrentUser(response.data);
-    });
+    }, []);
+
+    const [getUser, isLoading, error] = useFetching(fetchUser);
 
     useEffect(() => {
         void getUser();
