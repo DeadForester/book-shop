@@ -49,5 +49,6 @@ public interface UserMapper {
      * @param user сущность пользователя из базы данных
      * @return DTO {@link GetUserById}
      */
+    @Mapping(target = "userRole",source = "role" )
     GetUserById toUserById(User user);
 }

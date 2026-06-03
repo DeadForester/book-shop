@@ -2,6 +2,7 @@ package dev.bookservice.web.dto.user;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import dev.bookservice.entity.user.UserRole;
 import lombok.Data;
 
 /**
@@ -24,4 +25,6 @@ public class GetUserById {
      * Используется как основной логин для аутентификации в системе.
      */
     private String email;
+
+    private UserRole userRole;
 }
