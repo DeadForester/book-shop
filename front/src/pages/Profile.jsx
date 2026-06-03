@@ -13,16 +13,37 @@ import { Link as RouterLink } from 'react-router-dom';
 import InfoSection from '../components/profile-page/InfoSection.jsx';
 import { mockUser } from '../data/user.js';
 import DevPlaceholder from '../shared/components/DevPlaceholder.jsx';
+import { useFetching } from '../hooks/useFetching.js';
+import UserService from '../API/UserService.js';
+import Loader from '../shared/components/Loader.jsx';
+import { useEffect, useState } from 'react';
 
-export default function Profile({ user = null }) {
-    const currentUser = user || mockUser;
+export default function Profile() {
+    const [currentUser, setCurrentUser] = useState(mockUser);
 
-    const avatarLetter = currentUser.email ? currentUser.email.charAt(0).toUpperCase() : 'U';
+    const [getUser, isLoading, error] = useFetching(
+        async () => {
+            const response = await UserService.getUserById(localStorage.getItem('userId'));
+            setCurrentUser(response.data);
+        }
+    );
 
-    const isAdmin = currentUser.isAdmin;
+    useEffect(() => {
+        void getUser();
+
+        if (error) {
+            console.error(error);
+        }
+    }, [error, getUser]);
+
+    const isAdmin = mockUser.isAdmin;
     const navTo = isAdmin ? '/dashboard' : '/orders';
     const navLabel = isAdmin ? 'Панель администратора' : 'История заказов';
     const NavIcon = isAdmin ? Dashboard : History;
+
+    if (isLoading){
+        return <Loader />;
+    }
 
     return (
         <Container maxWidth="md" sx={{ mt: 4, mb: 6 }}>
@@ -44,11 +65,11 @@ export default function Profile({ user = null }) {
                         boxShadow: 3,
                     }}
                 >
-                    {avatarLetter}
+                    {currentUser.email.charAt(0).toUpperCase()}
                 </Avatar>
                 <Box>
                     <Typography variant="h4" component="h1" fontWeight="700">
-                        {currentUser.name || 'Пользователь'}
+                        {currentUser.name ?? 'Пользователь'}
                     </Typography>
                     <Typography
                         variant="body1"
@@ -104,10 +125,10 @@ export default function Profile({ user = null }) {
                         title="Личные данные"
                         icon={<Person color="primary" />}
                         items={[
-                            { label: 'Телефон', value: currentUser.phone },
+                            { label: 'Телефон', value: currentUser.phone ?? '+7 (9__) ___-__-__' },
                             {
                                 label: 'Дата регистрации',
-                                value: currentUser.joinDate,
+                                value: currentUser.joinDate ?? 'dd.mm.yyyy',
                             },
                         ]}
                     />

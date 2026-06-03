@@ -4,13 +4,14 @@ import { useFetching } from '../../hooks/useFetching.js';
 import AuthService from '../../API/AuthService.js';
 
 const AuthProvider = ({children}) => {
-    const [isAuth, setIsAuth] = useState(!!localStorage.getItem('userId'));
+    const [isAuth, setIsAuth] = useState(localStorage.getItem('remember') === 'true');
 
     const [login, isLoginLoading, loginError] = useFetching(async (email, password, rememberMe) => {
         const response = await AuthService.login(email, password);
         if (rememberMe) {
-            localStorage.setItem('userId', response.data.user_id);
+            localStorage.setItem('remember', 'true');
         }
+        localStorage.setItem('userId', response.data.user_id);
         setIsAuth(true);
     });
 
@@ -23,6 +24,7 @@ const AuthProvider = ({children}) => {
     const logout = () => {
         setIsAuth(false);
         localStorage.removeItem('userId');
+        localStorage.removeItem('remember');
     }
 
     const value = useMemo(
