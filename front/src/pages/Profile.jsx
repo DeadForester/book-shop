@@ -21,20 +21,20 @@ import { useEffect, useState } from 'react';
 export default function Profile() {
     const [currentUser, setCurrentUser] = useState(mockUser);
 
-    const [getUser, isLoading, error] = useFetching(
-        async () => {
-            const response = await UserService.getUserById(localStorage.getItem('userId'));
-            setCurrentUser(response.data);
-        }
-    );
+    const [getUser, isLoading, error] = useFetching(async () => {
+        const response = await UserService.getUserById(localStorage.getItem('userId'));
+        setCurrentUser(response.data);
+    });
 
     useEffect(() => {
         void getUser();
+    }, [getUser]);
 
+    useEffect(() => {
         if (error) {
-            console.error(error);
+            console.error('Ошибка загрузки профиля:', error);
         }
-    }, []);
+    }, [error]);
 
     const isAdmin = mockUser.isAdmin;
     const navTo = isAdmin ? '/dashboard' : '/orders';
