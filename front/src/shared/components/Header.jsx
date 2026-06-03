@@ -1,4 +1,5 @@
 import {AppBar, IconButton, Toolbar, Badge, Link} from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom';
 import {ShoppingBasket} from '@mui/icons-material';
 import {useBasketContext} from "../../hooks/useBasketContext.js";
 import UserCircle from "./UserCircle.jsx";
@@ -10,7 +11,8 @@ const Header = ({handleCart}) => {
         <AppBar position="static">
             <Toolbar>
                 <Link
-                    href="/"
+                    component={RouterLink}
+                    to="/"
                     underline="none"
                     sx={{ typography: 'h6', flexGrow: 1, color: 'inherit' }}
                 >
@@ -19,15 +21,9 @@ const Header = ({handleCart}) => {
 
                 <UserCircle />
 
-                <IconButton
-                    color="inherit"
-                    onClick={handleCart}
-                >
-                    <Badge
-                        color="secondary"
-                        badgeContent={order.length}
-                    >
-                        <ShoppingBasket/>
+                <IconButton color="inherit" onClick={handleCart}>
+                    <Badge color="secondary" badgeContent={order.length}>
+                        <ShoppingBasket />
                     </Badge>
                 </IconButton>
             </Toolbar>
