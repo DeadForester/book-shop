@@ -34,7 +34,7 @@ export default function Profile() {
         if (error) {
             console.error(error);
         }
-    }, [error, getUser]);
+    }, []);
 
     const isAdmin = mockUser.isAdmin;
     const navTo = isAdmin ? '/dashboard' : '/orders';
