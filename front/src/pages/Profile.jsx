@@ -24,7 +24,7 @@ export default function Profile() {
     }, [getUser]);
 
     useEffect(() => {
-        console.log('User: ' + currentUser);
+        console.log(currentUser);
         console.log('User admin: ' + currentUser.isAdmin);
     }, [currentUser]);
 
