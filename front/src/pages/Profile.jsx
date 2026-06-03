@@ -11,22 +11,13 @@ import {
 } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import InfoSection from '../components/profile-page/InfoSection.jsx';
-import { mockUser } from '../data/user.js';
 import DevPlaceholder from '../shared/components/DevPlaceholder.jsx';
-import { useFetching } from '../hooks/useFetching.js';
-import UserService from '../API/UserService.js';
 import Loader from '../shared/components/Loader.jsx';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import {useUserContext} from "../hooks/useUserContext.js";
 
 export default function Profile() {
-    const [currentUser, setCurrentUser] = useState(mockUser);
-
-    const fetchUser = useCallback(async () => {
-        const response = await UserService.getUserById(localStorage.getItem('userId'));
-        setCurrentUser(response.data);
-    }, []);
-
-    const [getUser, isLoading, error] = useFetching(fetchUser);
+    const { getUser, isLoading, error, currentUser } = useUserContext();
 
     useEffect(() => {
         void getUser();
@@ -37,11 +28,6 @@ export default function Profile() {
             console.error('Ошибка загрузки профиля:', error);
         }
     }, [error]);
-
-    const isAdmin = mockUser.isAdmin;
-    const navTo = isAdmin ? '/dashboard' : '/orders';
-    const navLabel = isAdmin ? 'Панель администратора' : 'История заказов';
-    const NavIcon = isAdmin ? Dashboard : History;
 
     if (isLoading){
         return <Loader />;
@@ -87,8 +73,8 @@ export default function Profile() {
                         {currentUser.email}
                     </Typography>
                     <Chip
-                        label={isAdmin ? 'Администратор' : 'Покупатель'}
-                        color={isAdmin ? 'error' : 'success'}
+                        label={currentUser.isAdmin ? 'Администратор' : 'Покупатель'}
+                        color={currentUser.isAdmin ? 'error' : 'success'}
                         size="small"
                         sx={{ mt: 1 }}
                     />
@@ -97,17 +83,17 @@ export default function Profile() {
 
             <Button
                 component={RouterLink}
-                to={navTo}
+                to={currentUser.isAdmin ? '/dashboard' : '/orders'}
                 variant="contained"
                 size="large"
-                startIcon={<NavIcon />}
+                startIcon={currentUser.isAdmin ? <Dashboard /> : <History />}
                 fullWidth
                 sx={{ mb: 4, py: 1.5, fontSize: '1.1rem' }}
             >
-                {navLabel}
+                {currentUser.isAdmin ? 'Панель администратора' : 'История заказов'}
             </Button>
 
-            {isAdmin && (
+            {currentUser.isAdmin && (
                 <Button
                     component={RouterLink}
                     to="/storageOrder"

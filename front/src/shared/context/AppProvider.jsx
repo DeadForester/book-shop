@@ -1,12 +1,13 @@
 import AuthProvider from "./AuthProvider.jsx";
 import BasketProvider from "./BasketProvider.jsx";
+import UserProvider from './UserProvider.jsx';
 
 const AppProvider = ({ children }) => {
     return (
         <AuthProvider>
-            <BasketProvider>
-                {children}
-            </BasketProvider>
+            <UserProvider>
+                <BasketProvider>{children}</BasketProvider>
+            </UserProvider>
         </AuthProvider>
     );
 };
