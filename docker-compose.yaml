@@ -98,6 +98,23 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_container
+    networks:
+      - book-shop
+    ports:
+      - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: demo@example.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    restart: unless-stopped
+
   grafana:
     env_file:
       - .env
