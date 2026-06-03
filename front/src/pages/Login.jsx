@@ -35,7 +35,7 @@ const Login = () => {
 
         const validationsErrors = validateCredentials(email, password);
 
-        if (validationsErrors) {
+        if (validationsErrors && Object.keys(validationsErrors).length > 0) {
             setErrors(validationsErrors);
             return;
         }
