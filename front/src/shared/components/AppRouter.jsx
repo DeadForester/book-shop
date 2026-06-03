@@ -7,10 +7,16 @@ import { useAuthContext } from '../../hooks/useAuthContext.js';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import Error from '../../pages/Error.jsx';
 import { useUserContext } from '../../hooks/useUserContext.js';
+import { useEffect } from 'react';
 
 const AppRouter = () => {
     const { isAuth } = useAuthContext();
     const { currentUser } = useUserContext();
+
+    useEffect(() => {
+        console.log('Router user: ');
+        console.log(currentUser);
+    }, [currentUser]);
 
     return (
         <Routes>
