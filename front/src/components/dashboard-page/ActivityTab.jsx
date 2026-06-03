@@ -6,18 +6,16 @@ const ActivityTab = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <Chart
                 url={
-                    'http://localhost:3000/d-solo/adz5sdc/analitika-v-knizhnomu-magazinu?orgId=1&timezone=browser&var-query0=&theme=light&panelId=panel-8'
+                    'http://localhost:3001/d-solo/adz5sdc/analitika-v-knizhnomu-magazinu?orgId=1&timezone=browser&var-query0=&theme=light&panelId=panel-8'
                 }
                 title={'Воронка статусов заказов'}
-                shortTitle={'Статусы заказов'}
             />
 
             <Chart
                 url={
-                    'http://localhost:3000/d-solo/adz5sdc/analitika-v-knizhnomu-magazinu?orgId=1&timezone=browser&var-query0=&theme=light&panelId=panel-7'
+                    'http://localhost:3001/d-solo/adz5sdc/analitika-v-knizhnomu-magazinu?orgId=1&timezone=browser&var-query0=&theme=light&panelId=panel-7'
                 }
                 title={'Тепловая карта активности'}
-                shortTitle={'Карта активности'}
             />
         </Box>
     );
