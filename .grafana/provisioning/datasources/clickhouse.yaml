@@ -14,3 +14,5 @@ datasources:
       port: 8123
       server: clickhouse
       useYandexCloudAuthorization: false
+    isDefault: false
+    editable: true
