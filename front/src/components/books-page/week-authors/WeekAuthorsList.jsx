@@ -3,7 +3,7 @@ import { Person } from '@mui/icons-material';
 import { goods } from '../../../data/goods.js';
 
 const WeekAuthorsList = () => {
-    const authors = [...new Set(goods.map((book) => book.author).filter(Boolean))].slice(0, 5);
+    const authors = [...new Set(goods.map((book) => book.author).filter(Boolean))].slice(31, 36);
     if (authors.length === 0) return null;
 
     return (

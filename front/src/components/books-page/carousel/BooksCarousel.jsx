@@ -7,7 +7,7 @@ import { goods } from '../../../data/goods.js';
 import CarouselItem from './CarouselItem.jsx';
 
 export default function BooksCarousel() {
-    const [books] = useState(goods.slice(0, 6));
+    const [books] = useState(goods.slice(21, 27));
 
     const [emblaRef, emblaApi] = useEmblaCarousel(
         { loop: true, align: 'start', containScroll: 'trimSnaps' },

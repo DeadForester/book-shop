@@ -4,7 +4,7 @@ import { Stack } from '@mui/material';
 import YearBooksItem from './YearBooksItem.jsx';
 
 export default function YearBooksList() {
-    const [booksPop] = useState(goods.slice(0, 5));
+    const [booksPop] = useState(goods.slice(45, 51));
 
     if (booksPop.length === 0) return null;
 

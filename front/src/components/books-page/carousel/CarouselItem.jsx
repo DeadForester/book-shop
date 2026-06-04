@@ -66,7 +66,7 @@ const CarouselItem = ({ book }) => {
                             WebkitBoxOrient: 'vertical',
                         }}
                     >
-                        {book.bookDescription ?? 'Описание книги'}
+                        {book.description ?? 'Описание книги'}
                     </Typography>
                     <Button
                         variant="contained"
