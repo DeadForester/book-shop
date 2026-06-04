@@ -32,14 +32,13 @@ export default function BooksItem({ book }) {
             elevation={2}
         >
             <Box sx={{ display: 'flex', borderBottom: '1px solid', borderColor: 'divider' }}>
-                {/* 🔑 Фикс ширины картинки */}
                 <CardMedia
                     component="img"
                     image={book.poster}
                     alt={book.name}
                     sx={{
-                        width: 160,
-                        height: 220,
+                        width: 180,
+                        height: 300,
                         flexShrink: 0,
                         minWidth: 160,
                         objectFit: 'cover',
