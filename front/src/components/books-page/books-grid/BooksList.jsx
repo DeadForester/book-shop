@@ -36,11 +36,10 @@ export default function BooksList() {
             const matchesSearch =
                 !searchQuery.trim() || book.name.toLowerCase().includes(searchQuery.toLowerCase());
             const matchesGenre =
-                !selectedGenre || book.idGenreNavigation?.genreName === selectedGenre;
+                !selectedGenre || book.genre === selectedGenre;
             return matchesSearch && matchesGenre;
         });
 
-        // Сортировка по цене
         if (sortBy === 'price-asc') {
             result = [...result].sort((a, b) => (a.price || 0) - (b.price || 0));
         } else if (sortBy === 'price-desc') {
