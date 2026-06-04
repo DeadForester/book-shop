@@ -1,6 +1,7 @@
 INSERT INTO USRS (USER_ID, EMAIL, PASSWORD, ROLE)
 VALUES(4, 'test123@example.com', '123', 'USER'),
-    (5, 'test12@example.com', '123', 'USER');
+    (5, 'test12@example.com', '123', 'USER')
+    ON CONFLICT (USER_ID) DO NOTHING;;
 
 -- ==========================================
 -- НОВЫЕ АВТОРЫ
