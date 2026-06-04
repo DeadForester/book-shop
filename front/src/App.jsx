@@ -8,7 +8,7 @@ const App = () => {
     const [isCartOpen, setCartOpen] = useState(false);
     const location = useLocation();
 
-    const hideHeaderPaths = ['/login', '/register', '/panel'];
+    const hideHeaderPaths = ['/login', '/register'];
     const shouldShowHeader = !hideHeaderPaths.includes(location.pathname);
 
     return (

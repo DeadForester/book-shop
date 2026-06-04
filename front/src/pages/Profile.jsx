@@ -88,7 +88,7 @@ export default function Profile() {
 
             <Button
                 component={RouterLink}
-                to={currentUser.isAdmin ? '/dashboard' : '/orders'}
+                to={currentUser.isAdmin ? '/panel' : '/orders'}
                 variant="contained"
                 size="large"
                 startIcon={currentUser.isAdmin ? <Dashboard /> : <History />}
