@@ -21,32 +21,6 @@ services:
       retries: 3
     restart: unless-stopped
 
-  clickhouse:
-    env_file:
-      - .env
-    networks:
-      - book-shop
-    container_name: clickhouse_container
-    image: clickhouse/clickhouse-server:latest
-    environment:
-      CLICKHOUSE_DB: "${CLICKHOUSE_DB}"
-      CLICKHOUSE_USER: "${CLICKHOUSE_USER}"
-      CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD}"
-    ports:
-      - "8123:8123"
-      - "9999:9000"
-    volumes:
-      - clickhouse_data:/var/lib/clickhouse
-    healthcheck:
-      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8123/ping" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    depends_on:
-      postgres_db:
-        condition: service_healthy
-    restart: unless-stopped
-
   minio:
     env_file:
       - .env
@@ -133,8 +107,6 @@ services:
       - grafana_data:/var/lib/grafana
       - ./.grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
       - ./.grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-    depends_on:
-      - clickhouse
     restart: unless-stopped
 
   backend:
@@ -148,9 +120,6 @@ services:
       APP_DATASOURCE_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
       APP_DATASOURCE_USERNAME: "${POSTGRES_USER}"
       APP_DATASOURCE_PASSWORD: "${POSTGRES_PASSWORD}"
-      APP_CLICKHOUSE_URL: "jdbc:ch://clickhouse:8123/${CLICKHOUSE_DB}"
-      APP_CLICKHOUSE_USER: "${CLICKHOUSE_USER}"
-      APP_CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD}"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres_db:5432/${POSTGRES_DB}"
       SPRING_DATASOURCE_USERNAME: "${POSTGRES_USER}"
       SPRING_DATASOURCE_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -169,8 +138,6 @@ services:
       minio:
         condition: service_healthy
       redis:
-        condition: service_healthy
-      clickhouse:
         condition: service_healthy
     restart: unless-stopped
 
