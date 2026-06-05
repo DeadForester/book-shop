@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { Email, Login as LoginIcon } from '@mui/icons-material';
 import { useAuthContext } from '../hooks/useAuthContext.js';
-import { validateCredentials } from '../utils/validateCredentials.js';
+import { validateCredentials } from '../utils/validateCredentials.ts';
 import Password from '../shared/components/Password.jsx';
 
 const Login = () => {
@@ -42,7 +42,7 @@ const Login = () => {
 
         await login(email, password, rememberMe);
 
-        if (loginError){
+        if (loginError) {
             setSnackbar({
                 open: true,
                 message: 'Не верные данные пользователя.',

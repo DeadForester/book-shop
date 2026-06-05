@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
 import Password from '../shared/components/Password.jsx';
-import { validateCredentials } from '../utils/validateCredentials.js';
+import { validateCredentials } from '../utils/validateCredentials.ts';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 
 const Register = () => {

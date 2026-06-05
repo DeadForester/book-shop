@@ -1,4 +1,6 @@
-export const mockUser = {
+import { User } from '@/types/User.ts';
+
+export const mockUser: User = {
     email: 'alex.ivanov@bookshop.ru',
     name: 'Алексей Иванов',
     isAdmin: false,

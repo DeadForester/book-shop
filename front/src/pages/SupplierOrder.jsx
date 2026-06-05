@@ -9,9 +9,9 @@ import {
     Typography,
 } from '@mui/material';
 import { Business, Search } from '@mui/icons-material';
-import { providers } from '../data/providers.js';
+import { providers } from '../data/providers.ts';
 import { BooksTable, SummarizePanel } from '../components/supplier-order-page';
-import { goods } from '../data/goods.js';
+import { goods } from '../data/goods.ts';
 
 export default function SupplierOrder() {
     const [search, setSearch] = useState('');

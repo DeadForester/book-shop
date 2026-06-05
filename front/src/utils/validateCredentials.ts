@@ -1,5 +1,15 @@
-export const validateCredentials = (email, password, confirmPassword = null) => {
-    const newErrors = {};
+import { CredentialsErrors } from '@/utils/CredentialsErrors.ts';
+
+export const validateCredentials = (
+    email: string,
+    password: string,
+    confirmPassword: string | null = null
+) => {
+    const newErrors: CredentialsErrors = {
+        email: '',
+        password: '',
+        confirmPassword: '',
+    };
 
     validateEmail(email, newErrors);
 
@@ -10,7 +20,7 @@ export const validateCredentials = (email, password, confirmPassword = null) => 
     return newErrors;
 };
 
-const validateEmail = (email, newErrors) => {
+const validateEmail = (email: string, newErrors: CredentialsErrors) => {
     if (!email.trim()) {
         newErrors.email = 'Введите email';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -18,7 +28,7 @@ const validateEmail = (email, newErrors) => {
     }
 };
 
-const validatePassword = (password, newErrors) => {
+const validatePassword = (password: string, newErrors: CredentialsErrors) => {
     if (!password) {
         newErrors.password = 'Введите пароль';
     } else if (password.length < 6) {
@@ -26,7 +36,11 @@ const validatePassword = (password, newErrors) => {
     }
 };
 
-const validatePasswordConfirm = (password, confirmPassword, newErrors) => {
+const validatePasswordConfirm = (
+    password: string,
+    confirmPassword: string,
+    newErrors: CredentialsErrors
+) => {
     if (!confirmPassword) newErrors.confirmPassword = 'Повторите пароль';
     else if (password !== confirmPassword) newErrors.confirmPassword = 'Пароли не совпадают';
 };

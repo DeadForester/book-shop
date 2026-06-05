@@ -4,7 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 import HistoryEmpty from '../components/order-history-page/HistoryEmpty.jsx';
 import PaginationControls from '../shared/components/PaginationControls.jsx';
 import HistoryList from '../components/order-history-page/HistoryList.jsx';
-import { generateMockOrders } from '../data/generateMockOrders.js';
+import { generateMockOrders } from '../data/generateMockOrders.ts';
 
 export default function OrderHistory() {
     const [orders] = useState(() => generateMockOrders(25));

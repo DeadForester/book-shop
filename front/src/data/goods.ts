@@ -1,6 +1,7 @@
-import { providers } from './providers.js';
+import { providers } from './providers.ts';
+import { Book } from '../types/Book.ts';
 
-export const goods = [
+export const goods: Book[] = [
     // ===== ПРОГРАММИРОВАНИЕ (1-12) =====
     {
         id: '01',

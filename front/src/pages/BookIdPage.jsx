@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
-import { goods } from '../data/goods.js';
+import { goods } from '../data/goods.ts';
 import { Box, Button, Chip, Container, Divider, Grid, Paper, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useBasketContext } from '../hooks/useBasketContext.js';

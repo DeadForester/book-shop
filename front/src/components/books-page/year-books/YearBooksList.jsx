@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { goods } from '../../../data/goods.js';
+import { goods } from '../../../data/goods.ts';
 import { Stack } from '@mui/material';
 import YearBooksItem from './YearBooksItem.jsx';
 

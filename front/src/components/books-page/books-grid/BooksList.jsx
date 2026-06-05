@@ -13,7 +13,7 @@ import BooksItem from './BooksItem.jsx';
 import { useMemo, useState } from 'react';
 import { ArrowDownward, ArrowUpward, Search } from '@mui/icons-material';
 import PaginationControls from '../../../shared/components/PaginationControls.jsx';
-import { goods } from '../../../data/goods.js';
+import { goods } from '../../../data/goods.ts';
 import AutocompleteSelector from '../../../shared/components/AutocompleteSelector.jsx';
 
 export default function BooksList() {
@@ -35,8 +35,7 @@ export default function BooksList() {
         let result = books.filter((book) => {
             const matchesSearch =
                 !searchQuery.trim() || book.name.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesGenre =
-                !selectedGenre || book.genre === selectedGenre;
+            const matchesGenre = !selectedGenre || book.genre === selectedGenre;
             return matchesSearch && matchesGenre;
         });
 

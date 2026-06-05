@@ -1,4 +1,4 @@
-export const generateMockOrders = (count) => {
+export const generateMockOrders = (count: number) => {
     const books = [
         '1984',
         'Мастер и Маргарита',

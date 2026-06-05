@@ -8,7 +8,7 @@ import {
     TableRow,
 } from '@mui/material';
 import { useMemo } from 'react';
-import { goods } from '../../../data/goods.js';
+import { goods } from '../../../data/goods.ts';
 import BooksTableItem from './BooksTableItem.jsx';
 
 const BooksTable = ({ search, selectedSupplier, orderItems, setOrderItems }) => {

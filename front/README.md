@@ -43,12 +43,12 @@ book-shop-front/
 │   ├── context/                    # React Context
 │   │   ├── auth.js                 #   Контекст аутентификации
 │   │   ├── basket.js               #   Контекст корзины
-│   │   └── user.js                 #   Контекст пользователя
+│   │   └── user.ts                 #   Контекст пользователя
 │   ├── data/                       # Моковые данные
-│   │   ├── generateMockOrders.js   #   Генератор тестовых заказов
-│   │   ├── goods.js                #   Товары (книги)
-│   │   ├── providers.js            #   Поставщики
-│   │   └── user.js                 #   Пользователи
+│   │   ├── generateMockOrders.ts   #   Генератор тестовых заказов
+│   │   ├── goods.ts                #   Товары (книги)
+│   │   ├── providers.ts            #   Поставщики
+│   │   └── user.ts                 #   Пользователи
 │   ├── hooks/                      # Кастомные хуки
 │   │   ├── useAuthContext.js       #   Доступ к контексту auth
 │   │   ├── useBasketContext.js     #   Доступ к контексту корзины
@@ -70,7 +70,7 @@ book-shop-front/
 │   ├── styles/                     # Глобальные стили
 │   │   └── index.css               #   Основной CSS-файл
 │   ├── utils/                      # Утилиты
-│   │   └── validateCredentials.js  #   Валидация email/пароля
+│   │   └── validateCredentials.ts  #   Валидация email/пароля
 │   ├── App.jsx                     # Корневой компонент приложения
 │   └── main.jsx                    # Точка входа
 ├── .dockerignore

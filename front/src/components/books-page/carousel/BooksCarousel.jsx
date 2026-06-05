@@ -3,7 +3,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Box, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { goods } from '../../../data/goods.js';
+import { goods } from '../../../data/goods.ts';
 import CarouselItem from './CarouselItem.jsx';
 
 export default function BooksCarousel() {
