@@ -1,16 +1,16 @@
-import {useCallback, useMemo, useState} from "react";
-import {BasketContext} from "../../context/basket.js";
+import { useCallback, useMemo, useState } from 'react';
+import { BasketContext } from '../../context/basket.ts';
 
-const BasketProvider = ({children}) => {
+const BasketProvider = ({ children }) => {
     const [order, setOrder] = useState([]);
 
     const removeFromOrder = useCallback((id) => {
-        setOrder(prev => prev.filter(item => item.id !== id));
+        setOrder((prev) => prev.filter((item) => item.id !== id));
     }, []);
 
     const addToOrder = useCallback((goodsItem) => {
-        setOrder(prev => {
-            const index = prev.findIndex(item => item.id === goodsItem.id);
+        setOrder((prev) => {
+            const index = prev.findIndex((item) => item.id === goodsItem.id);
 
             if (index > -1) {
                 // Обновляем количество у существующего товара
@@ -24,17 +24,16 @@ const BasketProvider = ({children}) => {
         });
     }, []);
 
-    const value = useMemo(() => ({
-        order,
-        removeFromOrder,
-        addToOrder
-    }), [addToOrder, order, removeFromOrder]);
-
-    return (
-        <BasketContext.Provider value={value}>
-            {children}
-        </BasketContext.Provider>
+    const value = useMemo(
+        () => ({
+            order,
+            removeFromOrder,
+            addToOrder,
+        }),
+        [addToOrder, order, removeFromOrder]
     );
+
+    return <BasketContext.Provider value={value}>{children}</BasketContext.Provider>;
 };
 
 export default BasketProvider;

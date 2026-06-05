@@ -1,4 +1,4 @@
-import { CredentialsErrors } from '@/utils/CredentialsErrors.ts';
+import { CredentialsErrors } from '@/utils/types/CredentialsErrors.ts';
 
 export const validateCredentials = (
     email: string,

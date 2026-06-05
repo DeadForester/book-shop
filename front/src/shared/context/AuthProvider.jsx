@@ -1,9 +1,9 @@
-import {useMemo, useState} from "react";
-import {AuthContext} from "../../context/auth.js";
+import { useMemo, useState } from 'react';
+import { AuthContext } from '../../context/auth.ts';
 import { useFetching } from '../../hooks/useFetching.js';
 import AuthService from '../../API/AuthService.js';
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
     const [isAuth, setIsAuth] = useState(localStorage.getItem('remember') === 'true');
 
     const [login, isLoginLoading, loginError] = useFetching(async (email, password, rememberMe) => {
@@ -20,12 +20,12 @@ const AuthProvider = ({children}) => {
             await AuthService.registration(email, password);
         }
     );
-    
+
     const logout = () => {
         setIsAuth(false);
         localStorage.removeItem('userId');
         localStorage.removeItem('remember');
-    }
+    };
 
     const value = useMemo(
         () => ({
@@ -49,11 +49,7 @@ const AuthProvider = ({children}) => {
         ]
     );
 
-    return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

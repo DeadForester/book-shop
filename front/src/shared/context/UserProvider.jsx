@@ -1,7 +1,7 @@
 import UserService from '../../API/UserService.js';
 import { useFetching } from '../../hooks/useFetching.js';
 import { useCallback, useMemo, useState } from 'react';
-import { UserContext } from '../../context/user.js';
+import { UserContext } from '../../context/user.ts';
 import { mockUser } from '../../data/user.ts';
 
 const UserProvider = ({ children }) => {
