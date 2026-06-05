@@ -24,13 +24,13 @@ book-shop-front/
 ├── public/                         # Статические файлы (favicon)
 ├── src/                            # Исходный код
 │   ├── API/                        # Сервисы для работы с бэкендом
-│   │   ├── AuthService.js          #   Аутентификация (логин, регистрация)
-│   │   ├── BookService.js          #   CRUD книг (список, детали)
-│   │   ├── OrderService.js         #   Заказы пользователей (список, создание)
-│   │   ├── PublisherService.js     #   Издательства
-│   │   ├── PurchaseService.js      #   Закупки у поставщиков
-│   │   ├── UserService.js          #   Пользователи
-│   │   └── WarehouseService.js     #   Складской учёт
+│   │   ├── AuthService.ts          #   Аутентификация (логин, регистрация)
+│   │   ├── BookService.ts          #   CRUD книг (список, детали)
+│   │   ├── OrderService.ts         #   Заказы пользователей (список, создание)
+│   │   ├── PublisherService.ts     #   Издательства
+│   │   ├── PurchaseService.ts      #   Закупки у поставщиков
+│   │   ├── UserService.ts          #   Пользователи
+│   │   └── WarehouseService.ts     #   Складской учёт
 │   ├── components/                 # UI-компоненты по разделам
 │   │   ├── basket/                 #   Корзина
 │   │   ├── book-id-page/           #   Страница книги

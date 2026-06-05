@@ -1,4 +1,4 @@
-import { User } from '@/types/User.ts';
+import { User } from '@/shared/types/User.ts';
 
 export const mockUser: User = {
     email: 'alex.ivanov@bookshop.ru',

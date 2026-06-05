@@ -1,4 +1,4 @@
-import UserService from '../../API/UserService.js';
+import UserService from '../../api/user/UserService.ts';
 import { useFetching } from '../../hooks/useFetching.js';
 import { useCallback, useMemo, useState } from 'react';
 import { UserContext } from '../../context/user.ts';

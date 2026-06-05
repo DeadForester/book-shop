@@ -1,5 +1,5 @@
 import { providers } from './providers.ts';
-import { Book } from '../types/Book.ts';
+import { Book } from '@/shared/types/Book.ts';
 
 export const goods: Book[] = [
     // ===== ПРОГРАММИРОВАНИЕ (1-12) =====
@@ -47,7 +47,7 @@ export const goods: Book[] = [
         price: 850,
         provider: providers[2],
         description:
-            'Введение в язык запросов GraphQL и его применение в современных API. Показаны преимущества перед REST и примеры интеграции.',
+            'Введение в язык запросов GraphQL и его применение в современных api. Показаны преимущества перед REST и примеры интеграции.',
         genre: 'Справочник',
         stock: 31,
     },

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { AuthContext } from '../../context/auth.ts';
 import { useFetching } from '../../hooks/useFetching.js';
-import AuthService from '../../API/AuthService.js';
+import AuthService from '../../api/auth/AuthService.ts';
 
 const AuthProvider = ({ children }) => {
     const [isAuth, setIsAuth] = useState(localStorage.getItem('remember') === 'true');
