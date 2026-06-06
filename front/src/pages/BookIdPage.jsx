@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { goods } from '../data/goods.ts';
 import { Box, Button, Chip, Container, Divider, Grid, Paper, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useBasketContext } from '../hooks/useBasketContext.js';
+import { useBasketContext } from '../hooks/useBasketContext.ts';
 import BookImage from '../components/book-id-page/BookImage.jsx';
 import BookRating from '../components/book-id-page/BookRating.jsx';
 import ActionButtons from '../components/book-id-page/ActionButtons.jsx';

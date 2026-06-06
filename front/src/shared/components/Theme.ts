@@ -8,11 +8,5 @@ export const theme = createTheme({
         secondary: {
             main: '#da61bf',
         },
-        palette: {
-            bookCard: {
-                even: '#ffcdd2',
-                odd: '#e1bee7',
-            },
-        },
     },
 });

@@ -3,10 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 import { adminRoutes, publicRoutes, userRoutes } from '../../router/routes.js';
 
 import Books from '../../pages/Books.jsx';
-import { useAuthContext } from '../../hooks/useAuthContext.js';
+import { useAuthContext } from '../../hooks/useAuthContext.ts';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import Error from '../../pages/Error.jsx';
-import { useUserContext } from '../../hooks/useUserContext.js';
+import { useUserContext } from '../../hooks/useUserContext.ts';
 import { useEffect } from 'react';
 
 const AppRouter = () => {

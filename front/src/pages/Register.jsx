@@ -15,7 +15,7 @@ import {
 import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
 import Password from '../shared/components/Password.jsx';
 import { validateCredentials } from '../utils/validateCredentials.ts';
-import { useAuthContext } from '../hooks/useAuthContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.ts';
 
 const Register = () => {
     const navigate = useNavigate();

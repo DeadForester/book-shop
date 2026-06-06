@@ -1,11 +1,11 @@
-import {IconButton, Avatar, Menu, MenuItem} from "@mui/material";
-import {AccountCircle} from '@mui/icons-material';
-import {useAuthContext} from "../../hooks/useAuthContext.js";
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
+import { AccountCircle } from '@mui/icons-material';
+import { useAuthContext } from '../../hooks/useAuthContext.ts';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const UserCircle = () => {
-    const {isAuth, logout} = useAuthContext();
+    const { isAuth, logout } = useAuthContext();
     const navigate = useNavigate();
     const user = {};
 

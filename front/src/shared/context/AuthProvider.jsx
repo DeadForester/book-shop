@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AuthContext } from '../../context/auth.ts';
-import { useFetching } from '../../hooks/useFetching.js';
+import { useFetching } from '../../hooks/useFetching.ts';
 import AuthService from '../../api/auth/AuthService.ts';
 
 const AuthProvider = ({ children }) => {

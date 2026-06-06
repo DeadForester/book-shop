@@ -14,7 +14,7 @@ import InfoSection from '../components/profile-page/InfoSection.jsx';
 import DevPlaceholder from '../shared/components/DevPlaceholder.jsx';
 import Loader from '../shared/components/Loader.jsx';
 import { useEffect } from 'react';
-import {useUserContext} from "../hooks/useUserContext.js";
+import { useUserContext } from '../hooks/useUserContext.ts';
 
 export default function Profile() {
     const { getUser, isLoading, error, currentUser } = useUserContext();
@@ -34,7 +34,7 @@ export default function Profile() {
         }
     }, [error]);
 
-    if (isLoading){
+    if (isLoading) {
         return <Loader />;
     }
 

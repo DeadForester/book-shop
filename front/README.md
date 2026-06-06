@@ -50,10 +50,10 @@ book-shop-front/
 │   │   ├── providers.ts            #   Поставщики
 │   │   └── user.ts                 #   Пользователи
 │   ├── hooks/                      # Кастомные хуки
-│   │   ├── useAuthContext.js       #   Доступ к контексту auth
-│   │   ├── useBasketContext.js     #   Доступ к контексту корзины
-│   │   ├── useFetching.js          #   Универсальный хук для запросов
-│   │   └── useUserContext.js       #   Доступ к контексту пользователя
+│   │   ├── useAuthContext.ts       #   Доступ к контексту auth
+│   │   ├── useBasketContext.ts     #   Доступ к контексту корзины
+│   │   ├── useFetching.ts          #   Универсальный хук для запросов
+│   │   └── useUserContext.ts       #   Доступ к контексту пользователя
 │   ├── pages/                      # Компоненты страниц
 │   │   ├── BookIdPage.jsx          #   Страница отдельной книги
 │   │   ├── Books.jsx               #   Каталог книг

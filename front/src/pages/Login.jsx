@@ -15,7 +15,7 @@ import {
     Typography,
 } from '@mui/material';
 import { Email, Login as LoginIcon } from '@mui/icons-material';
-import { useAuthContext } from '../hooks/useAuthContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.ts';
 import { validateCredentials } from '../utils/validateCredentials.ts';
 import Password from '../shared/components/Password.jsx';
 

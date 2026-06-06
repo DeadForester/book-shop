@@ -1,5 +1,5 @@
 import UserService from '../../api/user/UserService.ts';
-import { useFetching } from '../../hooks/useFetching.js';
+import { useFetching } from '../../hooks/useFetching.ts';
 import { useCallback, useMemo, useState } from 'react';
 import { UserContext } from '../../context/user.ts';
 import { mockUser } from '../../data/user.ts';

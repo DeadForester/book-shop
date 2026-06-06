@@ -1,11 +1,11 @@
-import {AppBar, IconButton, Toolbar, Badge, Link} from "@mui/material";
+import { AppBar, Badge, IconButton, Link, Toolbar } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import {ShoppingBasket} from '@mui/icons-material';
-import {useBasketContext} from "../../hooks/useBasketContext.js";
-import UserCircle from "./UserCircle.jsx";
+import { ShoppingBasket } from '@mui/icons-material';
+import { useBasketContext } from '../../hooks/useBasketContext.ts';
+import UserCircle from './UserCircle.jsx';
 
-const Header = ({handleCart}) => {
-    const {order} = useBasketContext();
+const Header = ({ handleCart }) => {
+    const { order } = useBasketContext();
 
     return (
         <AppBar position="static">

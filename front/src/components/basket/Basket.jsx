@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { ShoppingBasket } from '@mui/icons-material';
 import BasketItem from './BasketItem.jsx';
-import { useBasketContext } from '../../hooks/useBasketContext.js';
+import { useBasketContext } from '../../hooks/useBasketContext.ts';
 
 const Basket = ({ cartOpen, closeCart = Function.prototype }) => {
     const { order } = useBasketContext();
