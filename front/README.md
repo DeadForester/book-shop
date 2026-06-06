@@ -35,7 +35,6 @@ book-shop-front/
 │   │   ├── basket/                 #   Корзина
 │   │   ├── book-id-page/           #   Страница книги
 │   │   ├── books-page/             #   Каталог книг
-│   │   ├── dashboard-page/         #   Панель управления / админка
 │   │   ├── order-history-page/     #   История заказов
 │   │   ├── profile-page/           #   Профиль пользователя
 │   │   ├── supplier-order-page/    #   Заказ у поставщика
@@ -57,7 +56,6 @@ book-shop-front/
 │   ├── pages/                      # Компоненты страниц
 │   │   ├── BookIdPage.jsx          #   Страница отдельной книги
 │   │   ├── Books.jsx               #   Каталог книг
-│   │   ├── Dashboard.jsx           #   Панель управления / админка
 │   │   ├── Error.jsx               #   Страница ошибки
 │   │   ├── Login.jsx               #   Страница входа
 │   │   ├── OrderHistory.jsx        #   История заказов
