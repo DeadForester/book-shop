@@ -1,13 +1,14 @@
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
-import { useAuthContext } from '../../hooks/useAuthContext.ts';
+import { useAuthContext } from '@/hooks/useAuthContext.ts';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useUserContext } from '@/hooks/useUserContext.ts';
 
 const UserCircle = () => {
     const { isAuth, logout } = useAuthContext();
     const navigate = useNavigate();
-    const user = {};
+    const {} = useUserContext();
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);

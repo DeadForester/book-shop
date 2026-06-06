@@ -1,22 +1,25 @@
 import { useMemo, useState } from 'react';
-import { AuthContext } from '../../context/auth.ts';
-import { useFetching } from '../../hooks/useFetching.ts';
-import AuthService from '../../api/auth/AuthService.ts';
+import { AuthContext } from '@/context/auth.ts';
+import { useFetching } from '@/hooks/useFetching.ts';
+import AuthService from '@/api/auth/AuthService.ts';
+import { AuthContextType } from '@/shared/types/AuthContextType.ts';
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }: any) => {
     const [isAuth, setIsAuth] = useState(localStorage.getItem('remember') === 'true');
 
-    const [login, isLoginLoading, loginError] = useFetching(async (email, password, rememberMe) => {
-        const response = await AuthService.login(email, password);
-        if (rememberMe) {
-            localStorage.setItem('remember', 'true');
+    const [login, isLoginLoading, loginError] = useFetching(
+        async (email: string, password: string, rememberMe: boolean) => {
+            const response = await AuthService.login(email, password);
+            if (rememberMe) {
+                localStorage.setItem('remember', 'true');
+            }
+            localStorage.setItem('userId', response.data.user_id);
+            setIsAuth(true);
         }
-        localStorage.setItem('userId', response.data.user_id);
-        setIsAuth(true);
-    });
+    );
 
     const [registration, isRegistrationLoading, registrationError] = useFetching(
-        async (email, password) => {
+        async (email: string, password: string) => {
             await AuthService.registration(email, password);
         }
     );
@@ -27,8 +30,8 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('remember');
     };
 
-    const value = useMemo(
-        () => ({
+    const value: AuthContextType = useMemo(
+        (): AuthContextType => ({
             isAuth,
             login,
             isLoginLoading,

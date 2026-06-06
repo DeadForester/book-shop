@@ -1,5 +1,5 @@
-import AuthProvider from "./AuthProvider.jsx";
-import BasketProvider from "./BasketProvider.jsx";
+import AuthProvider from './AuthProvider.tsx';
+import BasketProvider from './BasketProvider.jsx';
 import UserProvider from './UserProvider.jsx';
 
 const AppProvider = ({ children }) => {
