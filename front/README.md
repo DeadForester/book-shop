@@ -70,7 +70,7 @@ book-shop-front/
 │   ├── utils/                      # Утилиты
 │   │   └── validateCredentials.ts  #   Валидация email/пароля
 │   ├── App.jsx                     # Корневой компонент приложения
-│   └── main.jsx                    # Точка входа
+│   └── main.tsx                    # Точка входа
 ├── .dockerignore
 ├── .gitignore
 ├── .prettierignore
