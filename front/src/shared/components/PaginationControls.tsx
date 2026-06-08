@@ -1,6 +1,13 @@
 import { Box, Pagination } from '@mui/material';
+import { ChangeEvent } from 'react';
 
-const PaginationControls = ({ page, totalPages, onPageChange }) => {
+interface PaginationControlsProps {
+    page: number;
+    totalPages: number;
+    onPageChange: (event: ChangeEvent<unknown, Element>, page: number) => void;
+}
+
+const PaginationControls = ({ page, totalPages, onPageChange }: PaginationControlsProps) => {
     if (totalPages <= 1) return <></>;
 
     return (

@@ -1,19 +1,23 @@
-import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
-import { useAuthContext } from '@/hooks/useAuthContext.ts';
+import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
+import { MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useUserContext } from '@/hooks/useUserContext.ts';
+
+import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import Loader from '@/shared/components/Loader.tsx';
+import { logout } from '@/store/reducers/auth/authSlice.ts';
 
 const UserCircle = () => {
-    const { isAuth, logout } = useAuthContext();
     const navigate = useNavigate();
-    const {} = useUserContext();
+    const { isAuth, currentUser, isUserLoading, userError } = useAppSelector((state) => state.auth);
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    const dispatch = useAppDispatch();
+
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = Boolean(anchorEl);
 
-    const handleMenuOpen = (event) => {
+    const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
         if (!isAuth) {
             navigate('/login');
         } else {
@@ -31,17 +35,25 @@ const UserCircle = () => {
     };
 
     const handleLogout = () => {
-        logout();
+        dispatch(logout());
         handleMenuClose();
         navigate('/');
     };
+
+    if (isUserLoading) {
+        return <Loader />;
+    }
+
+    if (currentUser === null) {
+        return <h1>{userError}</h1>;
+    }
 
     return (
         <>
             <IconButton color="inherit" onClick={handleMenuOpen}>
                 {isAuth ? (
                     <Avatar sx={{ width: 32, height: 32, backgroundColor: 'secondary.main' }}>
-                        {user.name?.charAt(0) || user.email?.charAt(0) || 'U'}
+                        {currentUser.name?.charAt(0) || currentUser.email?.charAt(0) || 'U'}
                     </Avatar>
                 ) : (
                     <AccountCircle />

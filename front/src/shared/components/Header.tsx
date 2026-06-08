@@ -1,11 +1,17 @@
+import { ShoppingBasket } from '@mui/icons-material';
 import { AppBar, Badge, IconButton, Link, Toolbar } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { ShoppingBasket } from '@mui/icons-material';
-import { useBasketContext } from '../../hooks/useBasketContext.ts';
+
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+
 import UserCircle from './UserCircle.tsx';
 
-const Header = ({ handleCart }) => {
-    const { order } = useBasketContext();
+interface HeaderProps {
+    handleCart: () => void;
+}
+
+const Header = ({ handleCart }: HeaderProps) => {
+    const { items } = useAppSelector((state) => state.cart);
 
     return (
         <AppBar position="static">
@@ -22,7 +28,7 @@ const Header = ({ handleCart }) => {
                 <UserCircle />
 
                 <IconButton color="inherit" onClick={handleCart}>
-                    <Badge color="secondary" badgeContent={order.length}>
+                    <Badge color="secondary" badgeContent={items.length}>
                         <ShoppingBasket />
                     </Badge>
                 </IconButton>

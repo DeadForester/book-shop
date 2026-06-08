@@ -1,17 +1,15 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { adminRoutes, publicRoutes, userRoutes } from '../../router/routes.js';
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import Books from '@/pages/Books.jsx';
+import Error from '@/pages/Error.jsx';
+import { adminRoutes, publicRoutes, userRoutes } from '@/router/routes';
 
-import Books from '../../pages/Books.jsx';
-import { useAuthContext } from '../../hooks/useAuthContext.ts';
-import ProtectedRoute from './ProtectedRoute.jsx';
-import Error from '../../pages/Error.jsx';
-import { useUserContext } from '../../hooks/useUserContext.ts';
-import { useEffect } from 'react';
+import ProtectedRoute from './ProtectedRoute.tsx';
 
 const AppRouter = () => {
-    const { isAuth } = useAuthContext();
-    const { currentUser } = useUserContext();
+    const { currentUser, isAuth } = useAppSelector((state) => state.auth);
 
     useEffect(() => {
         console.log('Router user: ');
@@ -34,7 +32,7 @@ const AppRouter = () => {
                             element={<route.element />}
                         />
                     ))}
-                {currentUser.isAdmin &&
+                {currentUser?.isAdmin &&
                     adminRoutes.map((route, index) => (
                         <Route
                             key={`private-${index}`}

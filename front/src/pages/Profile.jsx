@@ -11,8 +11,8 @@ import {
 } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import InfoSection from '../components/profile-page/InfoSection.jsx';
-import DevPlaceholder from '../shared/components/DevPlaceholder.jsx';
-import Loader from '../shared/components/Loader.jsx';
+import DevPlaceholder from '../shared/components/DevPlaceholder.tsx';
+import Loader from '../shared/components/Loader.tsx';
 import { useEffect } from 'react';
 import { useUserContext } from '../hooks/useUserContext.ts';
 

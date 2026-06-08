@@ -12,9 +12,9 @@ import {
 import BooksItem from './BooksItem.jsx';
 import { useMemo, useState } from 'react';
 import { ArrowDownward, ArrowUpward, Search } from '@mui/icons-material';
-import PaginationControls from '../../../shared/components/PaginationControls.jsx';
-import { goods } from '../../../data/goods.ts';
-import AutocompleteSelector from '../../../shared/components/AutocompleteSelector.jsx';
+import PaginationControls from '../../../shared/components/PaginationControls.tsx';
+import { goods } from '@/data/goods.ts';
+import AutocompleteSelector from '../../../shared/components/AutocompleteSelector.tsx';
 
 export default function BooksList() {
     const [books] = useState(goods);

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Container, Typography } from '@mui/material';
 
 import HistoryEmpty from '../components/order-history-page/HistoryEmpty.jsx';
-import PaginationControls from '../shared/components/PaginationControls.jsx';
+import PaginationControls from '../shared/components/PaginationControls.tsx';
 import HistoryList from '../components/order-history-page/HistoryList.jsx';
 import { generateMockOrders } from '../data/generateMockOrders.ts';
 

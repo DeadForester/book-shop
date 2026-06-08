@@ -13,7 +13,7 @@ import {
     Typography,
 } from '@mui/material';
 import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
-import Password from '../shared/components/Password.jsx';
+import Password from '../shared/components/Password.tsx';
 import { validateCredentials } from '../utils/validateCredentials.ts';
 import { useAuthContext } from '../hooks/useAuthContext.ts';
 

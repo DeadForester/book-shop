@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Header from './shared/components/Header.jsx';
+import Header from './shared/components/Header.tsx';
 import Basket from './components/basket/Basket.jsx';
-import AppRouter from './shared/components/AppRouter.jsx';
+import AppRouter from './shared/components/AppRouter.tsx';
 import { useLocation } from 'react-router-dom';
 
 const App = () => {

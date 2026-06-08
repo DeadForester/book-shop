@@ -1,7 +1,13 @@
-import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
 import { WarningAmber } from '@mui/icons-material';
+import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
+import { ReactNode } from 'react';
 
-const DevPlaceholder = ({ title, icon }) => {
+interface DevPlaceholderProps {
+    title: string;
+    icon: ReactNode;
+}
+
+const DevPlaceholder = ({ title, icon }: DevPlaceholderProps) => {
     return (
         <Card
             elevation={2}

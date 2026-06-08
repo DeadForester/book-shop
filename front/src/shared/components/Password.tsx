@@ -1,8 +1,24 @@
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { useState } from 'react';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-const Password = ({ password, setPassword, error, resetErrors, loading, label = 'Пароль' }) => {
+interface PasswordProps {
+    password: string;
+    setPassword: (newPassword: string) => void;
+    error: string;
+    resetErrors: () => void;
+    loading: boolean;
+    label: string;
+}
+
+const Password = ({
+    password,
+    setPassword,
+    error,
+    resetErrors,
+    loading,
+    label = 'Пароль',
+}: PasswordProps) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
