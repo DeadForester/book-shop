@@ -1,7 +1,5 @@
-import {Alert, Container} from "@mui/material";
-import {
-    ShoppingCart as OrderIcon
-} from '@mui/icons-material';
+import { ShoppingCart as OrderIcon } from '@mui/icons-material';
+import { Alert, Container } from '@mui/material';
 
 const HistoryEmpty = () => {
     return (

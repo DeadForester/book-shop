@@ -1,10 +1,19 @@
-import { Box, Chip, IconButton, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
+import { Box, Chip, IconButton, TableCell, TableRow, TextField, Typography } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
 
-const BooksTableItem = ({ book, orderItems, setOrderItems }) => {
+import { Book } from '@/shared/types/Book.ts';
+
+interface BooksTableItemProps {
+    book: Book;
+    orderItems: Record<string, number>;
+    setOrderItems: Dispatch<SetStateAction<Record<string, number>>>;
+}
+
+const BooksTableItem = ({ book, orderItems, setOrderItems }: BooksTableItemProps) => {
     const qty = orderItems[book.id] ?? 0;
 
-    const handleQuantityChange = (bookId, delta) => {
+    const handleQuantityChange = (bookId: string, delta: number) => {
         setOrderItems((prev) => {
             const current = prev[bookId] ?? 0;
             const next = Math.max(0, current + delta);
@@ -19,7 +28,7 @@ const BooksTableItem = ({ book, orderItems, setOrderItems }) => {
         });
     };
 
-    const handleDirectInput = (bookId, value) => {
+    const handleDirectInput = (bookId: string, value: string) => {
         const qty = parseInt(value, 10) ?? 0;
         setOrderItems((prev) => {
             if (qty <= 0) {
@@ -34,7 +43,7 @@ const BooksTableItem = ({ book, orderItems, setOrderItems }) => {
     return (
         <TableRow key={book.id} hover>
             <TableCell>
-                <Typography variant="body2" fontWeight="500">
+                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
                     {book.name}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
@@ -44,7 +53,7 @@ const BooksTableItem = ({ book, orderItems, setOrderItems }) => {
             <TableCell align="right">
                 <Chip label={book.provider} size="small" variant="outlined" />
             </TableCell>
-            <TableCell align="right" fontWeight="500">
+            <TableCell align="right" sx={{ fontWeight: 'bold' }}>
                 {book.price.toLocaleString('ru-RU', {
                     style: 'currency',
                     currency: 'RUB',
@@ -79,12 +88,13 @@ const BooksTableItem = ({ book, orderItems, setOrderItems }) => {
                         type="number"
                         value={qty}
                         onChange={(e) => handleDirectInput(book.id, e.target.value)}
-                        inputProps={{
-                            min: 0,
-                            style: {
-                                textAlign: 'center',
-                                width: 40,
-                                padding: '4px 8px',
+                        slotProps={{
+                            input: {
+                                style: {
+                                    textAlign: 'center',
+                                    width: 40,
+                                    padding: '4px 8px',
+                                },
                             },
                         }}
                         variant="outlined"

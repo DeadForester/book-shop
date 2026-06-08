@@ -1,9 +1,15 @@
 import { Box, Card, CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-export default function BooksItem({ book }) {
+import { Book } from '@/shared/types/Book.ts';
+
+interface BooksItemProps {
+    book: Book;
+}
+
+export default function BooksItem({ book }: BooksItemProps) {
     const navigate = useNavigate();
-    const formatPrice = (price) =>
+    const formatPrice = (price: number) =>
         price?.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' });
 
     return (
@@ -55,8 +61,12 @@ export default function BooksItem({ book }) {
                     <Typography
                         variant="h6"
                         component="div"
-                        fontWeight="500"
-                        sx={{ overflow: 'hidden', textOverflow: 'ellipsis', mb: 0.5 }}
+                        sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            mb: 0.5,
+                            fontWeight: 500,
+                        }}
                     >
                         {book.name}
                     </Typography>
@@ -109,7 +119,7 @@ export default function BooksItem({ book }) {
                         '& span': { fontWeight: 600 },
                     }}
                 >
-                    <Typography component="span" fontWeight="600">
+                    <Typography component="span" sx={{ fontWeight: 600 }}>
                         Цена:{' '}
                     </Typography>
                     {formatPrice(book.price)}

@@ -1,3 +1,4 @@
+import { CalendarToday as DateIcon, Receipt as ReceiptIcon } from '@mui/icons-material';
 import {
     Box,
     Card,
@@ -9,16 +10,20 @@ import {
     List,
     ListItem,
     ListItemText,
-    Typography
-} from "@mui/material";
-import {
-    CalendarToday as DateIcon,
-    Receipt as ReceiptIcon
-} from '@mui/icons-material';
+    Typography,
+} from '@mui/material';
 
+import { BookInOrder } from '@/shared/types/BookInOrder.ts';
 
-const HistoryItem = ({ id, date, items, total}) => {
-    const formatCurrency = (amount) =>
+interface HistoryItemProps {
+    id: string;
+    date: string;
+    items: BookInOrder[];
+    total: number;
+}
+
+const HistoryItem = ({ id, date, items, total }: HistoryItemProps) => {
+    const formatCurrency = (amount: number) =>
         new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(amount);
 
     return (
@@ -40,7 +45,7 @@ const HistoryItem = ({ id, date, items, total}) => {
                     title={
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <ReceiptIcon color="primary" fontSize="small" />
-                            <Typography variant="subtitle1" fontWeight="bold">
+                            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
                                 #{id}
                             </Typography>
                         </Box>
@@ -67,7 +72,7 @@ const HistoryItem = ({ id, date, items, total}) => {
                                 sx={{ px: 0, py: 0.5 }}
                                 secondaryAction={
                                     <Chip
-                                        label={`×${item.qty}`}
+                                        label={`×${item.quantity}`}
                                         size="small"
                                         variant="outlined"
                                         sx={{ ml: 1, height: 20 }}
@@ -89,7 +94,7 @@ const HistoryItem = ({ id, date, items, total}) => {
                 <Divider />
 
                 <Box sx={{ p: 2, textAlign: 'right', backgroundColor: 'grey.50' }}>
-                    <Typography variant="h6" color="primary" fontWeight="bold">
+                    <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold' }}>
                         {formatCurrency(total)}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">

@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { Box, Container, Typography } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
 
-import HistoryEmpty from '../components/order-history-page/HistoryEmpty.jsx';
-import PaginationControls from '../shared/components/PaginationControls.tsx';
-import HistoryList from '../components/order-history-page/HistoryList.jsx';
+import HistoryEmpty from '../components/order-history-page/HistoryEmpty.tsx';
+import HistoryList from '../components/order-history-page/HistoryList.tsx';
 import { generateMockOrders } from '../data/generateMockOrders.ts';
+import PaginationControls from '../shared/components/PaginationControls.tsx';
 
 export default function OrderHistory() {
     const [orders] = useState(() => generateMockOrders(25));
@@ -18,7 +18,7 @@ export default function OrderHistory() {
         currentPage * ITEMS_PER_PAGE
     );
 
-    const handlePageChange = (event, page) => {
+    const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -30,7 +30,7 @@ export default function OrderHistory() {
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
+                <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
                     История заказов
                 </Typography>
                 <Typography variant="body1" color="text.secondary">

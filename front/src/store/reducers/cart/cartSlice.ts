@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { Book } from '@/shared/types/Book.ts';
 
 export interface CartItem {
+    id: string;
     book: Book;
     quantity: number;
 }
@@ -26,7 +28,7 @@ export const cartSlice = createSlice({
             if (existing) {
                 existing.quantity += 1;
             } else {
-                state.items.push({ book: action.payload, quantity: 1 });
+                state.items.push({ id: action.payload.id, book: action.payload, quantity: 1 });
             }
         },
 

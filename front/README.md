@@ -54,14 +54,14 @@ book-shop-front/
 │   │   ├── useFetching.ts          #   Универсальный хук для запросов
 │   │   └── useUserContext.ts       #   Доступ к контексту пользователя
 │   ├── pages/                      # Компоненты страниц
-│   │   ├── BookIdPage.jsx          #   Страница отдельной книги
+│   │   ├── BookIdPage.tsx          #   Страница отдельной книги
 │   │   ├── Books.jsx               #   Каталог книг
-│   │   ├── Error.jsx               #   Страница ошибки
+│   │   ├── Error.tsx               #   Страница ошибки
 │   │   ├── Login.jsx               #   Страница входа
-│   │   ├── OrderHistory.jsx        #   История заказов
-│   │   ├── Profile.jsx             #   Профиль пользователя
+│   │   ├── OrderHistory.tsx        #   История заказов
+│   │   ├── Profile.tsx             #   Профиль пользователя
 │   │   ├── Register.jsx            #   Страница регистрации
-│   │   └── SupplierOrder.jsx       #   Заказ книг у поставщика
+│   │   └── SupplierOrder.tsx       #   Заказ книг у поставщика
 │   ├── router/                     # Конфигурация маршрутов
 │   │   └── routes.js               #   Определение путей SPA
 │   ├── shared/                     # Общие компоненты, контексты, утилиты
@@ -69,7 +69,7 @@ book-shop-front/
 │   │   └── index.css               #   Основной CSS-файл
 │   ├── utils/                      # Утилиты
 │   │   └── validateCredentials.ts  #   Валидация email/пароля
-│   ├── App.jsx                     # Корневой компонент приложения
+│   ├── App.tsx                     # Корневой компонент приложения
 │   └── main.tsx                    # Точка входа
 ├── .dockerignore
 ├── .gitignore

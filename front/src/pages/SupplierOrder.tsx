@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { Business, Search } from '@mui/icons-material';
 import {
     Autocomplete,
     Box,
@@ -8,20 +8,23 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { Business, Search } from '@mui/icons-material';
-import { providers } from '../data/providers.ts';
-import { BooksTable, SummarizePanel } from '../components/supplier-order-page';
+import { useMemo, useState } from 'react';
+
+import { OrderItem } from '@/components/supplier-order-page/types.ts';
+
+import { BooksTable, SummarizePanel } from '../components/supplier-order-page/index.ts';
 import { goods } from '../data/goods.ts';
+import { providers } from '../data/providers.ts';
 
 export default function SupplierOrder() {
     const [search, setSearch] = useState('');
-    const [selectedSupplier, setSelectedSupplier] = useState(null);
-    const [orderItems, setOrderItems] = useState({});
+    const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
+    const [orderItems, setOrderItems] = useState<Record<string, number>>({});
 
     const orderSummary = useMemo(() => {
         let totalItems = 0;
         let totalCost = 0;
-        const itemsList = [];
+        const itemsList: OrderItem[] = [];
 
         Object.entries(orderItems).forEach(([bookId, qty]) => {
             if (qty > 0) {
@@ -42,7 +45,7 @@ export default function SupplierOrder() {
             sx={{ p: { xs: 2, md: 4 }, backgroundColor: 'background.default', minHeight: '100vh' }}
         >
             <Box sx={{ mb: 3 }}>
-                <Typography variant="h4" fontWeight="bold" gutterBottom>
+                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
                     Заказ книг у поставщика
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
@@ -61,12 +64,14 @@ export default function SupplierOrder() {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         sx={{ minWidth: { xs: '100%', sm: 280 }, flex: 1 }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search color="action" />
-                                </InputAdornment>
-                            ),
+                        slotProps={{
+                            input: {
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search color="action" />
+                                    </InputAdornment>
+                                ),
+                            },
                         }}
                     />
                     <Autocomplete
@@ -80,13 +85,15 @@ export default function SupplierOrder() {
                                 variant="outlined"
                                 size="small"
                                 sx={{ minWidth: { xs: '100%', sm: 220 } }}
-                                InputProps={{
-                                    ...params.InputProps,
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <Business color="action" />
-                                        </InputAdornment>
-                                    ),
+                                slotProps={{
+                                    ...params.slotProps,
+                                    input: {
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Business color="action" />
+                                            </InputAdornment>
+                                        ),
+                                    },
                                 }}
                             />
                         )}
@@ -98,7 +105,7 @@ export default function SupplierOrder() {
             {/* 🔹 Таблица книг */}
             <BooksTable
                 search={search}
-                selectedSupplier={selectedSupplier}
+                selectedSupplier={selectedSupplier ?? ''}
                 orderItems={orderItems}
                 setOrderItems={setOrderItems}
             />

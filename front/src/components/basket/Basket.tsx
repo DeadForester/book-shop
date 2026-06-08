@@ -1,3 +1,4 @@
+import { ShoppingBasket } from '@mui/icons-material';
 import {
     Divider,
     Drawer,
@@ -7,12 +8,19 @@ import {
     ListItemText,
     Typography,
 } from '@mui/material';
-import { ShoppingBasket } from '@mui/icons-material';
-import BasketItem from './BasketItem.jsx';
-import { useBasketContext } from '../../hooks/useBasketContext.ts';
 
-const Basket = ({ cartOpen, closeCart = Function.prototype }) => {
-    const { order } = useBasketContext();
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+
+import BasketItem from './BasketItem.tsx';
+
+interface BasketProps {
+    cartOpen: boolean;
+    closeCart: () => void;
+}
+
+const Basket = ({ cartOpen, closeCart }: BasketProps) => {
+    const { items } = useAppSelector((state) => state.cart);
+
     return (
         <Drawer anchor="right" open={cartOpen} onClose={closeCart}>
             <List sx={{ width: '400px' }}>
@@ -23,19 +31,25 @@ const Basket = ({ cartOpen, closeCart = Function.prototype }) => {
                     <ListItemText primary="Корзина" />
                 </ListItem>
                 <Divider />
-                {!order.length ? (
+                {!items.length ? (
                     <ListItem>Корзина пуста!</ListItem>
                 ) : (
                     <>
-                        {order.map((item) => (
-                            <BasketItem {...item} key={item.id} />
+                        {items.map((item) => (
+                            <BasketItem
+                                id={item.id}
+                                name={item.book.name}
+                                price={item.book.price}
+                                quantity={item.quantity}
+                                key={item.id}
+                            />
                         ))}
                         <Divider />
                         <ListItem>
                             <Typography>
                                 Общая стоимость:{' '}
-                                {order.reduce((acc, item) => {
-                                    return acc + item.price * item.quantity;
+                                {items.reduce((acc, item) => {
+                                    return acc + item.book.price * item.quantity;
                                 }, 0)}{' '}
                                 рублей.
                             </Typography>

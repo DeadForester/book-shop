@@ -1,12 +1,15 @@
+import './styles/index.css';
+
+import { ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './styles/index.css';
-import App from './App.jsx';
-import { ThemeProvider } from '@mui/material';
-import { theme } from './shared/components/Theme.ts';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
 import { store } from '@/store/store.ts';
+
+import App from './App.js';
+import { theme } from './shared/components/Theme.ts';
 
 const rootElement = document.getElementById('root');
 

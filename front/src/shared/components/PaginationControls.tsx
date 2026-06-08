@@ -4,11 +4,11 @@ import { ChangeEvent } from 'react';
 interface PaginationControlsProps {
     page: number;
     totalPages: number;
-    onPageChange: (event: ChangeEvent<unknown, Element>, page: number) => void;
+    onPageChange: (event: ChangeEvent<unknown>, page: number) => void;
 }
 
 const PaginationControls = ({ page, totalPages, onPageChange }: PaginationControlsProps) => {
-    if (totalPages <= 1) return <></>;
+    if (totalPages <= 1) return null;
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>

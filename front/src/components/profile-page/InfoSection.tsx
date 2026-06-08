@@ -8,20 +8,29 @@ import {
     ListItemText,
     Typography,
 } from '@mui/material';
+import { ReactNode } from 'react';
 
-const InfoSection = ({ title, icon, items }) => {
+import { FieldsItem } from '@/components/profile-page/types.ts';
+
+interface InfoSectionProps {
+    title: string;
+    icon: ReactNode;
+    fields: FieldsItem[];
+}
+
+const InfoSection = ({ title, icon, fields }: InfoSectionProps) => {
     return (
         <Card elevation={2} sx={{ height: '100%' }}>
             <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                     {icon}
-                    <Typography variant="h6" fontWeight="600">
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
                         {title}
                     </Typography>
                 </Box>
                 <Divider sx={{ mb: 2 }} />
                 <List dense disablePadding>
-                    {items.map((item, idx) => (
+                    {fields.map((item, idx) => (
                         <ListItem key={idx} sx={{ px: 0, py: 0.75 }}>
                             <ListItemText
                                 primary={
@@ -30,7 +39,7 @@ const InfoSection = ({ title, icon, items }) => {
                                     </Typography>
                                 }
                                 secondary={
-                                    <Typography variant="body1" fontWeight="500">
+                                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
                                         {item.value}
                                     </Typography>
                                 }

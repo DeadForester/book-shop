@@ -1,4 +1,3 @@
-import { Avatar, Box, Button, Chip, Container, Grid, Typography } from '@mui/material';
 import {
     CreditCard,
     Dashboard,
@@ -9,33 +8,44 @@ import {
     Person,
     ShoppingCart,
 } from '@mui/icons-material';
+import { Avatar, Box, Button, Chip, Container, Grid, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import InfoSection from '../components/profile-page/InfoSection.jsx';
+
+import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { fetchUser } from '@/store/reducers/auth/thunks/featchUserThunk.ts';
+
+import InfoSection from '../components/profile-page/InfoSection.tsx';
 import DevPlaceholder from '../shared/components/DevPlaceholder.tsx';
 import Loader from '../shared/components/Loader.tsx';
-import { useEffect } from 'react';
-import { useUserContext } from '../hooks/useUserContext.ts';
 
 export default function Profile() {
-    const { getUser, isLoading, error, currentUser } = useUserContext();
+    const dispatch = useAppDispatch();
+
+    const { currentUser, isUserLoading, userError } = useAppSelector((state) => state.auth);
 
     useEffect(() => {
-        void getUser();
-    }, [getUser]);
+        dispatch(fetchUser());
+    }, [dispatch]);
 
     useEffect(() => {
         console.log(currentUser);
-        console.log('User admin: ' + currentUser.isAdmin);
+        console.log('User admin: ' + currentUser?.isAdmin);
     }, [currentUser]);
 
     useEffect(() => {
-        if (error) {
-            console.error('Ошибка загрузки профиля:', error);
+        if (userError) {
+            console.error('Ошибка загрузки профиля:', userError);
         }
-    }, [error]);
+    }, [userError]);
 
-    if (isLoading) {
+    if (isUserLoading) {
         return <Loader />;
+    }
+
+    if (currentUser === null) {
+        return <h1>{userError ?? 'Ошибка при загрузке профиля :('}</h1>;
     }
 
     return (
@@ -61,7 +71,7 @@ export default function Profile() {
                     {currentUser.email.charAt(0).toUpperCase()}
                 </Avatar>
                 <Box>
-                    <Typography variant="h4" component="h1" fontWeight="700">
+                    <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
                         {currentUser.name ?? 'Пользователь'}
                     </Typography>
                     <Typography
@@ -117,11 +127,11 @@ export default function Profile() {
                     <InfoSection
                         title="Личные данные"
                         icon={<Person color="primary" />}
-                        items={[
+                        fields={[
                             { label: 'Телефон', value: currentUser.phone ?? '+7 (9__) ___-__-__' },
                             {
                                 label: 'Дата регистрации',
-                                value: currentUser.joinDate ?? 'dd.mm.yyyy',
+                                value: currentUser.joinDate.toString() ?? 'dd.mm.yyyy',
                             },
                         ]}
                     />

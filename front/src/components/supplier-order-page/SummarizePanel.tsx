@@ -1,10 +1,37 @@
-import { Alert, Box, Button, Card, CardContent, Snackbar, Typography } from '@mui/material';
 import { CheckCircle, ShoppingCart, WarningAmber } from '@mui/icons-material';
-import { useState } from 'react';
+import {
+    Alert,
+    AlertColor,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    Snackbar,
+    Typography,
+} from '@mui/material';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-const SummarizePanel = ({ orderSummary, setOrderItems, setSelectedSupplier, setSearch }) => {
+import { OrderSummary } from '@/components/supplier-order-page/types.ts';
+
+interface SummarizePanelProps {
+    orderSummary: OrderSummary;
+    setOrderItems: Dispatch<SetStateAction<Record<string, number>>>;
+    setSelectedSupplier: Dispatch<SetStateAction<string | null>>;
+    setSearch: Dispatch<SetStateAction<string>>;
+}
+
+const SummarizePanel = ({
+    orderSummary,
+    setOrderItems,
+    setSelectedSupplier,
+    setSearch,
+}: SummarizePanelProps) => {
     const [loading, setLoading] = useState(false);
-    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+    const [snackbar, setSnackbar] = useState<{
+        open: boolean;
+        message: string;
+        severity: AlertColor;
+    }>({ open: false, message: '', severity: 'success' });
 
     const handleSubmitOrder = async () => {
         if (orderSummary.totalItems === 0) {
@@ -55,10 +82,14 @@ const SummarizePanel = ({ orderSummary, setOrderItems, setSelectedSupplier, setS
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <ShoppingCart color="primary" fontSize="large" />
                         <Box>
-                            <Typography variant="body1" fontWeight="bold">
+                            <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
                                 Позиций: {orderSummary.totalItems}
                             </Typography>
-                            <Typography variant="h6" color="primary.main" fontWeight="bold">
+                            <Typography
+                                variant="h6"
+                                color="primary.main"
+                                sx={{ fontWeight: 'bold' }}
+                            >
                                 Сумма:{' '}
                                 {orderSummary.totalCost.toLocaleString('ru-RU', {
                                     style: 'currency',

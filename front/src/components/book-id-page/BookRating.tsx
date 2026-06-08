@@ -1,6 +1,11 @@
-import {Box, Rating, Typography} from "@mui/material";
+import { Box, Rating, Typography } from '@mui/material';
 
-const BookRating = ({rating, reviewsCount}) => {
+interface BookRatingProps {
+    rating: number;
+    reviewsCount: number;
+}
+
+const BookRating = ({ rating, reviewsCount }: BookRatingProps) => {
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
             <Rating value={rating || 4.5} precision={0.5} readOnly size="small" />

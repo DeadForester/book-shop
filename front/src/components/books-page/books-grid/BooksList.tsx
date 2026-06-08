@@ -1,3 +1,4 @@
+import { ArrowDownward, ArrowUpward, Search } from '@mui/icons-material';
 import {
     Box,
     FormControl,
@@ -9,18 +10,19 @@ import {
     ToggleButtonGroup,
     Typography,
 } from '@mui/material';
-import BooksItem from './BooksItem.jsx';
-import { useMemo, useState } from 'react';
-import { ArrowDownward, ArrowUpward, Search } from '@mui/icons-material';
-import PaginationControls from '../../../shared/components/PaginationControls.tsx';
+import { ChangeEvent, MouseEvent, SyntheticEvent, useMemo, useState } from 'react';
+
 import { goods } from '@/data/goods.ts';
+
 import AutocompleteSelector from '../../../shared/components/AutocompleteSelector.tsx';
+import PaginationControls from '../../../shared/components/PaginationControls.tsx';
+import BooksItem from './BooksItem.tsx';
 
 export default function BooksList() {
     const [books] = useState(goods);
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedGenre, setSelectedGenre] = useState(null);
-    const [sortBy, setSortBy] = useState(null);
+    const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+    const [sortBy, setSortBy] = useState<string | null>(null);
 
     const [page, setPage] = useState(1);
 
@@ -54,22 +56,22 @@ export default function BooksList() {
         return filteredBooks.slice(start, start + ITEMS_PER_PAGE);
     }, [filteredBooks, page]);
 
-    const handlePageChange = (event, value) => {
+    const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
         setPage(value);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleSearchChange = (e) => {
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
         setPage(1);
     };
 
-    const handleGenreChange = (event, newValue) => {
+    const handleGenreChange = (_event: SyntheticEvent, newValue: string | null) => {
         setSelectedGenre(newValue);
         setPage(1);
     };
 
-    const handleSortChange = (event, newSort) => {
+    const handleSortChange = (_event: MouseEvent<HTMLElement>, newSort: string) => {
         if (newSort === sortBy) {
             setSortBy(null);
         } else {
@@ -84,11 +86,7 @@ export default function BooksList() {
     };
 
     if (books.length === 0) {
-        return (
-            <Typography textAlign="center" py={4}>
-                Загрузка книг...
-            </Typography>
-        );
+        return <Typography sx={{ py: 4, textAlign: 'center' }}>Загрузка книг...</Typography>;
     }
 
     return (
@@ -117,12 +115,14 @@ export default function BooksList() {
                         minWidth: { xs: '100%', sm: 240 },
                         flex: { xs: '1 1 100%', sm: '0 1 auto' },
                     }}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <Search color="action" />
-                            </InputAdornment>
-                        ),
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <Search color="action" />
+                                </InputAdornment>
+                            ),
+                        },
                     }}
                 />
 
@@ -201,7 +201,7 @@ export default function BooksList() {
                 <Box sx={{ mb: 2 }}>
                     <Typography variant="body2" color="text.secondary">
                         Найдено книг:{' '}
-                        <Typography component="span" fontWeight="bold">
+                        <Typography component="span" sx={{ fontWeight: 'bold' }}>
                             {filteredBooks.length}
                         </Typography>
                     </Typography>

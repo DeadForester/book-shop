@@ -1,6 +1,11 @@
 import { Box, Card, CardContent, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Favorite, Person } from '@mui/icons-material';
-import { BooksCarousel, BooksList, WeekAuthorsList, YearBooksList } from '../components/books-page';
+import {
+    BooksCarousel,
+    BooksList,
+    WeekAuthorsList,
+    YearBooksList,
+} from '../components/books-page/index.ts';
 
 const Books = () => {
     return (

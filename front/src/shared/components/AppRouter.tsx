@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import Books from '@/pages/Books.jsx';
-import Error from '@/pages/Error.jsx';
+import Error from '@/pages/Error.js';
 import { adminRoutes, publicRoutes, userRoutes } from '@/router/routes';
 
 import ProtectedRoute from './ProtectedRoute.tsx';

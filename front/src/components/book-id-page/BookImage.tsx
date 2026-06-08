@@ -1,6 +1,11 @@
 import { Box, Grid } from '@mui/material';
 
-const BookImage = ({ poster, name }) => {
+interface BookImageProps {
+    poster: string;
+    name: string;
+}
+
+const BookImage = ({ poster, name }: BookImageProps) => {
     return (
         <Grid size={{ xs: 12, md: 5 }}>
             <Box

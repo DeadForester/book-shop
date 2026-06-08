@@ -1,15 +1,18 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useMemo } from 'react';
-import { goods } from '../data/goods.ts';
-import { Box, Button, Chip, Container, Divider, Grid, Paper, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useBasketContext } from '../hooks/useBasketContext.ts';
-import BookImage from '../components/book-id-page/BookImage.jsx';
-import BookRating from '../components/book-id-page/BookRating.jsx';
-import ActionButtons from '../components/book-id-page/ActionButtons.jsx';
+import { Box, Button, Chip, Container, Divider, Grid, Paper, Typography } from '@mui/material';
+import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { addToCart } from '@/store/reducers/cart/cartSlice.ts';
+
+import ActionButtons from '../components/book-id-page/ActionButtons.tsx';
+import BookImage from '../components/book-id-page/BookImage.tsx';
+import BookRating from '../components/book-id-page/BookRating.tsx';
+import { goods } from '../data/goods.ts';
 
 const BookIdPage = () => {
-    const { addToOrder } = useBasketContext();
+    const dispatch = useDispatch();
     const params = useParams();
     const navigate = useNavigate();
 
@@ -32,7 +35,7 @@ const BookIdPage = () => {
     }
 
     const handleAddToCart = () => {
-        addToOrder({ id: book.id, name: book.name, price: book.price });
+        dispatch(addToCart(book));
     };
 
     return (
@@ -43,7 +46,6 @@ const BookIdPage = () => {
 
             <Paper elevation={0} sx={{ p: { xs: 2, md: 4 }, backgroundColor: 'background.paper' }}>
                 <Grid container spacing={4}>
-                    {/* Изображение */}
                     <BookImage name={book.name} poster={book.poster} />
 
                     <Grid size={{ xs: 12, md: 7 }}>
@@ -55,10 +57,8 @@ const BookIdPage = () => {
                             Автор: {book.author || 'Не указан'}
                         </Typography>
 
-                        {/* Рейтинг */}
-                        <BookRating rating={book.rating} reviewsCount={book.reviewsCount} />
+                        <BookRating rating={0} reviewsCount={0} />
 
-                        {/* Цена */}
                         <Typography
                             variant="h4"
                             color="primary.main"
@@ -69,26 +69,14 @@ const BookIdPage = () => {
 
                         <Divider sx={{ my: 2 }} />
 
-                        {/* Описание */}
-                        <Typography variant="body1" paragraph sx={{ lineHeight: 1.7 }}>
+                        <Typography variant="body1" component="p" sx={{ lineHeight: 1.7 }}>
                             {book.description || 'Описание отсутствует.'}
                         </Typography>
 
-                        {/* Метаданные */}
-                        {book.genres && (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 3 }}>
-                                {book.genres.map((genre) => (
-                                    <Chip
-                                        key={genre}
-                                        label={genre}
-                                        variant="outlined"
-                                        size="small"
-                                    />
-                                ))}
-                            </Box>
-                        )}
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 3 }}>
+                            <Chip label={book.genre} variant="outlined" size="small" />
+                        </Box>
 
-                        {/* Кнопки действий */}
                         <ActionButtons handleAddToCart={handleAddToCart} />
                     </Grid>
                 </Grid>

@@ -7,11 +7,20 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
-import { useMemo } from 'react';
-import { goods } from '../../../data/goods.ts';
-import BooksTableItem from './BooksTableItem.jsx';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 
-const BooksTable = ({ search, selectedSupplier, orderItems, setOrderItems }) => {
+import { goods } from '@/data/goods.ts';
+
+import BooksTableItem from './BooksTableItem.tsx';
+
+interface BooksTableProps {
+    search: string;
+    selectedSupplier: string;
+    orderItems: Record<string, number>;
+    setOrderItems: Dispatch<SetStateAction<Record<string, number>>>;
+}
+
+const BooksTable = ({ search, selectedSupplier, orderItems, setOrderItems }: BooksTableProps) => {
     const filteredBooks = useMemo(() => {
         return goods.filter((book) => {
             const matchesSearch =
