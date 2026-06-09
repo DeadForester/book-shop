@@ -22,11 +22,7 @@
         "paths": {
             "@/*": ["src/*"]
         },
-        "types": ["vite/client"],
-        "allowJs": true,
-        // TODO: delete when end refactor
-        "checkJs": false
-        // TODO: delete when end refactor
+        "types": ["vite/client"]
     },
     "include": ["src", "src/vite-env.d.ts"],
     "references": [
