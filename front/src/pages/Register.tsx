@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
 import {
     Alert,
     Box,
@@ -12,21 +11,33 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { Email, PersonAddAlt1 as RegisterIcon } from '@mui/icons-material';
+import { SyntheticEvent, useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
+import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
+import { SnackBar } from '@/shared/types/SnackBar.ts';
+import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts';
+
 import Password from '../shared/components/Password.tsx';
 import { validateCredentials } from '../utils/validateCredentials.ts';
-import { useAuthContext } from '../hooks/useAuthContext.ts';
 
 const Register = () => {
     const navigate = useNavigate();
-    const { registration, isRegistrationLoading, registrationError } = useAuthContext();
+    const { isRegistrationLoading, registrationError } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const [errors, setErrors] = useState({});
-    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+    const [errors, setErrors] = useState<CredentialsErrors>({});
+    const [snackbar, setSnackbar] = useState<SnackBar>({
+        open: false,
+        message: '',
+        severity: 'success',
+    });
 
     const validate = () => {
         const validationsErrors = validateCredentials(email, password, confirmPassword);
@@ -35,11 +46,11 @@ const Register = () => {
         return Object.keys(validationsErrors).length === 0;
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validate()) return;
 
-        await registration(email, password);
+        await dispatch(registration({ email, password }));
 
         if (registrationError) {
             setSnackbar({
@@ -103,7 +114,7 @@ const Register = () => {
                         >
                             <RegisterIcon sx={{ color: 'white', fontSize: 32 }} />
                         </Box>
-                        <Typography variant="h5" fontWeight={600}>
+                        <Typography variant="h5" sx={{ fontWeight: 600 }}>
                             Создать аккаунт
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -137,12 +148,14 @@ const Register = () => {
                             error={!!errors.email}
                             helperText={errors.email}
                             margin="normal"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Email color="action" />
-                                    </InputAdornment>
-                                ),
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Email color="action" />
+                                        </InputAdornment>
+                                    ),
+                                },
                             }}
                             disabled={isRegistrationLoading}
                         />
@@ -150,15 +163,16 @@ const Register = () => {
                         <Password
                             password={password}
                             setPassword={setPassword}
-                            error={errors.password}
+                            error={errors.password ?? ''}
                             resetErrors={() => setErrors({ ...errors, password: '' })}
                             loading={isRegistrationLoading}
+                            label="Пароль"
                         />
 
                         <Password
                             password={confirmPassword}
                             setPassword={setConfirmPassword}
-                            error={errors.confirmPassword}
+                            error={errors.confirmPassword ?? ''}
                             resetErrors={() => setErrors({ ...errors, confirmPassword: '' })}
                             loading={isRegistrationLoading}
                             label={'Повтор пароля'}
@@ -198,7 +212,11 @@ const Register = () => {
                         </Divider>
 
                         {/* Ссылка на вход */}
-                        <Typography variant="body2" textAlign="center" color="text.secondary">
+                        <Typography
+                            variant="body2"
+                            sx={{ textAlign: 'center' }}
+                            color="text.secondary"
+                        >
                             Уже есть аккаунт?{' '}
                             <Typography
                                 component={RouterLink}

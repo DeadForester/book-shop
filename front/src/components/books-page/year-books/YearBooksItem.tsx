@@ -1,8 +1,14 @@
+import { TrendingUp } from '@mui/icons-material';
 import { Box, Card, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { TrendingUp } from '@mui/icons-material';
 
-const YearBooksItem = ({ book }) => {
+import { Book } from '@/shared/types/Book.ts';
+
+interface YearBooksItem {
+    book: Book;
+}
+
+const YearBooksItem = ({ book }: YearBooksItem) => {
     const navigate = useNavigate();
 
     return (
@@ -32,7 +38,7 @@ const YearBooksItem = ({ book }) => {
                 }}
             />
             <Box sx={{ flex: 1, minWidth: 0 }}>
-                <Typography variant="subtitle2" fontWeight="bold" noWrap>
+                <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} noWrap>
                     {book.name}
                 </Typography>
                 <Typography variant="caption" color="text.secondary" noWrap>

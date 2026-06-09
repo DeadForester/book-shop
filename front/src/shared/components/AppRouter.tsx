@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
-import Books from '@/pages/Books.jsx';
+import Books from '@/pages/Books.js';
 import Error from '@/pages/Error.js';
-import { adminRoutes, publicRoutes, userRoutes } from '@/router/routes';
+import { adminRoutes, publicRoutes, userRoutes } from '@/router/routes.ts';
 
 import ProtectedRoute from './ProtectedRoute.tsx';
 

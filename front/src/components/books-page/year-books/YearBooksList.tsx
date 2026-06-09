@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { goods } from '../../../data/goods.ts';
 import { Stack } from '@mui/material';
-import YearBooksItem from './YearBooksItem.jsx';
+import { useState } from 'react';
+
+import { goods } from '@/data/goods.ts';
+
+import YearBooksItem from './YearBooksItem.tsx';
 
 export default function YearBooksList() {
     const [booksPop] = useState(goods.slice(45, 51));

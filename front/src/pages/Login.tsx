@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Email, Login as LoginIcon } from '@mui/icons-material';
 import {
     Alert,
     Box,
@@ -14,23 +13,35 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { Email, Login as LoginIcon } from '@mui/icons-material';
-import { useAuthContext } from '../hooks/useAuthContext.ts';
-import { validateCredentials } from '../utils/validateCredentials.ts';
+import { SyntheticEvent, useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
+import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
+import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
+import { SnackBar } from '@/shared/types/SnackBar.ts';
+import { login } from '@/store/reducers/auth/thunks/loginThunk.ts';
+
 import Password from '../shared/components/Password.tsx';
+import { validateCredentials } from '../utils/validateCredentials.ts';
 
 const Login = () => {
-    const { login, isLoginLoading, loginError } = useAuthContext();
+    const { isLoginLoading, loginError } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
 
-    const [errors, setErrors] = useState({});
-    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+    const [errors, setErrors] = useState<CredentialsErrors>({});
+    const [snackbar, setSnackbar] = useState<SnackBar>({
+        open: false,
+        message: '',
+        severity: 'success',
+    });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const validationsErrors = validateCredentials(email, password);
@@ -40,7 +51,7 @@ const Login = () => {
             return;
         }
 
-        await login(email, password, rememberMe);
+        await dispatch(login({ email, password, rememberMe }));
 
         if (loginError) {
             setSnackbar({
@@ -87,7 +98,7 @@ const Login = () => {
             >
                 <CardContent sx={{ p: 4 }}>
                     <Box sx={{ textAlign: 'center', mb: 3 }}>
-                        <Typography variant="h5" fontWeight={600}>
+                        <Typography variant="h5" sx={{ fontWeight: 600 }}>
                             Добро пожаловать
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
@@ -118,12 +129,14 @@ const Login = () => {
                             error={!!errors.email}
                             helperText={errors.email}
                             margin="normal"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Email color="action" />
-                                    </InputAdornment>
-                                ),
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Email color="action" />
+                                        </InputAdornment>
+                                    ),
+                                },
                             }}
                             disabled={isLoginLoading}
                         />
@@ -131,9 +144,10 @@ const Login = () => {
                         <Password
                             password={password}
                             setPassword={setPassword}
-                            error={errors.password}
+                            error={errors.password ?? ''}
                             resetErrors={() => setErrors({ ...errors, password: '' })}
                             loading={isLoginLoading}
+                            label={'Пароль'}
                         />
 
                         <Box
@@ -200,7 +214,11 @@ const Login = () => {
                             </Typography>
                         </Divider>
 
-                        <Typography variant="body2" textAlign="center" color="text.secondary">
+                        <Typography
+                            variant="body2"
+                            sx={{ textAlign: 'center' }}
+                            color="text.secondary"
+                        >
                             Нет аккаунта?{' '}
                             <Typography
                                 component={RouterLink}

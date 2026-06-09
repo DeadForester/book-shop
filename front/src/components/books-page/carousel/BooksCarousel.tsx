@@ -1,10 +1,12 @@
-import { useCallback, useState } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
-import { Box, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { goods } from '../../../data/goods.ts';
-import CarouselItem from './CarouselItem.jsx';
+import { Box, IconButton } from '@mui/material';
+import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
+import { useCallback, useState } from 'react';
+
+import { goods } from '@/data/goods.ts';
+
+import CarouselItem from './CarouselItem.tsx';
 
 export default function BooksCarousel() {
     const [books] = useState(goods.slice(21, 27));
@@ -35,8 +37,8 @@ export default function BooksCarousel() {
 
                 <Box ref={emblaRef} sx={{ flex: 1, overflow: 'hidden' }}>
                     <Box sx={{ display: 'flex', ml: -1 }}>
-                        {books.map((book) => (
-                            <CarouselItem key={book.id} book={book} />
+                        {books.map((book, index) => (
+                            <CarouselItem key={book.id} index={index} book={book} />
                         ))}
                     </Box>
                 </Box>

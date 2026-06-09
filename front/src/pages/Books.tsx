@@ -1,5 +1,6 @@
-import { Box, Card, CardContent, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Favorite, Person } from '@mui/icons-material';
+import { Box, Card, CardContent, Container, Divider, Grid, Stack, Typography } from '@mui/material';
+
 import {
     BooksCarousel,
     BooksList,
@@ -19,7 +20,11 @@ const Books = () => {
                             <Stack spacing={3}>
                                 <Card variant="outlined" sx={{ height: 'auto', minHeight: 200 }}>
                                     <CardContent>
-                                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                                        <Typography
+                                            variant="h6"
+                                            sx={{ fontWeight: 'bold' }}
+                                            gutterBottom
+                                        >
                                             <Person
                                                 color="primary"
                                                 sx={{ verticalAlign: 'middle', mr: 0.5 }}
@@ -33,7 +38,11 @@ const Books = () => {
 
                                 <Card variant="outlined">
                                     <CardContent>
-                                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                                        <Typography
+                                            variant="h6"
+                                            sx={{ fontWeight: 'bold' }}
+                                            gutterBottom
+                                        >
                                             <Favorite
                                                 color="error"
                                                 sx={{ verticalAlign: 'middle', mr: 0.5 }}

@@ -1,17 +1,9 @@
 import { CheckCircle, ShoppingCart, WarningAmber } from '@mui/icons-material';
-import {
-    Alert,
-    AlertColor,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Snackbar,
-    Typography,
-} from '@mui/material';
+import { Alert, Box, Button, Card, CardContent, Snackbar, Typography } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { OrderSummary } from '@/components/supplier-order-page/types.ts';
+import { SnackBar } from '@/shared/types/SnackBar.ts';
 
 interface SummarizePanelProps {
     orderSummary: OrderSummary;
@@ -27,11 +19,11 @@ const SummarizePanel = ({
     setSearch,
 }: SummarizePanelProps) => {
     const [loading, setLoading] = useState(false);
-    const [snackbar, setSnackbar] = useState<{
-        open: boolean;
-        message: string;
-        severity: AlertColor;
-    }>({ open: false, message: '', severity: 'success' });
+    const [snackbar, setSnackbar] = useState<SnackBar>({
+        open: false,
+        message: '',
+        severity: 'success',
+    });
 
     const handleSubmitOrder = async () => {
         if (orderSummary.totalItems === 0) {

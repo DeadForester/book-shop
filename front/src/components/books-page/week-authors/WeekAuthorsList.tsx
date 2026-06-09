@@ -1,6 +1,7 @@
-import { Avatar, Box, Chip } from '@mui/material';
 import { Person } from '@mui/icons-material';
-import { goods } from '../../../data/goods.ts';
+import { Avatar, Box, Chip } from '@mui/material';
+
+import { goods } from '@/data/goods.ts';
 
 const WeekAuthorsList = () => {
     const authors = [...new Set(goods.map((book) => book.author).filter(Boolean))].slice(31, 36);

@@ -1,10 +1,17 @@
-import { Box, Button, Card, CardMedia, Chip, Typography } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
+import { Box, Button, Card, CardMedia, Chip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const CarouselItem = ({ book }) => {
+import { Book } from '@/shared/types/Book.ts';
+
+interface CarouselItemProps {
+    index: number;
+    book: Book;
+}
+
+const CarouselItem = ({ index, book }: CarouselItemProps) => {
     const navigate = useNavigate();
-    const backgroundColor = book.id % 2 === 0 ? '#ffcdd2' : '#e1bee7';
+    const backgroundColor = index % 2 === 0 ? '#ffcdd2' : '#e1bee7';
 
     return (
         <Box
@@ -44,7 +51,7 @@ const CarouselItem = ({ book }) => {
                     }}
                 />
                 <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, p: 2 }}>
-                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
                         {book.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" gutterBottom>
