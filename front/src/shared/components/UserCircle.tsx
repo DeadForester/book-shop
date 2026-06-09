@@ -5,12 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
-import Loader from '@/shared/components/Loader.tsx';
 import { logout } from '@/store/reducers/auth/authSlice.ts';
 
 const UserCircle = () => {
     const navigate = useNavigate();
-    const { isAuth, currentUser, isUserLoading, userError } = useAppSelector((state) => state.auth);
+    const { isAuth, currentUser, userError } = useAppSelector((state) => state.auth);
 
     const dispatch = useAppDispatch();
 
@@ -40,11 +39,7 @@ const UserCircle = () => {
         navigate('/');
     };
 
-    if (isUserLoading) {
-        return <Loader />;
-    }
-
-    if (currentUser === null) {
+    if (currentUser === null && userError) {
         return <h1>{userError}</h1>;
     }
 
@@ -53,7 +48,7 @@ const UserCircle = () => {
             <IconButton color="inherit" onClick={handleMenuOpen}>
                 {isAuth ? (
                     <Avatar sx={{ width: 32, height: 32, backgroundColor: 'secondary.main' }}>
-                        {currentUser.name?.charAt(0) || currentUser.email?.charAt(0) || 'U'}
+                        {currentUser?.name?.charAt(0) || currentUser?.email?.charAt(0) || 'U'}
                     </Avatar>
                 ) : (
                     <AccountCircle />
