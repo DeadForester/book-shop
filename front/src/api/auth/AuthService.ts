@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { LoginResponse, RegisterResponse } from '@/api/auth/types.ts';
 
 export default class AuthService {

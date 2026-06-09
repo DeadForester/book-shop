@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { User } from '@/shared/types/User.ts';
 
 export default class UserService {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { Purchase, PurchaseCreateResponse, PurchaseValue } from '@/api/purchase/types.ts';
 
 export default class PurchaseService {
