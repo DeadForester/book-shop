@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { Book } from '@/shared/types/Book';
 
 export default class BookService {

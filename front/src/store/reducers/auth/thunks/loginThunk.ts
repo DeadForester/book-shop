@@ -1,4 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
 import AuthService from '@/api/auth/AuthService.ts';
 
 export const login = createAsyncThunk<
@@ -13,7 +15,13 @@ export const login = createAsyncThunk<
         }
         localStorage.setItem('userId', response.data.user_id);
         return response.data;
-    } catch (error: any) {
-        return rejectWithValue(error.response?.data?.message || 'Ошибка входа');
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+            return rejectWithValue(error.response?.data?.message ?? 'Ошибка входа в аккаунт');
+        }
+        if (error instanceof Error) {
+            return rejectWithValue(error.message);
+        }
+        return rejectWithValue('Неизвестная ошибка входа в аккаунт');
     }
 });

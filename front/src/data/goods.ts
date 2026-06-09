@@ -1,5 +1,6 @@
-import { providers } from './providers.ts';
 import { Book } from '@/shared/types/Book.ts';
+
+import { providers } from './providers.ts';
 
 export const goods: Book[] = [
     // ===== ПРОГРАММИРОВАНИЕ (1-12) =====

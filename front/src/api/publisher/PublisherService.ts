@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { Publisher } from './types.ts';
 
 export default class PublisherService {
