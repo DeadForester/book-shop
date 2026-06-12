@@ -1,46 +1,35 @@
+import { z } from 'zod';
+
+import { loginSchema, registerSchema } from '@/shared/schemas/auth';
 import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 
 export const validateCredentials = (
     email: string,
     password: string,
-    confirmPassword: string | null = null
+    confirmPassword: string = '',
 ) => {
-    const newErrors: CredentialsErrors = {
-        email: '',
-        password: '',
-        confirmPassword: '',
-    };
-
-    validateEmail(email, newErrors);
-
-    validatePassword(password, newErrors);
-
-    if (confirmPassword != null) validatePasswordConfirm(password, confirmPassword, newErrors);
-
-    return newErrors;
-};
-
-const validateEmail = (email: string, newErrors: CredentialsErrors) => {
-    if (!email.trim()) {
-        newErrors.email = 'Введите email';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-        newErrors.email = 'Некорректный формат email';
+    try {
+        if (!confirmPassword) {
+            loginSchema.parse({ email, password });
+        } else {
+            registerSchema.parse({ email, password, confirmPassword });
+        }
+        return {};
+    } catch (err) {
+        if (err instanceof z.ZodError) {
+            return z.flattenError(err).fieldErrors as CredentialsErrors;
+        }
+        return {};
     }
 };
 
-const validatePassword = (password: string, newErrors: CredentialsErrors) => {
-    if (!password) {
-        newErrors.password = 'Введите пароль';
-    } else if (password.length < 6) {
-        newErrors.password = 'Минимум 6 символов';
+/*
+const errors: CredentialsErrors = {};
+error.issues.forEach((e) => {
+    if (e.path.length > 0) {
+        const field = e.path[0] as keyof CredentialsErrors;
+        errors[field] = e.message;
     }
-};
-
-const validatePasswordConfirm = (
-    password: string,
-    confirmPassword: string,
-    newErrors: CredentialsErrors
-) => {
-    if (!confirmPassword) newErrors.confirmPassword = 'Повторите пароль';
-    else if (password !== confirmPassword) newErrors.confirmPassword = 'Пароли не совпадают';
-};
+});
+return errors;
+ */
