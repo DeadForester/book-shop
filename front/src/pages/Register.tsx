@@ -122,7 +122,6 @@ const Register = () => {
                         </Typography>
                     </Box>
 
-                    {/* Уведомление */}
                     {snackbar.open && (
                         <Alert
                             severity={snackbar.severity}
@@ -133,7 +132,6 @@ const Register = () => {
                         </Alert>
                     )}
 
-                    {/* Форма */}
                     <Box component="form" onSubmit={handleSubmit} noValidate>
                         {/* Email */}
                         <TextField
@@ -178,7 +176,6 @@ const Register = () => {
                             label={'Повтор пароля'}
                         />
 
-                        {/* Кнопка регистрации */}
                         <Button
                             fullWidth
                             type="submit"
@@ -211,7 +208,6 @@ const Register = () => {
                             </Typography>
                         </Divider>
 
-                        {/* Ссылка на вход */}
                         <Typography
                             variant="body2"
                             sx={{ textAlign: 'center' }}
