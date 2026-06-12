@@ -6,7 +6,7 @@ import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 export const validateCredentials = (
     email: string,
     password: string,
-    confirmPassword: string = '',
+    confirmPassword: string = ''
 ) => {
     try {
         if (!confirmPassword) {
@@ -22,14 +22,3 @@ export const validateCredentials = (
         return {};
     }
 };
-
-/*
-const errors: CredentialsErrors = {};
-error.issues.forEach((e) => {
-    if (e.path.length > 0) {
-        const field = e.path[0] as keyof CredentialsErrors;
-        errors[field] = e.message;
-    }
-});
-return errors;
- */
