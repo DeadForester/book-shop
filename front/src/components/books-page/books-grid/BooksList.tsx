@@ -3,6 +3,7 @@ import { ChangeEvent, useMemo, useState } from 'react';
 
 import BooksFilters from '@/components/books-page/books-grid/BooksFilters.tsx';
 import { goods } from '@/data/goods.ts';
+import { useIsMobile } from '@/hooks/useIsMobile.ts';
 import PaginationControls from '@/shared/components/PaginationControls.tsx';
 import { Book } from '@/shared/types/Book.ts';
 
@@ -13,7 +14,7 @@ export default function BooksList() {
 
     const [page, setPage] = useState(1);
 
-    const ITEMS_PER_PAGE = 6;
+    const ITEMS_PER_PAGE = useIsMobile(1200) ? 3 : 6;
 
     const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
@@ -21,7 +22,7 @@ export default function BooksList() {
     const currentItems = useMemo(() => {
         const start = (page - 1) * ITEMS_PER_PAGE;
         return filteredBooks.slice(start, start + ITEMS_PER_PAGE);
-    }, [filteredBooks, page]);
+    }, [ITEMS_PER_PAGE, filteredBooks, page]);
 
     const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -53,7 +54,7 @@ export default function BooksList() {
                 <>
                     <Grid container spacing={2}>
                         {currentItems.map((book) => (
-                            <Grid size={{ xs: 12, sm: 6 }} key={book.id}>
+                            <Grid size={{ md: 12, lg: 6 }} key={book.id}>
                                 <BooksItem book={book} />
                             </Grid>
                         ))}

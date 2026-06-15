@@ -139,10 +139,6 @@ const BooksFilters = ({ books, onPageReset, onFilteredBooksChange }: BookFilters
                         renderInput={(params) => (
                             <TextField {...params} label="Жанр" placeholder="Выберите жанр..." />
                         )}
-                        sx={{
-                            flexGrow: 1,
-                            height: '100%',
-                        }}
                     />
                 </Stack>
 
