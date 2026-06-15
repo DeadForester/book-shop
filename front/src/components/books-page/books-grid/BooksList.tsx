@@ -13,14 +13,16 @@ import {
 import { ChangeEvent, MouseEvent, SyntheticEvent, useMemo, useState } from 'react';
 
 import { goods } from '@/data/goods.ts';
+import useDebounce from '@/hooks/useDebounce.ts';
+import AutocompleteSelector from '@/shared/components/AutocompleteSelector.tsx';
+import PaginationControls from '@/shared/components/PaginationControls.tsx';
 
-import AutocompleteSelector from '../../../shared/components/AutocompleteSelector.tsx';
-import PaginationControls from '../../../shared/components/PaginationControls.tsx';
 import BooksItem from './BooksItem.tsx';
 
 export default function BooksList() {
     const [books] = useState(goods);
     const [searchQuery, setSearchQuery] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
     const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState<string | null>(null);
 
@@ -36,7 +38,8 @@ export default function BooksList() {
     const filteredBooks = useMemo(() => {
         let result = books.filter((book) => {
             const matchesSearch =
-                !searchQuery.trim() || book.name.toLowerCase().includes(searchQuery.toLowerCase());
+                !debouncedSearch.trim() ||
+                book.name.toLowerCase().includes(debouncedSearch.toLowerCase());
             const matchesGenre = !selectedGenre || book.genre === selectedGenre;
             return matchesSearch && matchesGenre;
         });
@@ -48,7 +51,7 @@ export default function BooksList() {
         }
 
         return result;
-    }, [books, searchQuery, selectedGenre, sortBy]);
+    }, [books, debouncedSearch, selectedGenre, sortBy]);
 
     const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
     const currentItems = useMemo(() => {
@@ -61,9 +64,14 @@ export default function BooksList() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const handleDebouncedSearchChange = useDebounce((query: unknown) => {
+        if (typeof query === 'string') setDebouncedSearch(query);
+        setPage(1);
+    }, 500);
+
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
-        setPage(1);
+        handleDebouncedSearchChange(e.target.value);
     };
 
     const handleGenreChange = (_event: SyntheticEvent, newValue: string | null) => {
