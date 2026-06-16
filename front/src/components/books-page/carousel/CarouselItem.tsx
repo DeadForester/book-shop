@@ -16,7 +16,7 @@ const CarouselItem = ({ index, book }: CarouselItemProps) => {
     return (
         <Box
             sx={{
-                flex: { xs: '0 0 100%', sm: '0 0 50%' },
+                flex: { xs: '0 0 100%', sm: '0 0 100%', md: '0 0 50%' },
                 minWidth: 0,
                 pl: 1,
                 boxSizing: 'border-box',
