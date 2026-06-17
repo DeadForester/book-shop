@@ -1,4 +1,4 @@
-import { Book } from '../../../models/db/Book';
+import { Book } from '@/models/db/Book';
 
 export interface OrderSummary {
     totalItems: number;

@@ -1,6 +1,5 @@
 import $api from '@/http';
-
-import { AuthResponse } from '../../models/response/Auth/AuthResponse.ts';
+import { AuthResponse } from '@/models/response/Auth/AuthResponse.ts';
 
 export default class AuthService {
     static async login(email: string, password: string) {

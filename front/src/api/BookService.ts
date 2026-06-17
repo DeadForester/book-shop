@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 import { API_URL } from '@/http';
-
-import { Book } from '../../models/db/Book';
+import { Book } from '@/models/db/Book';
 
 export default class BookService {
     static async getAllBooks(page: number = 1, size: number = 10) {

@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 import { API_URL } from '@/http';
-
-import { Purchase } from '../../models/db/Purchase';
-import { PurchaseCreate } from '../../models/request/Purchase/PurchaseCreate.ts';
+import { Purchase } from '@/models/db/Purchase';
+import { PurchaseCreate } from '@/models/request/Purchase/PurchaseCreate.ts';
 
 export default class PurchaseService {
     static async getPurchaseById(id: number) {

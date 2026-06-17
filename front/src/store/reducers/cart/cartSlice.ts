@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Book } from '../../../../models/db/Book';
+import { Book } from '@/models/db/Book';
 
 export interface CartItem {
     id: number;

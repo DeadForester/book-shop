@@ -1,6 +1,6 @@
 import { BookItem } from 'front/src/shared/types/BookItem.ts';
 
-import { PurchaseProvider } from './PurchaseProvider';
+import { PurchaseProvider } from './PurchaseProvider.ts';
 
 export interface Purchase {
     purchaseId: number;

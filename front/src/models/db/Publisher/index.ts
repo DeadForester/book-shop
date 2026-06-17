@@ -1,4 +1,4 @@
-import { PublisherBook } from './PublisherBook';
+import { PublisherBook } from './PublisherBook.ts';
 
 export interface Publisher {
     publisherId: number;
