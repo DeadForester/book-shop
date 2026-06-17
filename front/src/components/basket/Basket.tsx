@@ -38,8 +38,8 @@ const Basket = ({ cartOpen, closeCart }: BasketProps) => {
                         {items.map((item) => (
                             <BasketItem
                                 id={item.id}
-                                name={item.book.name}
-                                price={item.book.price}
+                                name={item.book.title}
+                                price={item.book.pages}
                                 quantity={item.quantity}
                                 key={item.id}
                             />
@@ -49,7 +49,7 @@ const Basket = ({ cartOpen, closeCart }: BasketProps) => {
                             <Typography>
                                 Общая стоимость:{' '}
                                 {items.reduce((acc, item) => {
-                                    return acc + item.book.price * item.quantity;
+                                    return acc + item.book.pages * item.quantity;
                                 }, 0)}{' '}
                                 рублей.
                             </Typography>

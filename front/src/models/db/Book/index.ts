@@ -10,7 +10,4 @@ export interface Book {
     description: string;
     pages: number;
     binding: string;
-    price: number;
-    provider: string;
-    stock: number;
 }

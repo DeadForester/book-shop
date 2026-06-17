@@ -1,4 +1,4 @@
-import { BookItem } from 'front/src/shared/types/BookItem.ts';
+import { BookItem } from '@/shared/types/BookItem';
 
 export interface WarehouseWithBook {
     warehouseId: number;

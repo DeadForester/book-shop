@@ -5,7 +5,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { removeFromCart } from '@/store/reducers/cart/cartSlice.ts';
 
 interface BasketItemProps {
-    id: string;
+    id: number;
     name: string;
     price: number;
     quantity: number;

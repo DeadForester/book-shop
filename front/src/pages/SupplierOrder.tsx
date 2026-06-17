@@ -11,6 +11,7 @@ import {
 import { useMemo, useState } from 'react';
 
 import { OrderItem } from '@/components/supplier-order-page/types.ts';
+import { Book } from '@/models/db/Book';
 
 import { BooksTable, SummarizePanel } from '../components/supplier-order-page/index.ts';
 import { goods } from '../data/goods.ts';
@@ -30,9 +31,28 @@ export default function SupplierOrder() {
             if (qty > 0) {
                 const book = goods.find((b) => b.id === bookId);
                 if (book) {
+                    const bookToPush: Book = {
+                        id: Number(book.id),
+                        title: book.name,
+                        genre: book.genre,
+                        image: {
+                            imageId: Number(book.id),
+                            url: book.poster,
+                        },
+                        authors: [
+                            {
+                                authorId: 1,
+                                firstName: book.author,
+                                surname: '',
+                            },
+                        ],
+                        description: book.description,
+                        pages: book.price,
+                        binding: book.stock.toString(),
+                    };
                     totalItems += qty;
                     totalCost += qty * book.price;
-                    itemsList.push({ ...book, quantity: qty });
+                    itemsList.push({ ...bookToPush, quantity: qty });
                 }
             }
         });

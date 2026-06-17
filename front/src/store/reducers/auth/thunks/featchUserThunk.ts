@@ -7,11 +7,13 @@ import { User } from '@/models/db/User';
 export const fetchUser = createAsyncThunk<User, void, { rejectValue: string }>(
     'auth/fetchUser',
     async (_, { rejectWithValue }) => {
-        const userId = localStorage.getItem('userId');
+        const userIdLS = localStorage.getItem('userId');
 
-        if (!userId) {
+        if (!userIdLS) {
             return rejectWithValue('userId не найден в localStorage');
         }
+
+        const userId = Number(userIdLS);
 
         try {
             const response = await UserService.getUserById(userId);

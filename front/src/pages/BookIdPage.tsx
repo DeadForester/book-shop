@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { Book } from '@/models/db/Book';
 import { addToCart } from '@/store/reducers/cart/cartSlice.ts';
 
 import ActionButtons from '../components/book-id-page/ActionButtons.tsx';
@@ -35,7 +36,26 @@ const BookIdPage = () => {
     }
 
     const handleAddToCart = () => {
-        dispatch(addToCart(book));
+        const bookToAdd: Book = {
+            id: Number(book.id),
+            title: book.name,
+            genre: book.genre,
+            image: {
+                imageId: Number(book.id),
+                url: book.poster,
+            },
+            authors: [
+                {
+                    authorId: 1,
+                    firstName: book.author,
+                    surname: '',
+                },
+            ],
+            description: book.description,
+            pages: book.price,
+            binding: book.stock.toString(),
+        };
+        dispatch(addToCart(bookToAdd));
     };
 
     return (

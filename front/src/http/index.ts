@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { RefreshResponse } from '@/models/response/Auth/AuthResponse.ts';
+import { AuthResponse } from '@/models/response/Auth/AuthResponse';
 
 export const API_URL = 'http://localhost:8080/api/v1';
 
@@ -23,7 +23,7 @@ $api.interceptors.response.use(
         if (error.response.status == 401 && originalRequest && !originalRequest._isRetry) {
             originalRequest._isRetry = true;
             try {
-                const response = await axios.get<RefreshResponse>(`${API_URL}/refresh`, {
+                const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
                     withCredentials: true,
                 });
                 localStorage.setItem('token', response.data.accessToken);

@@ -4,7 +4,7 @@ import axios from 'axios';
 import AuthService from '@/api/AuthService.ts';
 
 export const login = createAsyncThunk<
-    { user_id: string },
+    { userId: number },
     { email: string; password: string; rememberMe: boolean },
     { rejectValue: string }
 >('auth/login', async ({ email, password, rememberMe }, { rejectWithValue }) => {
@@ -13,7 +13,7 @@ export const login = createAsyncThunk<
         if (rememberMe) {
             localStorage.setItem('remember', 'true');
         }
-        localStorage.setItem('userId', response.data.user_id);
+        localStorage.setItem('userId', response.data.userId.toString());
         return response.data;
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {

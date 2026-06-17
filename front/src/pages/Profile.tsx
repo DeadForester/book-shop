@@ -131,7 +131,7 @@ export default function Profile() {
                             { label: 'Телефон', value: currentUser.phone ?? '+7 (9__) ___-__-__' },
                             {
                                 label: 'Дата регистрации',
-                                value: currentUser.joinDate.toString() ?? 'dd.mm.yyyy',
+                                value: currentUser.joinDate?.toString() ?? 'dd.mm.yyyy',
                             },
                         ]}
                     />
