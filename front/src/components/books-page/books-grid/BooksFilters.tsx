@@ -14,12 +14,12 @@ import {
 import { ChangeEvent, MouseEvent, SyntheticEvent, useEffect, useMemo, useState } from 'react';
 
 import useDebounce from '@/hooks/useDebounce.ts';
-import { Book } from '@/shared/types/Book.ts';
+import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface BookFiltersProps {
-    books: Book[];
+    books: BookMock[];
     onPageReset: () => void;
-    onFilteredBooksChange: (filtered: Book[]) => void;
+    onFilteredBooksChange: (filtered: BookMock[]) => void;
 }
 
 const BooksFilters = ({ books, onPageReset, onFilteredBooksChange }: BookFiltersProps) => {

@@ -1,4 +1,4 @@
-import { BookInOrder } from '@/shared/types/BookInOrder.ts';
+import { BookInOrder } from '@/shared/types/mock/BookInOrder.ts';
 
 export interface Order {
     id: string;

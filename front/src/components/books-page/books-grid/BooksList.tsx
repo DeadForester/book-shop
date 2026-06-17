@@ -5,7 +5,7 @@ import BooksFilters from '@/components/books-page/books-grid/BooksFilters.tsx';
 import { goods } from '@/data/goods.ts';
 import { useIsMobile } from '@/hooks/useIsMobile.ts';
 import PaginationControls from '@/shared/components/PaginationControls.tsx';
-import { Book } from '@/shared/types/Book.ts';
+import { BookMock } from '@/shared/types/mock/BookMock';
 
 import BooksItem from './BooksItem.tsx';
 
@@ -16,7 +16,7 @@ export default function BooksList() {
 
     const ITEMS_PER_PAGE = useIsMobile(1200) ? 3 : 6;
 
-    const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+    const [filteredBooks, setFilteredBooks] = useState<BookMock[]>([]);
 
     const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
     const currentItems = useMemo(() => {

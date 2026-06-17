@@ -1,4 +1,4 @@
-export interface Book {
+export interface BookMock {
     id: string;
     author: string;
     name: string;

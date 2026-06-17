@@ -1,8 +1,8 @@
-import { Book } from '@/shared/types/Book.ts';
+import { BookMock } from '@/shared/types/mock/BookMock.ts';
 
 import { providers } from './providers.ts';
 
-export const goods: Book[] = [
+export const goods: BookMock[] = [
     // ===== ПРОГРАММИРОВАНИЕ (1-12) =====
     {
         id: '01',

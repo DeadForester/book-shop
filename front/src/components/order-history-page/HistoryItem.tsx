@@ -13,7 +13,7 @@ import {
     Typography,
 } from '@mui/material';
 
-import { BookInOrder } from '@/shared/types/BookInOrder.ts';
+import { BookInOrder } from '@/shared/types/mock/BookInOrder.ts';
 
 interface HistoryItemProps {
     id: string;

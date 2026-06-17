@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 
-import { Order } from '@/shared/types/Order.ts';
+import { Order } from '@/shared/types/mock/Order';
 
 import HistoryItem from './HistoryItem.tsx';
 

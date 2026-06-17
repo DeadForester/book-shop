@@ -2,11 +2,11 @@ import { ArrowForward } from '@mui/icons-material';
 import { Box, Button, Card, CardMedia, Chip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { Book } from '@/shared/types/Book.ts';
+import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface CarouselItemProps {
     index: number;
-    book: Book;
+    book: BookMock;
 }
 
 const CarouselItem = ({ index, book }: CarouselItemProps) => {

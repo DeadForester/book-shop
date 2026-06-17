@@ -2,10 +2,10 @@ import { TrendingUp } from '@mui/icons-material';
 import { Box, Card, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { Book } from '@/shared/types/Book.ts';
+import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface YearBooksItem {
-    book: Book;
+    book: BookMock;
 }
 
 const YearBooksItem = ({ book }: YearBooksItem) => {

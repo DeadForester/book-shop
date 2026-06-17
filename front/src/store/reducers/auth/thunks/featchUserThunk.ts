@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import UserService from '@/api/user/UserService.ts';
-import { User } from '@/shared/types/User.ts';
+import UserService from '@/api/UserService.ts';
+import { User } from '@/shared/types/models/User';
 
 export const fetchUser = createAsyncThunk<User, void, { rejectValue: string }>(
     'auth/fetchUser',

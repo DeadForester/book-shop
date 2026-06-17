@@ -1,4 +1,4 @@
-import { Book } from '@/shared/types/Book';
+import { Book } from '@/shared/types/models/Book';
 
 export interface OrderSummary {
     totalItems: number;

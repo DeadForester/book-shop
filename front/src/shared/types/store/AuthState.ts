@@ -1,4 +1,4 @@
-import { User } from '@/shared/types/User.ts';
+import { User } from '@/shared/types/models/User';
 
 export interface AuthState {
     isAuth: boolean;

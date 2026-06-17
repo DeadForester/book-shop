@@ -1,10 +1,10 @@
 import { Box, Card, CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { Book } from '@/shared/types/Book.ts';
+import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface BooksItemProps {
-    book: Book;
+    book: BookMock;
 }
 
 export default function BooksItem({ book }: BooksItemProps) {

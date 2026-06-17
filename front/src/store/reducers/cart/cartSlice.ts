@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Book } from '@/shared/types/Book.ts';
+import { Book } from '@/shared/types/models/Book';
 
 export interface CartItem {
-    id: string;
+    id: number;
     book: Book;
     quantity: number;
 }
@@ -32,11 +32,11 @@ export const cartSlice = createSlice({
             }
         },
 
-        removeFromCart: (state, action: PayloadAction<string>) => {
+        removeFromCart: (state, action: PayloadAction<number>) => {
             state.items = state.items.filter((item) => item.book.id !== action.payload);
         },
 
-        updateQuantity: (state, action: PayloadAction<{ bookId: string; quantity: number }>) => {
+        updateQuantity: (state, action: PayloadAction<{ bookId: number; quantity: number }>) => {
             const item = state.items.find((i) => i.book.id === action.payload.bookId);
             if (item) {
                 item.quantity = action.payload.quantity;

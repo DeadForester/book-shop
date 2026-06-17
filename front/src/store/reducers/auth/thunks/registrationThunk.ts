@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import AuthService from '@/api/auth/AuthService.ts';
+import AuthService from '@/api/AuthService.ts';
 
 export const registration = createAsyncThunk<
     void,

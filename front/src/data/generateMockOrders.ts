@@ -1,5 +1,5 @@
-import { BookInOrder } from '@/shared/types/BookInOrder.ts';
-import { Order } from '@/shared/types/Order';
+import { Order } from '@/shared/types/mock/Order';
+import { BookInOrder } from '@/shared/types/mock/BookInOrder.ts';
 
 export const generateMockOrders = (count: number): Order[] => {
     const books = [

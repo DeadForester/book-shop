@@ -2,10 +2,10 @@ import { Add, Remove } from '@mui/icons-material';
 import { Box, Chip, IconButton, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 
-import { Book } from '@/shared/types/Book.ts';
+import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface BooksTableItemProps {
-    book: Book;
+    book: BookMock;
     orderItems: Record<string, number>;
     setOrderItems: Dispatch<SetStateAction<Record<string, number>>>;
 }
