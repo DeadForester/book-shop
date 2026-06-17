@@ -1,4 +1,4 @@
-import { CartItem } from '@/store/reducers/cart/cartSlice.ts';
+import { CartItem } from './CartItem';
 
 export interface CartState {
     items: CartItem[];

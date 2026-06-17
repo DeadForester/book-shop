@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Book } from '@/models/db/Book';
+import { Book } from '@/models/db/book';
 import { addToCart } from '@/store/reducers/cart/cartSlice.ts';
 
 import ActionButtons from '../components/book-id-page/ActionButtons.tsx';

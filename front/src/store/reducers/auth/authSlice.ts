@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { AuthState } from '@/models/store/AuthState.ts';
+import { AuthState } from '@/models/store/auth/AuthState.ts';
 import { fetchUser } from '@/store/reducers/auth/thunks/featchUserThunk.ts';
 import { login } from '@/store/reducers/auth/thunks/loginThunk.ts';
 import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts';

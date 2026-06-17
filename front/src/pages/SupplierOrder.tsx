@@ -11,7 +11,7 @@ import {
 import { useMemo, useState } from 'react';
 
 import { OrderItem } from '@/components/supplier-order-page/types.ts';
-import { Book } from '@/models/db/Book';
+import { Book } from '@/models/db/book';
 
 import { BooksTable, SummarizePanel } from '../components/supplier-order-page/index.ts';
 import { goods } from '../data/goods.ts';

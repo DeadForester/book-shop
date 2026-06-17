@@ -31,7 +31,7 @@ export default function Profile() {
 
     useEffect(() => {
         console.log(currentUser);
-        console.log('User admin: ' + currentUser?.isAdmin);
+        console.log('user admin: ' + currentUser?.isAdmin);
     }, [currentUser]);
 
     useEffect(() => {

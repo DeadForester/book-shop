@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { AuthResponse } from '@/models/response/Auth/AuthResponse';
+import { AuthResponse } from '@/models/response/auth/AuthResponse';
 
 export const API_URL = 'http://localhost:8080/api/v1';
 
