@@ -1,4 +1,4 @@
-import { User } from '@/shared/types/models/User';
+import { User } from '../db/User';
 
 export interface AuthState {
     isAuth: boolean;

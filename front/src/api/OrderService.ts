@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 import { API_URL } from '@/http';
-import { Order } from '@/shared/types/models/Order';
-import { OrderCreate } from '@/shared/types/request/Order/OrderCreate.ts';
+
+import { Order } from '../../models/db/Order';
+import { OrderCreate } from '../../models/request/Order/OrderCreate.ts';
 
 export default class OrderService {
     static async getAllOrders() {

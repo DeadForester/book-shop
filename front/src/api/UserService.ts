@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 import { API_URL } from '@/http';
-import { User } from '@/shared/types/models/User';
+
+import { User } from '../../models/db/User';
 
 export default class UserService {
     static async getUserById(id: number) {

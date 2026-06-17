@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 import { API_URL } from '@/http';
-import { Provider } from '@/shared/types/models/Provider';
+
+import { Provider } from '../../models/db/Provider';
 
 export default class ProviderService {
     static async getProviderById(id: number) {

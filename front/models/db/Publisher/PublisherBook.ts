@@ -1,4 +1,4 @@
-import { BookImage } from '@/shared/types/models/Book/BookImage.ts';
+import { BookImage } from '../Book/BookImage.ts';
 
 export interface PublisherBook {
     bookId: number;

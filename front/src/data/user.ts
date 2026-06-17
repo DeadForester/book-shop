@@ -1,4 +1,4 @@
-import { User } from '@/shared/types/models/User';
+import { User } from '../../models/db/User';
 
 export const mockUser: User = {
     email: 'alex.ivanov@bookshop.ru',

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { RefreshResponse } from '@/shared/types/response/Auth';
+import { RefreshResponse } from '../../models/response/Auth/AuthResponse.ts';
 
 export const API_URL = 'http://localhost:8080/api/v1';
 
