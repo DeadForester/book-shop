@@ -25,12 +25,16 @@
 ```
 book-shop-front/
 ├── src/
-│   ├── api/            # HTTP-сервисы (auth, book, order, publisher, purchase, user, warehouse)
+│   ├── api/            # HTTP-сервисы (AuthService, BookService, OrderService,
+│   │                   #   ProviderService, PublisherService, PurchaseService,
+│   │                   #   UserService, WarehouseService)
 │   ├── components/     # UI-компоненты по разделам (basket, book-id-page, books-page,
 │   │                   #   order-history-page, profile-page, supplier-order-page)
 │   ├── data/           # Моковые данные (товары, поставщики, пользователи, генератор заказов)
 │   ├── hooks/          # Кастомные хуки (useAppDispatch, useAppSelector, useAppStore,
 │   │                   #   useDebounce, useIsMobile)
+│   ├── http/           # HTTP-клиент (axios-инстанс с базовыми настройками)
+│   ├── models/         # TypeScript-модели (db, request, response, store)
 │   ├── pages/          # Компоненты страниц (BookIdPage, Books, Error, Login,
 │   │                   #   OrderHistory, Profile, Register, SupplierOrder)
 │   ├── router/         # Конфигурация маршрутов SPA
