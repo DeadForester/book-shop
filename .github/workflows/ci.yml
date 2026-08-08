@@ -40,6 +40,9 @@ jobs:
       - name: Run linter
         working-directory: ./front
         run: npm run lint
+      - name: Run tests
+        working-directory: ./front
+        run: npm run test:run
       - name: Run build
         working-directory: ./front
         run: npm run build
