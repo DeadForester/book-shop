@@ -22,7 +22,7 @@
         "paths": {
             "@/*": ["src/*"]
         },
-        "types": ["vite/client"]
+        "types": ["vite/client", "node"]
     },
     "include": ["src", "src/vite-env.d.ts"],
     "references": [
