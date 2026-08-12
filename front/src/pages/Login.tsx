@@ -18,6 +18,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { usePageTitle } from '@/hooks/usePageTitle.ts';
 import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 import { SnackBar } from '@/shared/types/SnackBar.ts';
 import { login } from '@/store/reducers/auth/thunks/loginThunk.ts';
@@ -71,6 +72,8 @@ const Login = () => {
 
         setTimeout(() => navigate('/', { replace: true }), 1500);
     };
+
+    usePageTitle('Прочитайка - Вход');
 
     return (
         <Box
