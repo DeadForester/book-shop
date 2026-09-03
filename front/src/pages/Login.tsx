@@ -27,7 +27,7 @@ import Password from '../shared/components/Password.tsx';
 import { validateCredentials } from '../utils/validateCredentials.ts';
 
 const Login = () => {
-    const { isLoginLoading, loginError } = useAppSelector((state) => state.auth);
+    const { isLoginLoading } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -52,25 +52,26 @@ const Login = () => {
             return;
         }
 
-        await dispatch(login({ email, password, rememberMe }));
+        console.log(email, password, rememberMe);
 
-        if (loginError) {
+        try {
+            await dispatch(login({ email, password, rememberMe })).unwrap();
+
+            setSnackbar({
+                open: true,
+                message: 'Успешный вход.',
+                severity: 'success',
+            });
+
+            setTimeout(() => navigate('/', { replace: true }), 1500);
+        } catch (e: unknown) {
             setSnackbar({
                 open: true,
                 message: 'Не верные данные пользователя.',
                 severity: 'error',
             });
-            console.error('Login: ' + loginError);
-            return;
+            console.error('Login: ' + e);
         }
-
-        setSnackbar({
-            open: true,
-            message: 'Успешный вход.',
-            severity: 'success',
-        });
-
-        setTimeout(() => navigate('/', { replace: true }), 1500);
     };
 
     usePageTitle('Прочитайка - Вход');
@@ -114,6 +115,7 @@ const Login = () => {
                             severity={snackbar.severity}
                             sx={{ mb: 2 }}
                             onClose={() => setSnackbar({ ...snackbar, open: false })}
+                            data-testid="login-result"
                         >
                             {snackbar.message}
                         </Alert>
@@ -140,6 +142,9 @@ const Login = () => {
                                         </InputAdornment>
                                     ),
                                 },
+                                htmlInput: {
+                                    'data-testid': 'login-field',
+                                },
                             }}
                             disabled={isLoginLoading}
                         />
@@ -151,6 +156,7 @@ const Login = () => {
                             resetErrors={() => setErrors({ ...errors, password: '' })}
                             loading={isLoginLoading}
                             label={'Пароль'}
+                            testId="password-field"
                         />
 
                         <Box
@@ -207,6 +213,7 @@ const Login = () => {
                                 fontSize: '1rem',
                                 fontWeight: 600,
                             }}
+                            data-testid="login-button"
                         >
                             {isLoginLoading ? 'Вход...' : 'Войти'}
                         </Button>
