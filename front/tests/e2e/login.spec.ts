@@ -30,18 +30,23 @@ test.describe('Login', () => {
     });
 
     test('login denied', async ({ page }) => {
-        const passwordField = page.getByTestId('password-field');
+        expect(await page.title()).toEqual('Прочитайка - Вход');
+
         const loginField = page.getByTestId('login-field');
+        const passwordField = page.getByTestId('password-field');
+        const loginButton = page.getByTestId('login-button');
 
-        expect(passwordField).not.toBeNull();
+        await expect(loginField).toBeVisible();
 
-        expect(loginField).not.toBeNull();
+        await expect(passwordField).toBeVisible();
 
-        await passwordField.fill('123456789');
+        await expect(loginButton).toBeVisible();
 
         await loginField.fill('user@gmail.com');
 
-        await page.getByTestId('login-button').click();
+        await passwordField.fill('123456789');
+
+        await loginButton.click();
 
         await expect(page.getByTestId('login-result')).toContainText(
             'Не верные данные пользователя.'
@@ -49,6 +54,6 @@ test.describe('Login', () => {
 
         await page.waitForTimeout(1000);
 
-        expect(page.title()).toEqual('Прочитайка - Вход');
+        expect(await page.title()).toEqual('Прочитайка - Вход');
     });
 });
