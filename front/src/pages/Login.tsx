@@ -52,8 +52,6 @@ const Login = () => {
             return;
         }
 
-        console.log(email, password, rememberMe);
-
         try {
             await dispatch(login({ email, password, rememberMe })).unwrap();
 

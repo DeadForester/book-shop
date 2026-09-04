@@ -7,11 +7,11 @@ const Loader = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '100%',
-                height: '100%',
+                width: '100vw',
+                height: '100vh',
             }}
         >
-            <CircularProgress size="3rem" aria-label="Loading…" />
+            <CircularProgress size="6rem" aria-label="Loading…" />
         </Box>
     );
 };

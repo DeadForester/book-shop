@@ -9,7 +9,7 @@ interface PasswordProps {
     resetErrors: () => void;
     loading: boolean;
     label: string;
-    testId: string;
+    testId?: string;
 }
 
 const Password = ({
@@ -19,7 +19,7 @@ const Password = ({
     resetErrors,
     loading,
     label = 'Пароль',
-    testId = 'password',
+    testId,
 }: PasswordProps) => {
     const [showPassword, setShowPassword] = useState(false);
 

@@ -48,7 +48,9 @@ const UserCircle = () => {
             <IconButton color="inherit" onClick={handleMenuOpen}>
                 {isAuth ? (
                     <Avatar sx={{ width: 32, height: 32, backgroundColor: 'secondary.main' }}>
-                        {currentUser?.name?.charAt(0) || currentUser?.email?.charAt(0) || 'U'}
+                        {currentUser?.name?.charAt(0).toUpperCase() ||
+                            currentUser?.email?.charAt(0).toUpperCase() ||
+                            'U'}
                     </Avatar>
                 ) : (
                     <AccountCircle />

@@ -18,9 +18,8 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         /* Aliases */
-        "baseUrl": ".",
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": ["./src/*"]
         },
         "types": ["vite/client", "node"]
     },
