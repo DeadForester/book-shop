@@ -1,13 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { AuthResponse } from '@/models/response/auth/AuthResponse.ts';
 import { AuthState } from '@/models/store/auth/AuthState.ts';
 import { fetchUser } from '@/store/reducers/auth/thunks/featchUserThunk.ts';
 import { login } from '@/store/reducers/auth/thunks/loginThunk.ts';
 import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts';
+import { authStorage } from '@/utils/authStorage.ts';
 
 const initialState: AuthState = {
     isAuth: localStorage.getItem('remember') === 'true',
     currentUser: null,
+    isCheckingAuth: true,
     isLoginLoading: false,
     isRegistrationLoading: false,
     isUserLoading: false,
@@ -20,11 +23,23 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        restoreAuth(state, action: PayloadAction<AuthResponse>) {
+            state.currentUser = {
+                user_id: action.payload.user_id,
+                email: action.payload.email,
+                user_role: action.payload.user_role,
+            };
+            state.isAuth = true;
+            state.isCheckingAuth = false;
+        },
+        finishCheckAuth(state) {
+            state.isCheckingAuth = false;
+        },
         logout: (state) => {
             state.isAuth = false;
             state.currentUser = null;
-            localStorage.removeItem('userId');
-            localStorage.removeItem('remember');
+            state.isCheckingAuth = false;
+            authStorage.clear();
         },
         clearErrors: (state) => {
             state.loginError = null;
@@ -80,5 +95,5 @@ export const authSlice = createSlice({
     },
 });
 
-export const { logout, clearErrors } = authSlice.actions;
+export const { restoreAuth, finishCheckAuth, logout, clearErrors } = authSlice.actions;
 export default authSlice.reducer;
