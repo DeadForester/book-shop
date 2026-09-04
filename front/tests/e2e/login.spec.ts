@@ -1,24 +1,24 @@
-import { expect, test } from '@playwright/test';
+import { expect, Locator, test } from '@playwright/test';
 
 test.describe('Login', () => {
+    let loginField: Locator;
+    let passwordField: Locator;
+    let loginButton: Locator;
+
     test.beforeEach(async ({ page }) => {
         await page.goto('/login');
 
-        await page.waitForTimeout(500);
+        loginField = page.getByTestId('login-field');
+        passwordField = page.getByTestId('password-field');
+        loginButton = page.getByTestId('login-button');
+
+        await expect(loginField).toBeVisible();
+        await expect(passwordField).toBeVisible();
+        await expect(loginButton).toBeVisible();
     });
 
     test('login success', async ({ page }) => {
         expect(await page.title()).toEqual('Прочитайка - Вход');
-
-        const loginField = page.getByTestId('login-field');
-        const passwordField = page.getByTestId('password-field');
-        const loginButton = page.getByTestId('login-button');
-
-        await expect(loginField).toBeVisible();
-
-        await expect(passwordField).toBeVisible();
-
-        await expect(loginButton).toBeVisible();
 
         await loginField.fill('user@gmail.com');
 
@@ -31,16 +31,6 @@ test.describe('Login', () => {
 
     test('login denied', async ({ page }) => {
         expect(await page.title()).toEqual('Прочитайка - Вход');
-
-        const loginField = page.getByTestId('login-field');
-        const passwordField = page.getByTestId('password-field');
-        const loginButton = page.getByTestId('login-button');
-
-        await expect(loginField).toBeVisible();
-
-        await expect(passwordField).toBeVisible();
-
-        await expect(loginButton).toBeVisible();
 
         await loginField.fill('user@gmail.com');
 
