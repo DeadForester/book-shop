@@ -30,7 +30,6 @@ const BooksFilters = ({ books, onPageReset, onFilteredBooksChange }: BookFilters
 
     const availableGenres = useMemo(() => {
         const genres = books.map((book) => book.genre).filter(Boolean);
-        console.log('genres', genres);
         return [...new Set(genres)].sort();
     }, [books]);
 

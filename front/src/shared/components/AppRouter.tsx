@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
@@ -10,11 +9,6 @@ import ProtectedRoute from './ProtectedRoute.tsx';
 
 const AppRouter = () => {
     const { currentUser, isAuth } = useAppSelector((state) => state.auth);
-
-    useEffect(() => {
-        console.log('Router user: ');
-        console.log(currentUser);
-    }, [currentUser]);
 
     return (
         <Routes>
