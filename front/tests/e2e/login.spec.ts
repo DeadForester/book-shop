@@ -38,6 +38,9 @@ test.describe('Login', () => {
 
         await loginButton.click();
 
+        await expect(page.getByTestId('login-result'))
+            .toBeVisible();
+
         await expect(page.getByTestId('login-result')).toContainText(
             'Не верные данные пользователя.'
         );
