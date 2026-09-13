@@ -16,6 +16,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { LOGIN_ROUTE } from '@/shared/constants/route-paths.ts';
 import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 import { SnackBar } from '@/shared/types/SnackBar.ts';
 import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts';
@@ -68,7 +69,7 @@ const Register = () => {
             severity: 'success',
         });
 
-        setTimeout(() => navigate('/login', { replace: true }), 2000);
+        setTimeout(() => navigate(LOGIN_ROUTE, { replace: true }), 2000);
     };
 
     return (
@@ -216,7 +217,7 @@ const Register = () => {
                             Уже есть аккаунт?{' '}
                             <Typography
                                 component={RouterLink}
-                                to="/login"
+                                to={LOGIN_ROUTE}
                                 color="primary"
                                 sx={{
                                     textDecoration: 'none',

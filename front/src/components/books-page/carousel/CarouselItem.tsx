@@ -2,6 +2,7 @@ import { ArrowForward } from '@mui/icons-material';
 import { Box, Button, Card, CardMedia, Chip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { BOOKS_ROUTE } from '@/shared/constants/route-paths.ts';
 import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface CarouselItemProps {
@@ -79,7 +80,7 @@ const CarouselItem = ({ index, book }: CarouselItemProps) => {
                         variant="contained"
                         size="small"
                         endIcon={<ArrowForward />}
-                        onClick={() => navigate(`/books/${book.id}`)}
+                        onClick={() => navigate(`${BOOKS_ROUTE}/${book.id}`)}
                         sx={{ mt: 1, alignSelf: 'flex-start' }}
                     >
                         Подробнее

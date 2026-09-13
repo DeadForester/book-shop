@@ -19,6 +19,11 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import { usePageTitle } from '@/hooks/usePageTitle.ts';
+import {
+    FORGOT_PASSWORD_ROUTE,
+    REGISTER_ROUTE,
+    ROOT_ROUTE,
+} from '@/shared/constants/route-paths.ts';
 import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 import { SnackBar } from '@/shared/types/SnackBar.ts';
 import { login } from '@/store/reducers/auth/thunks/loginThunk.ts';
@@ -61,7 +66,7 @@ const Login = () => {
                 severity: 'success',
             });
 
-            setTimeout(() => navigate('/', { replace: true }), 1500);
+            setTimeout(() => navigate(ROOT_ROUTE, { replace: true }), 1500);
         } catch (e: unknown) {
             setSnackbar({
                 open: true,
@@ -177,7 +182,7 @@ const Login = () => {
                             />
                             <Typography
                                 component={RouterLink}
-                                to="/forgot-password"
+                                to={FORGOT_PASSWORD_ROUTE}
                                 variant="body2"
                                 color="primary"
                                 sx={{
@@ -230,7 +235,7 @@ const Login = () => {
                             Нет аккаунта?{' '}
                             <Typography
                                 component={RouterLink}
-                                to="/register"
+                                to={REGISTER_ROUTE}
                                 color="primary"
                                 sx={{
                                     textDecoration: 'none',

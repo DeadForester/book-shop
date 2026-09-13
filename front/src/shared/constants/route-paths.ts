@@ -1,0 +1,9 @@
+export const ROOT_ROUTE = '/';
+export const STORAGE_ORDER_ROUTE = '/storageOrder';
+export const ORDER_HISTORY_ROUTE = '/orders';
+export const PROFILE_ROUTE = '/profile';
+export const BOOKS_ROUTE = '/books';
+export const LOGIN_ROUTE = '/login';
+export const REGISTER_ROUTE = '/register';
+export const FORGOT_PASSWORD_ROUTE = '/forgot-password';
+export const PANEL_ROUTE = '/panel';

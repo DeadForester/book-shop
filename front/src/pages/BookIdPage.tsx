@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Book } from '@/models/db/book';
+import { ROOT_ROUTE } from '@/shared/constants/route-paths.ts';
 import { addToCart } from '@/store/reducers/cart/cartSlice.ts';
 
 import ActionButtons from '../components/book-id-page/ActionButtons.tsx';
@@ -28,7 +29,7 @@ const BookIdPage = () => {
                 <Typography variant="h5" color="error">
                     Книга не найдена
                 </Typography>
-                <Button sx={{ mt: 2 }} onClick={() => navigate('/')}>
+                <Button sx={{ mt: 2 }} onClick={() => navigate(ROOT_ROUTE)}>
                     Вернуться в каталог
                 </Button>
             </Container>

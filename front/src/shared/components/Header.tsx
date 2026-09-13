@@ -3,6 +3,7 @@ import { AppBar, Badge, IconButton, Link, Toolbar } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { ROOT_ROUTE } from '@/shared/constants/route-paths.ts';
 
 import UserCircle from './UserCircle';
 
@@ -18,7 +19,7 @@ const Header = ({ handleCart }: HeaderProps) => {
             <Toolbar>
                 <Link
                     component={RouterLink}
-                    to="/"
+                    to={ROOT_ROUTE}
                     underline="none"
                     sx={{ typography: 'h6', flexGrow: 1, color: 'inherit' }}
                 >
