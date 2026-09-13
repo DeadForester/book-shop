@@ -20,7 +20,7 @@ import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 import { SnackBar } from '@/shared/types/SnackBar.ts';
 import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts';
 
-import Password from '../shared/components/Password.tsx';
+import Password from '../shared/components/Password';
 import { validateCredentials } from '../utils/validateCredentials.ts';
 
 const Register = () => {

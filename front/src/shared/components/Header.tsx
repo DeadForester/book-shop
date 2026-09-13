@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
 
-import UserCircle from './UserCircle.tsx';
+import UserCircle from './UserCircle';
 
 interface HeaderProps {
     handleCart: () => void;

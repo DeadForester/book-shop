@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
-import Loader from '@/shared/components/Loader.tsx';
+import Loader from '@/shared/components/Loader';
 import { finishCheckAuth, restoreAuth } from '@/store/reducers/auth/authSlice.ts';
 import { authStorage } from '@/utils/authStorage.ts';
 

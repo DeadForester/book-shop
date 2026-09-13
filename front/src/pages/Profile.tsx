@@ -17,8 +17,8 @@ import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import { fetchUser } from '@/store/reducers/auth/thunks/featchUserThunk.ts';
 
 import InfoSection from '../components/profile-page/InfoSection.tsx';
-import DevPlaceholder from '../shared/components/DevPlaceholder.tsx';
-import Loader from '../shared/components/Loader.tsx';
+import DevPlaceholder from '../shared/components/DevPlaceholder';
+import Loader from '../shared/components/Loader';
 
 export default function Profile() {
     const dispatch = useAppDispatch();

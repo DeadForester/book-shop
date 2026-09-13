@@ -3,12 +3,19 @@ import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { useState } from 'react';
 
 interface PasswordProps {
+    /** Текущее значение пароля */
     password: string;
+    /** Колбэк для обновления значения пароля */
     setPassword: (newPassword: string) => void;
+    /** Текст ошибки валидации, если есть */
     error: string;
+    /** Сбрасывает состояние ошибки при вводе */
     resetErrors: () => void;
+    /** Блокирует поле на время запроса */
     loading: boolean;
+    /** Текст лейбла над полем */
     label: string;
+    /** data-testid для e2e-тестов */
     testId?: string;
 }
 
