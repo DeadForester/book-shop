@@ -3,6 +3,7 @@ import { User } from '../../db/user';
 export interface AuthState {
     isAuth: boolean;
     currentUser: User | null;
+    isCheckingAuth: boolean;
     isLoginLoading: boolean;
     isRegistrationLoading: boolean;
     isUserLoading: boolean;

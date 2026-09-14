@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 import HistoryEmpty from '../components/order-history-page/HistoryEmpty.tsx';
 import HistoryList from '../components/order-history-page/HistoryList.tsx';
 import { generateMockOrders } from '../data/generateMockOrders.ts';
-import PaginationControls from '../shared/components/PaginationControls.tsx';
+import PaginationControls from '../shared/components/PaginationControls';
 
 export default function OrderHistory() {
     const [orders] = useState(() => generateMockOrders(25));
