@@ -38,34 +38,48 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: ./front/package-lock.json
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
       - name: Install dependencies
         run: npm ci
       - name: Run linter
         run: npm run lint
 
-  frontend_test:
+  frontend_test_unit:
     needs: frontend_lint
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{ env.FRONTEND_DIR }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6.0.2
-      - name: Setup Node.js
-        uses: actions/setup-node@v6.4.0
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-node@v6.4.0
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: ./front/package-lock.json
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm run test:run
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
+      - run: npm ci
+      - run: npm run test:unit
+
+  frontend_test_storybook:
+    needs: frontend_lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
+    steps:
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-node@v6.4.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
+      - run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - run: npm run test:storybook
 
   frontend_build:
-    needs: frontend_test
+    needs: [ frontend_test_unit, frontend_test_storybook ]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -78,7 +92,7 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: ./front/package-lock.json
+          cache-dependency-path: ${{ env.FRONTEND_DIR }}/package-lock.json
       - name: Install dependencies
         run: npm ci
       - name: Run build

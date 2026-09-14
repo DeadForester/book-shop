@@ -11,6 +11,8 @@
         "lint:fix": "eslint src/ --fix",
         "test": "vitest",
         "test:run": "vitest run",
+        "test:unit": "vitest run --project unit",
+        "test:storybook": "vitest run --project storybook",
         "test:e2e": "npx playwright test",
         "type-check": "tsc --noEmit",
         "storybook": "storybook dev -p 6006",
