@@ -7,6 +7,9 @@ on:
     branches:
       - main
 
+env:
+  FRONTEND_DIR: ./front
+
 jobs:
   backend_build:
     runs-on: ubuntu-latest
@@ -22,9 +25,11 @@ jobs:
         working-directory: ./backend/book-service
         run: mvn clean package -DskipTests
 
-  frontend_build:
-    needs: backend_build
+  frontend_lint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.2
@@ -35,16 +40,48 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./front/package-lock.json
       - name: Install dependencies
-        working-directory: ./front
         run: npm ci
       - name: Run linter
-        working-directory: ./front
         run: npm run lint
+
+  frontend_test:
+    needs: frontend_lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: ./front/package-lock.json
+      - name: Install dependencies
+        run: npm ci
       - name: Run tests
-        working-directory: ./front
         run: npm run test:run
+
+  frontend_build:
+    needs: frontend_test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_DIR }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: ./front/package-lock.json
+      - name: Install dependencies
+        run: npm ci
       - name: Run build
-        working-directory: ./front
         run: npm run build
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
