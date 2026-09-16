@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { AuthResponse } from '@/models/response/auth/AuthResponse.ts';
 import { AuthState } from '@/models/store/auth/AuthState.ts';
-import { fetchUser } from '@/store/reducers/auth/thunks/featchUserThunk.ts';
+import { fetchUser } from '@/store/reducers/auth/thunks/fetchUserThunk.ts';
 import { login } from '@/store/reducers/auth/thunks/loginThunk.ts';
 import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts';
 import { authStorage } from '@/utils/authStorage.ts';
@@ -53,9 +53,10 @@ export const authSlice = createSlice({
                 state.isLoginLoading = true;
                 state.loginError = null;
             })
-            .addCase(login.fulfilled, (state) => {
+            .addCase(login.fulfilled, (state, action) => {
                 state.isLoginLoading = false;
                 state.isAuth = true;
+                state.currentUser = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoginLoading = false;

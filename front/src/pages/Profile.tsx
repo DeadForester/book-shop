@@ -19,7 +19,7 @@ import {
     PANEL_ROUTE,
     STORAGE_ORDER_ROUTE,
 } from '@/shared/constants/route-paths.ts';
-import { fetchUser } from '@/store/reducers/auth/thunks/featchUserThunk.ts';
+import { fetchUser } from '@/store/reducers/auth/thunks/fetchUserThunk.ts';
 
 import InfoSection from '../components/profile-page/InfoSection.tsx';
 import DevPlaceholder from '../shared/components/DevPlaceholder';
