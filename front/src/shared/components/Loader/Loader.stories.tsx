@@ -6,7 +6,7 @@ const meta: Meta<typeof Loader> = {
     title: 'Shared/Loader',
     component: Loader,
     tags: ['autodocs'],
-}
+};
 
 export default meta;
 type Story = StoryObj<typeof Loader>;

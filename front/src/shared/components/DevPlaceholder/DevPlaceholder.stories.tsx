@@ -28,4 +28,4 @@ export const CustomIcon: Story = {
     args: {
         icon: <Engineering fontSize="large" />
     }
-}
+};

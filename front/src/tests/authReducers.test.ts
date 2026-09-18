@@ -116,9 +116,11 @@ describe('AuthReducers', () => {
     });
 
     test('register fulfilled', () => {
-        expect(authReducer(initialState, { type: registration.fulfilled.type })).toEqual({
+        expect(authReducer(initialState, { type: registration.fulfilled.type, payload: testUser })).toEqual({
             ...initialState,
             isRegistrationLoading: false,
+            isAuth: true,
+            currentUser: testUser,
         });
     });
 
