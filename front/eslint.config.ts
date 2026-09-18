@@ -3,6 +3,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -26,6 +27,9 @@ export default defineConfig([
         rules: {
             'simple-import-sort/imports': 'error',
             'simple-import-sort/exports': 'error',
+            semi: ['error', 'always'],
         },
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    storybook.configs['flat/recommended'] as any,
 ]);

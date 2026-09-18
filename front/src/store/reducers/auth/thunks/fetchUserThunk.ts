@@ -3,10 +3,13 @@ import axios from 'axios';
 
 import UserService from '@/api/UserService.ts';
 import { User } from '@/models/db/user';
+import { clearErrors } from '@/store/reducers/auth/authSlice.ts';
 
 export const fetchUser = createAsyncThunk<User, void, { rejectValue: string }>(
     'auth/fetchUser',
-    async (_, { rejectWithValue }) => {
+    async (_, { dispatch, rejectWithValue }) => {
+        dispatch(clearErrors());
+
         const userIdLS = localStorage.getItem('userId');
 
         if (!userIdLS) {
