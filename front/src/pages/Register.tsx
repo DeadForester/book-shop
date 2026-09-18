@@ -16,7 +16,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
-import { LOGIN_ROUTE } from '@/shared/constants/route-paths.ts';
+import { LOGIN_ROUTE, ROOT_ROUTE } from '@/shared/constants/route-paths.ts';
 import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 import { SnackBar } from '@/shared/types/SnackBar.ts';
 import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts';
@@ -26,7 +26,7 @@ import { validateCredentials } from '../utils/validateCredentials.ts';
 
 const Register = () => {
     const navigate = useNavigate();
-    const { isRegistrationLoading, registrationError } = useAppSelector((state) => state.auth);
+    const { isRegistrationLoading } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState('');
@@ -51,25 +51,24 @@ const Register = () => {
         e.preventDefault();
         if (!validate()) return;
 
-        await dispatch(registration({ email, password }));
+        try {
+            await dispatch(registration({ email, password })).unwrap();
 
-        if (registrationError) {
+            setSnackbar({
+                open: true,
+                message: 'Регистрация прошла успешно!',
+                severity: 'success',
+            });
+
+            setTimeout(() => navigate(ROOT_ROUTE, { replace: true }), 1500);
+        } catch (error: unknown) {
             setSnackbar({
                 open: true,
                 message: 'Произошла ошибка при регистрации.',
                 severity: 'error',
             });
-            console.error('Register: ' + registrationError);
-            return;
+            console.error('Register: ' + error);
         }
-
-        setSnackbar({
-            open: true,
-            message: 'Регистрация успешна! Перенаправляем на вход...',
-            severity: 'success',
-        });
-
-        setTimeout(() => navigate(LOGIN_ROUTE, { replace: true }), 2000);
     };
 
     return (
