@@ -4,8 +4,7 @@ import axios from 'axios';
 import AuthService from '@/api/AuthService.ts';
 import { AuthResponse } from '@/models/response/auth/AuthResponse.ts';
 import { clearErrors } from '@/store/reducers/auth/authSlice.ts';
-import { authStorage } from '@/utils/authStorage.ts';
-import { isValidRole } from '@/utils/isValidRole.ts';
+import handleAuthSuccess from '@/utils/handleAuthSuccess.ts';
 
 export const login = createAsyncThunk<
     AuthResponse,
@@ -16,17 +15,7 @@ export const login = createAsyncThunk<
     try {
         const response = await AuthService.login(email, password);
 
-        const data = response.data;
-        
-        if (!isValidRole(data.user_role)) {
-            return rejectWithValue('Неизвестная роль пользователя');
-        }
-
-        authStorage.save(data, rememberMe);
-
-        authStorage.saveStorageType(rememberMe ? 'local' : 'session');
-
-        return data;
+        return await handleAuthSuccess(response.data, rememberMe, rejectWithValue);
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
             return rejectWithValue(error.response?.data?.message ?? 'Ошибка входа в аккаунт');
