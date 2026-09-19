@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import UserService from '@/api/UserService.ts';
 import { User } from '@/models/db/user';
+import { AUTH_STORAGE_KEY, AUTH_STORAGE_TYPE_KEY } from '@/shared/constants/auth-storage.ts';
 import { clearErrors } from '@/store/reducers/auth/authSlice.ts';
 
 export const fetchUser = createAsyncThunk<User, void, { rejectValue: string }>(
@@ -10,17 +11,19 @@ export const fetchUser = createAsyncThunk<User, void, { rejectValue: string }>(
     async (_, { dispatch, rejectWithValue }) => {
         dispatch(clearErrors());
 
-        const userIdLS = localStorage.getItem('userId');
+        const user = (
+            localStorage.getItem(AUTH_STORAGE_TYPE_KEY) === 'local' ? localStorage : sessionStorage
+        ).getItem(AUTH_STORAGE_KEY);
 
-        if (!userIdLS) {
+        const userId = JSON.parse(user ?? '{}')?.user_id;
+
+        if (!userId) {
             return rejectWithValue('userId не найден в localStorage');
         }
 
-        const userId = Number(userIdLS);
-
         try {
-            const response = await UserService.getUserById(userId);
-            return { ...response.data, isAdmin: response.data.user_role === 'ADMIN' };
+            const response = await UserService.getUserById(Number(userId));
+            return response.data;
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 return rejectWithValue(

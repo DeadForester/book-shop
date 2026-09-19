@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import UserService from '@/api/UserService.ts';
+import { AUTH_STORAGE_KEY, AUTH_STORAGE_TYPE_KEY } from '@/shared/constants/auth-storage.ts';
 import { fetchUser } from '@/store/reducers/auth/thunks/fetchUserThunk.ts';
 
 vi.mock('@/api/UserService');
@@ -15,8 +16,6 @@ describe('fetch user thunk', () => {
     });
 
     test('Fetch success: User', async () => {
-        localStorage.setItem('userId', '1');
-
         const mockResponse = {
             data: {
                 user_id: 1,
@@ -25,21 +24,19 @@ describe('fetch user thunk', () => {
             },
         };
 
+        localStorage.setItem(AUTH_STORAGE_TYPE_KEY, 'local');
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(mockResponse.data));
+
         vi.mocked(UserService.getUserById).mockResolvedValue(mockResponse as never);
 
         const result = await fetchUser()(dispatch, getState, undefined);
 
         expect(UserService.getUserById).toHaveBeenCalledWith(1);
         expect(result.type).toBe('auth/fetchUser/fulfilled');
-        expect(result.payload).toEqual({
-            ...mockResponse.data,
-            isAdmin: false,
-        });
+        expect(result.payload).toEqual(mockResponse.data);
     });
 
     test('Fetch success: Admin', async () => {
-        localStorage.setItem('userId', '2');
-
         const mockResponse = {
             data: {
                 user_id: 2,
@@ -48,16 +45,16 @@ describe('fetch user thunk', () => {
             },
         };
 
+        localStorage.setItem(AUTH_STORAGE_TYPE_KEY, 'local');
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(mockResponse.data));
+
         vi.mocked(UserService.getUserById).mockResolvedValue(mockResponse as never);
 
         const result = await fetchUser()(dispatch, getState, undefined);
 
         expect(UserService.getUserById).toHaveBeenCalledWith(2);
         expect(result.type).toBe('auth/fetchUser/fulfilled');
-        expect(result.payload).toEqual({
-            ...mockResponse.data,
-            isAdmin: true,
-        });
+        expect(result.payload).toEqual(mockResponse.data);
     });
 
     test('Fetch failure: local storage have no userId', async () => {
