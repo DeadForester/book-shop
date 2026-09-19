@@ -1,8 +1,7 @@
 import { AuthResponse } from '@/models/response/auth/AuthResponse.ts';
+import { AUTH_STORAGE_KEY, AUTH_STORAGE_TYPE_KEY } from '@/shared/constants/auth-storage.ts';
 
 type StorageType = 'local' | 'session';
-
-const AUTH_STORAGE_KEY = 'auth_data';
 
 export const authStorage = {
     save(data: AuthResponse, rememberMe: boolean) {
@@ -37,11 +36,11 @@ export const authStorage = {
     },
 
     saveStorageType(type: StorageType) {
-        localStorage.setItem('auth_storage_type', type);
+        localStorage.setItem(AUTH_STORAGE_TYPE_KEY, type);
     },
 
     getStorageType(): StorageType | null {
-        const storage = localStorage.getItem('auth_storage_type');
+        const storage = localStorage.getItem(AUTH_STORAGE_TYPE_KEY);
 
         if (storage !== 'local' && storage !== 'session') {
             return null;
@@ -53,6 +52,6 @@ export const authStorage = {
     clear() {
         localStorage.removeItem(AUTH_STORAGE_KEY);
         sessionStorage.removeItem(AUTH_STORAGE_KEY);
-        localStorage.removeItem('auth_storage_type');
+        localStorage.removeItem(AUTH_STORAGE_TYPE_KEY);
     },
 };

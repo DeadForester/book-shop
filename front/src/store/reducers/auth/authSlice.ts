@@ -8,7 +8,7 @@ import { registration } from '@/store/reducers/auth/thunks/registrationThunk.ts'
 import { authStorage } from '@/utils/authStorage.ts';
 
 const initialState: AuthState = {
-    isAuth: localStorage.getItem('remember') === 'true',
+    isAuth: false,
     currentUser: null,
     isCheckingAuth: true,
     isLoginLoading: false,

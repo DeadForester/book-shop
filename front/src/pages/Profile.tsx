@@ -9,7 +9,7 @@ import {
     ShoppingCart,
 } from '@mui/icons-material';
 import { Avatar, Box, Button, Chip, Container, Grid, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect} from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
@@ -20,6 +20,7 @@ import {
     STORAGE_ORDER_ROUTE,
 } from '@/shared/constants/route-paths.ts';
 import { fetchUser } from '@/store/reducers/auth/thunks/fetchUserThunk.ts';
+import isCurrentUserAdmin from '@/utils/isCurrentUserAdmin.ts';
 
 import InfoSection from '../components/profile-page/InfoSection.tsx';
 import DevPlaceholder from '../shared/components/DevPlaceholder';
@@ -30,14 +31,11 @@ export default function Profile() {
 
     const { currentUser, isUserLoading, userError } = useAppSelector((state) => state.auth);
 
+    const isAdmin = isCurrentUserAdmin(currentUser);
+
     useEffect(() => {
         dispatch(fetchUser());
     }, [dispatch]);
-
-    useEffect(() => {
-        console.log(currentUser);
-        console.log('user admin: ' + currentUser?.isAdmin);
-    }, [currentUser]);
 
     useEffect(() => {
         if (userError) {
@@ -93,8 +91,8 @@ export default function Profile() {
                         {currentUser.email}
                     </Typography>
                     <Chip
-                        label={currentUser.isAdmin ? 'Администратор' : 'Покупатель'}
-                        color={currentUser.isAdmin ? 'error' : 'success'}
+                        label={isAdmin ? 'Администратор' : 'Покупатель'}
+                        color={isAdmin ? 'error' : 'success'}
                         size="small"
                         sx={{ mt: 1 }}
                     />
@@ -103,17 +101,17 @@ export default function Profile() {
 
             <Button
                 component={RouterLink}
-                to={currentUser.isAdmin ? PANEL_ROUTE : ORDER_HISTORY_ROUTE}
+                to={isAdmin ? PANEL_ROUTE : ORDER_HISTORY_ROUTE}
                 variant="contained"
                 size="large"
-                startIcon={currentUser.isAdmin ? <Dashboard /> : <History />}
+                startIcon={isAdmin ? <Dashboard /> : <History />}
                 fullWidth
                 sx={{ mb: 4, py: 1.5, fontSize: '1.1rem' }}
             >
-                {currentUser.isAdmin ? 'Панель администратора' : 'История заказов'}
+                {isAdmin ? 'Панель администратора' : 'История заказов'}
             </Button>
 
-            {currentUser.isAdmin && (
+            {isAdmin && (
                 <Button
                     component={RouterLink}
                     to={STORAGE_ORDER_ROUTE}

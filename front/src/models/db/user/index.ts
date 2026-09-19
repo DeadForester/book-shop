@@ -5,7 +5,6 @@ export interface User {
     email: string;
     name?: string;
     user_role: UserRole;
-    isAdmin?: boolean;
     phone?: string;
     joinDate?: Date | string;
 }
