@@ -3,10 +3,15 @@ import { Autocomplete, InputAdornment, TextField } from '@mui/material';
 import { SyntheticEvent } from 'react';
 
 interface AutocompleteSelectorProps {
+    /** Текущее выбранное значение (или null, если ничего не выбрано) */
     value: string | null;
+    /** Колбэк, вызывается при выборе нового значения из списка */
     onChange: (event: SyntheticEvent, value: string | null) => void;
+    /** Список доступных вариантов для выбора */
     options: string[];
+    /** Текст лейбла над полем */
     label: string;
+    /** Текст плейсхолдера внутри пустого поля */
     placeholder: string;
 }
 

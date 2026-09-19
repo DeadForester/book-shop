@@ -3,7 +3,9 @@ import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 
 interface DevPlaceholderProps {
+    /** Текст карточки */
     title: string;
+    /** Иконка карточки */
     icon: ReactNode;
 }
 
@@ -29,6 +31,7 @@ const DevPlaceholder = ({ title, icon }: DevPlaceholderProps) => {
                     color="warning"
                     variant="outlined"
                     size="small"
+                    sx={{ padding: 1 }}
                 />
             </CardContent>
         </Card>

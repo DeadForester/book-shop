@@ -6,10 +6,18 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "preview": "vite preview",
         "lint": "eslint src/ --max-warnings 0",
         "lint:fix": "eslint src/ --fix",
-        "preview": "vite preview",
-        "type-check": "tsc --noEmit"
+        "test": "vitest",
+        "test:run": "vitest run",
+        "test:unit": "vitest run --project unit",
+        "test:storybook": "vitest run --project storybook",
+        "test:e2e": "pnpm exec playwright test tests/e2e",
+        "test:visuals": "pnpm exec playwright test tests/visuals",
+        "type-check": "tsc --noEmit",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",
@@ -30,7 +38,8 @@
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
-        "@types/node": "^25.9.1",
+        "@playwright/test": "^1.62.1",
+        "@types/node": "^25.9.5",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^6.0.1",
@@ -40,10 +49,23 @@
         "eslint-plugin-simple-import-sort": "^13.0.0",
         "globals": "^17.5.0",
         "jiti": "^2.7.0",
+        "jsdom": "^29.1.1",
         "prettier": "3.8.3",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.61.0",
         "vite": "^8.0.10",
-        "vite-plugin-checker": "^0.14.1"
+        "vite-plugin-checker": "^0.14.1",
+        "vitest": "^4.1.10",
+        "storybook": "^10.6.0",
+        "@storybook/react-vite": "^10.6.0",
+        "@chromatic-com/storybook": "latest",
+        "@storybook/addon-vitest": "^10.6.0",
+        "@storybook/addon-a11y": "^10.6.0",
+        "@storybook/addon-docs": "^10.6.0",
+        "@storybook/addon-onboarding": "^10.6.0",
+        "eslint-plugin-storybook": "^10.6.0",
+        "@vitest/browser-playwright": "4.1.10",
+        "@vitest/coverage-v8": "4.1.10",
+        "playwright": "latest"
     }
 }

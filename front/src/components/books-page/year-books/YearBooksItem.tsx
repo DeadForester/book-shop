@@ -2,6 +2,7 @@ import { TrendingUp } from '@mui/icons-material';
 import { Box, Card, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { BOOKS_ROUTE } from '@/shared/constants/route-paths.ts';
 import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface YearBooksItem {
@@ -23,7 +24,7 @@ const YearBooksItem = ({ book }: YearBooksItem) => {
                 transition: 'box-shadow 0.2s',
                 '&:hover': { boxShadow: 4, backgroundColor: 'action.hover' },
             }}
-            onClick={() => navigate(`/books/${book.id}`)}
+            onClick={() => navigate(`${BOOKS_ROUTE}/${book.id}`)}
         >
             <Box
                 component="img"

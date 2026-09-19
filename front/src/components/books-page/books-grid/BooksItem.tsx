@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { BOOKS_ROUTE } from '@/shared/constants/route-paths.ts';
 import { BookMock } from '@/shared/types/mock/BookMock';
 
 interface BooksItemProps {
@@ -14,7 +15,7 @@ export default function BooksItem({ book }: BooksItemProps) {
 
     return (
         <Card
-            onClick={() => navigate(`/books/${book.id}`)}
+            onClick={() => navigate(`${BOOKS_ROUTE}/${book.id}`)}
             sx={{
                 height: '100%',
                 display: 'flex',

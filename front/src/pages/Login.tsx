@@ -18,15 +18,21 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { usePageTitle } from '@/hooks/usePageTitle.ts';
+import {
+    FORGOT_PASSWORD_ROUTE,
+    REGISTER_ROUTE,
+    ROOT_ROUTE,
+} from '@/shared/constants/route-paths.ts';
 import { CredentialsErrors } from '@/shared/types/CredentialsErrors.ts';
 import { SnackBar } from '@/shared/types/SnackBar.ts';
 import { login } from '@/store/reducers/auth/thunks/loginThunk.ts';
 
-import Password from '../shared/components/Password.tsx';
+import Password from '../shared/components/Password';
 import { validateCredentials } from '../utils/validateCredentials.ts';
 
 const Login = () => {
-    const { isLoginLoading, loginError } = useAppSelector((state) => state.auth);
+    const { isLoginLoading } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -51,26 +57,27 @@ const Login = () => {
             return;
         }
 
-        await dispatch(login({ email, password, rememberMe }));
+        try {
+            await dispatch(login({ email, password, rememberMe })).unwrap();
 
-        if (loginError) {
+            setSnackbar({
+                open: true,
+                message: 'Успешный вход.',
+                severity: 'success',
+            });
+
+            setTimeout(() => navigate(ROOT_ROUTE, { replace: true }), 1500);
+        } catch (e: unknown) {
             setSnackbar({
                 open: true,
                 message: 'Не верные данные пользователя.',
                 severity: 'error',
             });
-            console.error('Login: ' + loginError);
-            return;
+            console.error('Login: ' + e);
         }
-
-        setSnackbar({
-            open: true,
-            message: 'Успешный вход.',
-            severity: 'success',
-        });
-
-        setTimeout(() => navigate('/', { replace: true }), 1500);
     };
+
+    usePageTitle('Прочитайка - Вход');
 
     return (
         <Box
@@ -111,6 +118,7 @@ const Login = () => {
                             severity={snackbar.severity}
                             sx={{ mb: 2 }}
                             onClose={() => setSnackbar({ ...snackbar, open: false })}
+                            data-testid="login-result"
                         >
                             {snackbar.message}
                         </Alert>
@@ -137,6 +145,9 @@ const Login = () => {
                                         </InputAdornment>
                                     ),
                                 },
+                                htmlInput: {
+                                    'data-testid': 'login-field',
+                                },
                             }}
                             disabled={isLoginLoading}
                         />
@@ -148,6 +159,7 @@ const Login = () => {
                             resetErrors={() => setErrors({ ...errors, password: '' })}
                             loading={isLoginLoading}
                             label={'Пароль'}
+                            testId="password-field"
                         />
 
                         <Box
@@ -170,7 +182,7 @@ const Login = () => {
                             />
                             <Typography
                                 component={RouterLink}
-                                to="/forgot-password"
+                                to={FORGOT_PASSWORD_ROUTE}
                                 variant="body2"
                                 color="primary"
                                 sx={{
@@ -204,6 +216,7 @@ const Login = () => {
                                 fontSize: '1rem',
                                 fontWeight: 600,
                             }}
+                            data-testid="login-button"
                         >
                             {isLoginLoading ? 'Вход...' : 'Войти'}
                         </Button>
@@ -222,7 +235,7 @@ const Login = () => {
                             Нет аккаунта?{' '}
                             <Typography
                                 component={RouterLink}
-                                to="/register"
+                                to={REGISTER_ROUTE}
                                 color="primary"
                                 sx={{
                                     textDecoration: 'none',

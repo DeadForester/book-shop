@@ -4,7 +4,7 @@ import { ChangeEvent, useMemo, useState } from 'react';
 import BooksFilters from '@/components/books-page/books-grid/BooksFilters.tsx';
 import { goods } from '@/data/goods.ts';
 import { useIsMobile } from '@/hooks/useIsMobile.ts';
-import PaginationControls from '@/shared/components/PaginationControls.tsx';
+import PaginationControls from '@/shared/components/PaginationControls';
 import { BookMock } from '@/shared/types/mock/BookMock';
 
 import BooksItem from './BooksItem.tsx';

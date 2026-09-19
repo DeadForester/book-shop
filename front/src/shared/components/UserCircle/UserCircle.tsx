@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
+import { LOGIN_ROUTE, PROFILE_ROUTE, ROOT_ROUTE } from '@/shared/constants/route-paths.ts';
 import { logout } from '@/store/reducers/auth/authSlice.ts';
 
 const UserCircle = () => {
@@ -18,7 +19,7 @@ const UserCircle = () => {
 
     const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
         if (!isAuth) {
-            navigate('/login');
+            navigate(LOGIN_ROUTE);
         } else {
             setAnchorEl(event.currentTarget);
         }
@@ -29,14 +30,14 @@ const UserCircle = () => {
     };
 
     const handleProfile = () => {
-        navigate('/profile');
+        navigate(PROFILE_ROUTE);
         handleMenuClose();
     };
 
     const handleLogout = () => {
         dispatch(logout());
         handleMenuClose();
-        navigate('/');
+        navigate(ROOT_ROUTE);
     };
 
     if (currentUser === null && userError) {
@@ -48,7 +49,9 @@ const UserCircle = () => {
             <IconButton color="inherit" onClick={handleMenuOpen}>
                 {isAuth ? (
                     <Avatar sx={{ width: 32, height: 32, backgroundColor: 'secondary.main' }}>
-                        {currentUser?.name?.charAt(0) || currentUser?.email?.charAt(0) || 'U'}
+                        {currentUser?.name?.charAt(0).toUpperCase() ||
+                            currentUser?.email?.charAt(0).toUpperCase() ||
+                            'U'}
                     </Avatar>
                 ) : (
                     <AccountCircle />

@@ -2,6 +2,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { ROOT_ROUTE } from '@/shared/constants/route-paths.ts';
+
 interface ActionButtonsProps {
     handleAddToCart: () => void;
 }
@@ -20,7 +22,7 @@ const ActionButtons = ({ handleAddToCart }: ActionButtonsProps) => {
             >
                 В корзину
             </Button>
-            <Button variant="outlined" size="large" onClick={() => navigate('/')}>
+            <Button variant="outlined" size="large" onClick={() => navigate(ROOT_ROUTE)}>
                 Продолжить покупки
             </Button>
         </Box>

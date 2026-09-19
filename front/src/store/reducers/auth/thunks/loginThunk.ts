@@ -2,19 +2,20 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import AuthService from '@/api/AuthService.ts';
+import { AuthResponse } from '@/models/response/auth/AuthResponse.ts';
+import { clearErrors } from '@/store/reducers/auth/authSlice.ts';
+import handleAuthSuccess from '@/utils/handleAuthSuccess.ts';
 
 export const login = createAsyncThunk<
-    { userId: number },
+    AuthResponse,
     { email: string; password: string; rememberMe: boolean },
     { rejectValue: string }
->('auth/login', async ({ email, password, rememberMe }, { rejectWithValue }) => {
+>('auth/login', async ({ email, password, rememberMe }, { dispatch, rejectWithValue }) => {
+    dispatch(clearErrors());
     try {
         const response = await AuthService.login(email, password);
-        if (rememberMe) {
-            localStorage.setItem('remember', 'true');
-        }
-        localStorage.setItem('userId', response.data.userId.toString());
-        return response.data;
+
+        return await handleAuthSuccess(response.data, rememberMe, rejectWithValue);
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
             return rejectWithValue(error.response?.data?.message ?? 'Ошибка входа в аккаунт');

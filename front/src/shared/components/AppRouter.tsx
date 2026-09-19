@@ -1,21 +1,18 @@
-import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { useAppSelector } from '@/hooks/useAppSelector.ts';
 import Books from '@/pages/Books.js';
 import Error from '@/pages/Error.js';
 import { adminRoutes, publicRoutes, userRoutes } from '@/router/routes.ts';
+import isCurrentUserAdmin from '@/utils/isCurrentUserAdmin.ts';
 
 import ProtectedRoute from './ProtectedRoute.tsx';
 
 const AppRouter = () => {
     const { currentUser, isAuth } = useAppSelector((state) => state.auth);
 
-    useEffect(() => {
-        console.log('Router user: ');
-        console.log(currentUser);
-    }, [currentUser]);
-
+    const isAdmin = isCurrentUserAdmin(currentUser);
+    
     return (
         <Routes>
             <Route path="/" element={<Books />} />
@@ -32,7 +29,7 @@ const AppRouter = () => {
                             element={<route.element />}
                         />
                     ))}
-                {currentUser?.isAdmin &&
+                {isAdmin &&
                     adminRoutes.map((route, index) => (
                         <Route
                             key={`private-${index}`}

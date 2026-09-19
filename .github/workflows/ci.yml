@@ -8,41 +8,8 @@ on:
       - main
 
 jobs:
-  backend_build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6.0.2
-      - name: Setup JDK
-        uses: actions/setup-java@v5.2.0
-        with:
-          java-version: 21
-          distribution: 'temurin'
-      - name: Run build
-        working-directory: ./backend/book-service
-        run: mvn clean package -DskipTests
+  backend:
+    uses: ./.github/workflows/backend-ci.yml
 
-  frontend_build:
-    needs: backend_build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6.0.2
-      - name: Setup Node.js
-        uses: actions/setup-node@v6.4.0
-        with:
-          node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: ./front/package-lock.json
-      - name: Install dependencies
-        working-directory: ./front
-        run: npm ci
-      - name: Run linter
-        working-directory: ./front
-        run: npm run lint
-      - name: Run build
-        working-directory: ./front
-        run: npm run build
-
-
-
+  frontend:
+    uses: ./.github/workflows/frontend-ci.yml
